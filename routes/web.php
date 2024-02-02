@@ -15,13 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::get('/dashboard', function () {
+    return view('web.chat_dashboard');
+});
+
+
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-        return view('web.chat_dashboard');
-    });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
