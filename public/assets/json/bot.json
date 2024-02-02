@@ -1,0 +1,60 @@
+{
+    "bots": [
+      {
+        "name": "bot1",
+        "text": "Bot 1",
+        "features": [
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot1"
+            }
+       
+     ]
+      },
+      {
+        "name": "bot2",
+        "text": "Bot 2",
+        "features": [
+            {
+             "text": "Remembers what user said earlier in the conversation bot2"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot2"
+            },
+            {
+             "text": "Remembers what user said earlier in the conversation bot2"
+            }
+     ]
+      },
+      {
+        "name": "botboth",
+        "text": "Bot 1 + Bot 2",
+        "features": [
+           {
+            "text": "Remembers what user said earlier in the conversation botboth"
+           },
+           {
+            "text": "Remembers what user said earlier in the conversation botboth"
+           },
+           {
+            "text": "Remembers what user said earlier in the conversation botboth"
+           }
+    ]
+      }
+    ]
+  }
+  
