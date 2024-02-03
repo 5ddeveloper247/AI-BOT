@@ -34,13 +34,20 @@
                 <a class="login scrollto1 me-2" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             @endguest
 
-            <button class="contact_us scrollto" href="#">
+            {{-- <button class="contact_us scrollto" href="#">
                 <span class="icon-container">
                     <i class="bi bi-arrow-right-circle-fill"></i>
                 </span>
                 <span class="contact"> Start free 7-day trial</span>
 
+            </button> --}}
+            <button class="contact_us scrollto d-block" onclick="window.location='{{ route('register') }}'">
+                <span class="icon-container">
+                    <i class="bi bi-arrow-right-circle-fill"></i>
+                </span>
+                <span class="contact"> Start free 7-day trial</span>
             </button>
+
         </div>
         <i class="bi mobile-nav-toggle bi-list"></i>
     </nav>

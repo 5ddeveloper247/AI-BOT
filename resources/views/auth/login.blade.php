@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
 
@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
     <div class="container">
         <div class="cover">
             <div class="front">
@@ -54,6 +55,75 @@
             </div>
         </div>
     </div>
+
+</body>
+
+</html> --}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AI - @yield('title', 'login')</title>
+
+    <!--Bootstrap CDN's-->
+
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.jpeg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/login.css') }}" />
+    @stack('css')
+</head>
+
+<body>
+    @include('layouts.web.header')
+<div class="container mt-5">
+    <div class="cover">
+        <div class="front">
+            <img src="assets/images/login.jpg" alt="login" loading="lazy" />
+            <div class="text">
+                <span class="text-1">Welcome to the Future<br />AI-Powered Bot <br />Login</span>
+                <span class="text-2">Let's get connected</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="forms">
+        <div class="form-content">
+            <div class="login-form">
+                <div class="title">Login</div>
+                <form action="#">
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="bi bi-envelope-fill"></i>
+                            <input type="email" placeholder="Enter your email" required />
+                        </div>
+                        <div class="input-box">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" placeholder="Enter your password" required />
+                        </div>
+                        <div class="text"><a href="{{ route('password.request') }}">Forgot password?</a></div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit" />
+                        </div>
+                        <div class="text sign-up-text">
+                            Don't have an account? <a href="{{ route('register') }}">Signup</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+{{-- @include('layouts.web.footer') --}}
+
+@stack('script')
 </body>
 
 </html>

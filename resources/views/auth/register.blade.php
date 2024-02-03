@@ -34,20 +34,29 @@
         <div class="form-content">
           <div class="signup-form">
             <div class="title">Signup</div>
-            <form action="#">
+            <form  action="{{ route('plans') }}" id="registrationForm" action="#">
               <div class="input-boxes">
                 <div class="input-box">
                   <i class="bi bi-person-fill"></i>
-                  <input type="text" placeholder="Enter your name" required />
+                  {{-- <input type="text" placeholder="Enter your name" required /> --}}
+                  <input
+                  type="text"
+                  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
+                  transform="matrix(1 0 0 1 65.1054 241.5)"
+                  placeholder="Enter your name"
+                  required
+              />
+
                 </div>
                 <div class="input-box">
                   <i class="bi bi-envelope-fill"></i>
-                  <input type="text" placeholder="Enter your email" required />
+                  <input type="email" placeholder="Enter your email" required />
                 </div>
                 <div class="input-box">
                   <i class="bi bi-telephone-fill"></i>
                   <input
                     type="number"
+                    transform="matrix(1 0 0 1 65.1054 241.5)"
                     placeholder="Enter your phone number"
                     required
                   />
@@ -69,14 +78,15 @@
                   />
                 </div>
                 <div class="term-and-condition">
-                  <input
-                    type="checkbox"
-                    id="term--checkbox"
-                    class="term--checkbox me-2"
-                  />
-                  <label for="term--checkbox" class="me-1">
-                    I agree to
-                    <a href="{{ route('privacy') }}" class="text-primary">privacy policy</a> &amp; <a href="{{ route('term-condition') }}" class="text-primary">terms</a>
+                    <input
+                        type="checkbox"
+                        id="term--checkbox"
+                        class="term--checkbox me-2"
+                        required
+                    />
+                    <label for="term--checkbox" class="me-1">
+                        I agree to
+                        <a href="{{ route('privacy') }}" class="text-primary">privacy policy</a> &amp; <a href="{{ route('term-condition') }}" class="text-primary">terms</a>
                     </label>
                 </div>
                 <div class="button input-box">
@@ -93,14 +103,16 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
     crossorigin="anonymous"></script>
-    <script>
+
+
+    {{-- <script>
       $(document).ready(function () {
             $(".button").click(function (e) {
                 e.preventDefault();
-               
+
                 window.location.href = '{{ route('plans') }}';
             });
         });
-    </script>
+    </script> --}}
   </body>
 </html>

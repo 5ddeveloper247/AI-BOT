@@ -146,7 +146,10 @@
                             <div class="form-container">
                                 <div class="field-container">
                                     <label for="name">Name</label>
-                                    <input id="name" maxlength="20" type="text">
+                                    {{-- <input id="name" maxlength="20" type="text"> --}}
+                                    <input type="text" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
+                                    transform="matrix(1 0 0 1 65.1054 241.5)" placeholder="Enter your name" required />
+
                                 </div>
                                 <div class="field-container">
                                     <label for="cardnumber">Card Number</label><span id="generatecard">Generate
