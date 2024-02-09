@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/payment.css') }}">
 </head>
-
+<style>.alert-red {
+    color: red;
+}
+</style>
 <body>
     <div class="container">
         <div class="card">
@@ -161,10 +164,12 @@
 
                                     </svg>
                                 </div>
+
                                 <div class="field-container">
                                     <label for="expirationdate">Expiration (mm/yy)</label>
-                                    <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+                                    <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric" required>
                                 </div>
+
                                 <div class="field-container">
                                     <label for="securitycode">Security Code</label>
                                     <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
@@ -183,14 +188,49 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.js"
-        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/bootstrap/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/js/toastr.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
     <script>
-        $(document).ready(function () {
+        document.getElementById('card-form__button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission for now
+
+            var expirationInput = document.getElementById('expirationdate');
+            var expirationDate = expirationInput.value;
+
+            // Validate if the expiration date is not empty
+            if (expirationDate.trim() === '') {
+                alert('Please enter the expiration date.');
+                return;
+            }
+
+            // Extract the month and year from the input value (assuming format is mm/yy)
+            var parts = expirationDate.split('/');
+            var month = parseInt(parts[0], 10);
+            var year = parseInt(parts[1], 10);
+
+            // Get the current date
+            var currentDate = new Date();
+            var currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed
+            var currentYear = currentDate.getFullYear() % 100; // Get last two digits of the year
+
+            // Compare the expiration date with the current date
+            if (year < currentYear || (year === currentYear && month < currentMonth)) {
+            //     // alert('Your card is expired.');
+            //     var alertMessage = document.getElementById('.toast toast-success');
+            // alertMessage.classList.add('alert-red');
+                $(document).ready(function () {
+            $('#card-form__button').click(function (e) {
+
+                e.preventDefault();
+                toastr.success('Your card is expired!', '', { timeOut: 3000 })
+
+                setTimeout(() => {
+                    window.location.href = '{{ route('payment') }}'
+                }, 3000);
+            });
+        });
+
+            } else {
+                // Proceed with form submission
+                $(document).ready(function () {
             $('#card-form__button').click(function (e) {
 
                 e.preventDefault();
@@ -201,6 +241,22 @@
                 }, 3000);
             });
         });
+                // document.querySelector('form').submit();
+            }
+        });
+    </script>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/toastr.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script>
+
         window.onload = function () {
 
             const name = document.getElementById("name");

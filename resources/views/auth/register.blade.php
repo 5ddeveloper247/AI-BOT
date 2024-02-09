@@ -42,7 +42,7 @@
                   <input
                   type="text"
                   oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
-                  transform="matrix(1 0 0 1 65.1054 241.5)"
+
                   placeholder="Enter your name"
                   required
               />
@@ -54,12 +54,15 @@
                 </div>
                 <div class="input-box">
                   <i class="bi bi-telephone-fill"></i>
+
                   <input
-                    type="number"
-                    transform="matrix(1 0 0 1 65.1054 241.5)"
-                    placeholder="Enter your phone number"
-                    required
-                  />
+                  type="text"
+                  placeholder="Enter your phone number (including code)"
+                  required
+                  pattern="[0-9]{7,15}"
+                  title="Please enter a valid phone number of 7 to 15 digits"
+              />
+
                 </div>
                 <div class="input-box">
                   <i class="bi bi-lock-fill"></i>

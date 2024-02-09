@@ -91,8 +91,8 @@
                 <span class="text-2">Let's get connected</span>
             </div>
         </div>
+    </div>      
 
-    </div>
     <div class="forms">
         <div class="form-content">
             <div class="login-form">

@@ -24,9 +24,12 @@
                         landscape.
                     </h2>
 
+
+
                     <button class="btn try-bot">
                         <p class="mb-0 text-white">Try Bot</p>
                     </button>
+
                 </div>
             </div>
         </div>
@@ -40,23 +43,31 @@
                     <div class="wrapper">
                         <div class="row no-gutters">
                             <div class="col-lg-8 col-md-7 order-md-last d-flex align-items-stretch p-0">
+
+
+
+
+
+
                                 <div class="contact-wrap w-100 p-md-5 p-4">
                                     <h3 class="mb-4 fw-bold">Get in touch</h3>
                                     <div id="form-message-success" class="mb-4">
-                                        <div class="alert alert-success" role="alert">
-
+                                        <div style="display: none" id="alert-success" class="alert alert-success"
+                                            role="alert">
                                             Your message was sent, thank you!
                                             <a href="#" class="btn-close alert-contact-us float-end p-1 shadow"
                                                 data-bs-dismiss="alert" aria-label="close"></a>
                                         </div>
-                                        <div class="alert alert-danger" role="alert">
-
+                                        <div style="display: none" id="alert-danger" class="alert alert-danger"
+                                            role="alert">
                                             Something went wrong. Please try again.
                                             <a href="#" class="btn-close alert-contact-us float-end p-1 shadow"
                                                 data-bs-dismiss="alert" aria-label="close"></a>
                                         </div>
                                     </div>
-                                    <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+
+                                    <form id="contactForm" class="contactForm">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group contact-page-form-group">
@@ -89,8 +100,7 @@
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-4">
                                                 <div class="form-group contact-page-form-group">
-                                                    <button class="contact_us_2 scrollto" href=""
-                                                        onclick="alert('Submitted');return false">
+                                                    <button class="contact_us_2 scrollto" type="button" id="submitButton">
                                                         <span class="icon-container">
                                                             <i class="bi bi-arrow-right-circle-fill"></i>
                                                         </span>
@@ -101,7 +111,19 @@
                                             </div>
                                         </div>
                                     </form>
+
+
                                 </div>
+
+
+
+
+
+
+
+
+
+
                             </div>
                             <div class="col-lg-4 col-md-5 d-flex align-items-stretch p-0">
                                 <div class="info-wrap w-100 p-md-5 p-4" style="background-color: var(--background-color)">
@@ -152,6 +174,55 @@
     </section>
     <!--Contact-Form End-->
 @endsection
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var successAlert = document.getElementById('alert-success');
+        var errorAlert = document.getElementById('alert-danger');
+
+        // Set the initial style of the alerts to display: none
+
+        successAlert.style.display = 'none';
+        errorAlert.style.display = 'none';
+
+        document.getElementById('submitButton').addEventListener('click', function() {
+            var formData = new FormData(document.getElementById('contactForm'));
+
+            fetch('{{ route('contact.store') }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    // Check if the response contains success or error messages
+                    if (data.includes('Message sent successfully')) {
+                        // Display success message
+                        successAlert.style.display = 'block';
+                        // Hide error message
+                        errorAlert.style.display = 'none';
+                    } else {
+                        // Display error message
+                        errorAlert.style.display = 'block';
+                        // Hide success message
+                        successAlert.style.display = 'none';
+                    }
+
+                    // Set a timeout to hide the alerts after 3000 milliseconds (3 seconds)
+                    setTimeout(function() {
+                        successAlert.style.display = 'none';
+                        errorAlert.style.display = 'none';
+                    }, 5000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+
 
 @push('script')
 @endpush

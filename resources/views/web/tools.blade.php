@@ -71,14 +71,14 @@
                     <h1 class="text-center my-3 my-md-5">Download Tools</h1>
                 </div>
             </div>
-            
+
             <div class="card" style="border-radius: 20px;">
                 <div class="card-body">
                     <div class="row">
-                        
+
                         <div class="col-md-3">
                         <img class="img-fluid" src="assets/images/pdf.png"  alt="">
-                        
+
                         </div>
                         <div class="col-md-3 my-auto">
                             <div class="price_card_body align-items-center gap-3">
@@ -91,16 +91,16 @@
                                         <div class="feature_amount">99</div>
                                         <!-- <div class="feature_month">/month</div> -->
                                     </div>
-                                    
+
                                 </div>
-                                <button class="contact_us scrollto d-block" href="#">
+                                <button class="contact_us scrollto d-block" onclick="window.location.href = '{{ url('/login') }}';">
                                     <span class="icon-container">
                                         <i class="bi bi-arrow-right-circle-fill"></i>
                                     </span>
                                     <span class="contact">Buy Now</span>
                                 </button>
                             </div>
-                        
+
                         </div>
                         <div class="col-md-6">
                             <div class="price_card_features">
@@ -129,7 +129,7 @@
                                     <img alt="Check" src="assets/images/tick.png" class="feature_list_icon">
                                     <div class="price_card_feature">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dicta provident aliquid.</div>
                                 </div>
-                            
+
                             </div>
                         </div>
 
@@ -142,7 +142,7 @@
                     <div class="row">
                         <div class="col-md-3">
                         <img class="img-fluid" src="assets/images/pdf.png"  alt="">
-                        
+
                         </div>
                         <div class="col-md-3 my-auto">
                             <div class="price_card_body align-items-center gap-3">
@@ -156,14 +156,14 @@
                                         <!-- <div class="feature_month">/month</div> -->
                                     </div>
                                 </div>
-                                <button class="contact_us scrollto d-block " href="#">
+                                <button class="contact_us scrollto d-block" onclick="window.location.href = '{{ url('/login') }}';">
                                     <span class="icon-container">
                                         <i class="bi bi-arrow-right-circle-fill"></i>
                                     </span>
                                     <span class="contact">Buy Now</span>
                                 </button>
                             </div>
-                        
+
                         </div>
                         <div class="col-md-6">
                             <div class="price_card_features">
@@ -192,7 +192,7 @@
                                     <img alt="Check" src="assets/images/tick.png" class="feature_list_icon">
                                     <div class="price_card_feature">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dicta provident aliquid.</div>
                                 </div>
-                            
+
                             </div>
                         </div>
                     </div>

@@ -244,7 +244,7 @@ h1 {
   # Navigation Menu
   --------------------------------------------------------------*/
 /**
-  * Desktop Navigation 
+  * Desktop Navigation
   */
 
 /* .navbar {
@@ -318,7 +318,20 @@ h1 {
 .navbar .active:focus,
 .navbar li:hover > a {
   color: var(--primary-color);
+
+  /* added css */
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-transform: none;
+  font-weight: 1000;
+
+
 }
+
+
 
 .navbar .contact_us,
 .navbar .contact_us:focus {
@@ -436,7 +449,7 @@ div:not(.navbar-mobile) .contact_us {
 }
 
 /**
-  * Mobile Navigation 
+  * Mobile Navigation
   */
 .mobile-nav-toggle {
   color: #000;
@@ -1372,7 +1385,7 @@ textarea.contact-page.form-control {
 }
 .check_tool{
   color: var(--primary-color);
-  
+
 }
 .mt-8{
   margin-top: 8rem;

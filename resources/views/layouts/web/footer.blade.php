@@ -4,14 +4,14 @@
          data-aos="fade-up">
          <div class="footer-top">
              <div class="footer-brand">
-                 <a href="/">
+                 <a href="{{ route('home') }}">
                      <img src="{{ asset('assets/images/logo.jpeg') }}" class="footer-logo" alt="">
                  </a>
                  <div class="footer-tagline">© 2023 MediNurseAI, INC.</div>
              </div>
              <div class="footer-social">
                  <div class="social-icons">
-                     <a aria-label="Link to Twitter" href="#" target="_blank"
+                     <a aria-label="Link to Twitter" href="https://twitter.com/" target="_blank"
                          class="social-icon twitter w-inline-block">
                          <div class="social-icon-image w-embed">
                              <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
@@ -23,7 +23,7 @@
                              </svg>
                          </div>
                      </a>
-                     <a aria-label="Link to Facebook" href="#" target="_blank"
+                     <a aria-label="Link to Facebook" href="https://www.facebook.com/" target="_blank"
                          class="social-icon facebook w-inline-block">
                          <div class="social-icon-image w-embed">
                              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
@@ -35,7 +35,7 @@
                              </svg>
                          </div>
                      </a>
-                     <a aria-label="Link to Instagram" href="#" target="_blank"
+                     <a aria-label="Link to Instagram" href="https://www.instagram.com/" target="_blank"
                          class="social-icon instagram w-inline-block">
                          <div class="social-icon-image w-embed">
                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
@@ -47,7 +47,7 @@
                              </svg>
                          </div>
                      </a>
-                     <a aria-label="Link to LinkedIn" href="#" target="_blank"
+                     <a aria-label="Link to LinkedIn" href="https://www.linkedin.com/" target="_blank"
                          class="social-icon linkedin w-inline-block">
                          <div class="social-icon-image w-embed">
                              <svg width="12" height="13" viewBox="0 0 12 13" fill="none"
@@ -59,7 +59,7 @@
                              </svg>
                          </div>
                      </a>
-                     <a aria-label="Link to Youtube" href="#" target="_blank"
+                     <a aria-label="Link to Youtube" href="https://www.youtube.com/" target="_blank"
                          class="social-icon youtube w-inline-block">
                          <div class="social-icon-image w-embed">
                              <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
@@ -94,7 +94,7 @@
 
              <div class="footer-coloumn">
                  <h4 class="footer-title">Account</h4>
-                 <a href="register.html" class="footer-link">Signup or 7 day free trail</a>
+                 <a href="{{ route('register') }}" class="footer-link">Signup or 7 day free trail</a>
                  @guest
                      <a href="{{ url('/login') }}" class="footer-link">Login</a>
                  @else
@@ -112,12 +112,12 @@
                     <strong>Address:</strong> 198 West 21th Street,<br /> Suite 721
                     New York NY 10016
                 </p>
-                
+
                 <p class="m-0">
                     <strong>Phone:</strong>
                     <a class="text-light" href="tel://1234567920">+ 1235 2355 98</a>
                 </p>
-            
+
                 <p class="m-0">
                     <strong>Email:</strong>
                     <a class="text-light" href="mailto:info@yoursite.com">info@yoursite.com</a>
@@ -129,11 +129,16 @@
                          <div class="icon-footer d-flex align-items-center justify-content-center">
                              <span class="bi bi-geo-alt"></span>
                          </div>
+
                          <div class="text ps-3">
-                             <p class="footer-link">
-                                 198 West 21th Street, Suite 721 New York NY 10016
-                             </p>
-                         </div>
+                            <p class="footer-link">
+                                <a href="https://www.google.com/maps/search/?api=1&query=198+West+21th+Street,+Suite+721,+New+York,+NY+10016" target="_blank">
+                                    198 West 21th Street, Suite 721 New York, NY 10016
+                                </a>
+                            </p>
+                        </div>
+
+
                      </div>
                      <div class="dbox-footer w-100 d-flex align-items-center">
                          <div class="icon-footer d-flex align-items-center justify-content-center">
