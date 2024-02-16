@@ -321,6 +321,26 @@
       });
     });
 
+    $(document).ready(function () {
+    // Show popover by default
+    $('#change_direction').popover({
+        trigger: "manual", // Set trigger to "manual" to control when the popover is shown
+        placement: "top",
+        html: true,
+        content: function () {
+            return `<div class="custom-popover-content">View Packages?</div>`;
+        },
+    });
+
+    // Show the popover
+    $('#change_direction').popover('show');
+
+    // Hide the popover after 3 seconds
+    setTimeout(function() {
+        $('#change_direction').popover('hide');
+    }, 3000); // 3000 milliseconds = 3 seconds
+});
+
     function changeDirection() {
       $(".front").css("transform", "perspective(600px) rotateY(0deg)");
       $(".back").css("transform", "perspective(600px) rotateY(180deg)");

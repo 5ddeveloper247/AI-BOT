@@ -91,23 +91,36 @@
                 <span class="text-2">Let's get connected</span>
             </div>
         </div>
-    </div>      
+    </div>
 
     <div class="forms">
         <div class="form-content">
             <div class="login-form">
                 <div class="title">Login</div>
-                <form action="#">
+
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="input-boxes">
+
                         <div class="input-box">
                             <i class="bi bi-envelope-fill"></i>
-                            <input type="email" placeholder="Enter your email" required />
+                            {{-- <x-input-label for="email" :value="__('Email')" /> --}}
+                            <x-text-input id="email" placeholder="Enter your email" class="block mt-1 w-full" type="email" name="email"
+                                :value="old('email')" required autofocus autocomplete="username" required />
+
+                            {{-- <input type="text" placeholder="Enter your email" required /> --}}
                         </div>
+
                         <div class="input-box">
                             <i class="bi bi-lock-fill"></i>
-                            <input type="password" placeholder="Enter your password" required />
+                            <x-text-input id="password" placeholder="Enter your password" class="block mt-1 w-full" type="password" name="password"
+                                required autocomplete="current-password" />
+                            {{-- <input type="password" placeholder="Enter your password" required /> --}}
                         </div>
+
                         <div class="text"><a href="{{ route('password.request') }}">Forgot password?</a></div>
+
                         <div class="button input-box">
                             <input type="submit" value="Submit" />
                         </div>
@@ -116,6 +129,11 @@
                         </div>
                     </div>
                 </form>
+                <div class="google-button">
+                    <button type="button" class="google-sign-in-button" >
+                        Sign in with Google
+                    </button>
+                </div>
             </div>
         </div>
     </div>

@@ -314,24 +314,20 @@ h1 {
 }
 
 .navbar a:hover,
-.navbar .active,
+
 .navbar .active:focus,
 .navbar li:hover > a {
-  color: var(--primary-color);
+  color: #fd7e14;
 
-  /* added css */
-  background-color: var(--primary-color);
-  border-radius: 10px;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 14px;
-  text-transform: none;
-  font-weight: 1000;
 
 
 }
 
+.navbar .active{
+    font-weight: bolder;
+    color: #fd7e14;
 
+}
 
 .navbar .contact_us,
 .navbar .contact_us:focus {
@@ -347,7 +343,9 @@ h1 {
 
 .navbar .contact_us:hover,
 .navbar .contact_us:focus:hover {
-  color: #ddd;
+    /* strat 7 day trail */
+  /* color: #ddd; */
+  color: #000;
   background: var(--btn-background-color);
 }
 
