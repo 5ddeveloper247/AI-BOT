@@ -596,7 +596,7 @@ footer {
 }
 
 /* .user_question.toggle_bookmark_icon::after {
-  content: '\F1A3'; 
+  content: '\F1A3';
 } */
 #chat3 .form-control {
   border-color: transparent;
@@ -688,4 +688,23 @@ footer {
   .main.collapsed {
     margin-left: 0;
   }
+}
+
+.custom-alert {
+    /* display: none; */
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    border: 1px solid #e74c3c;
+    /* Red border color */
+    background-color: #f8d7da;
+    /* Red background color */
+    color: #721c24;
+    /* Red text color */
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+    z-index: 1000;
 }

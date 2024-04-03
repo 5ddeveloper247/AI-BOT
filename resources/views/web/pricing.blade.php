@@ -20,9 +20,16 @@
                         ever-evolving market landscape.
                     </h2>
 
-                    <button class="btn try-bot">
+                    <div class="parent">
+                        <a href="{{ auth()->check() ? route('chat_dashboard') : route('login') }}">
+                            <button class="btn try-bot" id="tryBotButton">
+                                <p class="mb-0 text-white">Try Bot</p>
+                            </button>
+                        </a>
+                    </div>
+                    {{-- <button class="btn try-bot">
                         <p class="mb-0 text-white">Try Bot</p>
-                    </button>
+                    </button> --}}
 
                 </div>
             </div>

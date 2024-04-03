@@ -18,7 +18,7 @@
                             outlines how we collect, use, disclose, and safeguard your data when you visit and
                             interact with our AI-powered website. By accessing or using our website, you consent to
                             the practices described in this Privacy Policy.</p>
-                            
+
                         <h6 class="fw-bold">Data Collection</h6>
                         <p>We may collect personal and non-personal information from you when you use our website.
                             This information may include, but is not limited to, your name, email address, IP

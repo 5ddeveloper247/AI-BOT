@@ -48,43 +48,65 @@
             </label>
           </div>
 
-          <form action="#" id="plan_ai">
+          {{-- <form action="#" id="plan_ai">
             <div class="grid">
-              <label class="card">
-                <input name="plan" value="20" class="radio" type="radio" checked />
-
-                <span class="plan-details">
-                  <span class="plan-type">Bot 1</span>
-                  <span class="plan-cost">$20<span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
-                </span>
-              </label>
-              <label class="card">
-                <input name="plan" value="50" class="radio" type="radio" />
-
-                <span class="plan-details" aria-hidden="true">
-                  <span class="plan-type">Bot 2</span>
-                  <span class="plan-cost">$50<span class="slash">/</span><span class="plan-cycle">mo</span></span>
-                </span>
-              </label>
-              <label class="card">
-                <input name="plan" value="200" class="radio" type="radio" />
-
-                <span class="plan-details" aria-hidden="true">
-                  <span class="plan-type">Bot 1 + Bot 2</span>
-                  <span class="plan-cost">$200<span class="slash">/</span><span class="plan-cycle">mo</span></span>
-                </span>
-              </label>
-              <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
-                <button class="btn btn-success submit_plan">
-                  <i class="bi bi-check2-circle"></i> Select Plan
-                </button>
-                <button class="btn text-light try_bot" style="background: var(--color-green)">
-                  <i class="bi bi-symmetry-horizontal"></i> Try Bot
-                  <strong>(7 Day Trial)</strong>
-                </button>
-              </div>
+                <label class="card">
+                    <input name="plan" value="1" class="radio" type="radio" checked />
+                    <span class="plan-details">
+                        <span class="plan-type">Bot 1</span>
+                        <span class="plan-cost">$20<span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
+                    </span>
+                </label>
+                <label class="card">
+                    <input name="plan" value="2" class="radio" type="radio" />
+                    <span class="plan-details" aria-hidden="true">
+                        <span class="plan-type">Bot 2</span>
+                        <span class="plan-cost">$50<span class="slash">/</span><span class="plan-cycle">mo</span></span>
+                    </span>
+                </label>
+                <label class="card">
+                    <input name="plan" value="3" class="radio" type="radio" />
+                    <span class="plan-details" aria-hidden="true">
+                        <span class="plan-type">Bot 1 + Bot 2</span>
+                        <span class="plan-cost">$200<span class="slash">/</span><span class="plan-cycle">mo</span></span>
+                    </span>
+                </label>
+                <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
+                    <button class="btn btn-success submit_plan">
+                        <i class="bi bi-check2-circle"></i> Select Plan
+                    </button>
+                    <button class="btn text-light try_bot" style="background: var(--color-green)">
+                        <i class="bi bi-symmetry-horizontal"></i> Try Bot
+                        <strong>(7 Day Trial)</strong>
+                    </button>
+                </div>
             </div>
-          </form>
+        </form> --}}
+
+        <form action="#" id="plan_ai">
+            <div class="grid">
+                @foreach($plans as $plan)
+                <label class="card">
+                    <input name="plan" value="{{ $plan->id }}" class="radio" type="radio" {{ $loop->first ? 'checked' : '' }} />
+                    <span class="plan-details">
+                        <span class="plan-type">{{ $plan->plan_name }}</span>
+                        <span class="plan-cost">${{ $plan->plan_price }}<span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
+                    </span>
+                </label>
+                @endforeach
+                <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
+                    <button class="btn btn-success submit_plan">
+                        <i class="bi bi-check2-circle"></i> Select Plan
+                    </button>
+                    <button class="btn text-light try_bot" style="background: var(--color-green)">
+                        <i class="bi bi-symmetry-horizontal"></i> Try Bot
+                        <strong>(7 Day Trial)</strong>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
         </div>
         <div class="plan_list d-none d-md-block">
           <label onclick="changeDirection()" for="flip" href="#" class=""
@@ -363,17 +385,94 @@
       //     }
       // });
     });
-    $(document).ready(function () {
-      $(".try_bot").click(function (e) {
-        e.preventDefault();
+    // $(document).ready(function () {
+    //   $(".try_bot").click(function (e) {
+    //     e.preventDefault();
 
-        window.location.href = "{{ route('payment') }}";
-      });
-    });
+    //     window.location.href = "{{ route('payment') }}";
+    //   });
+    // });
+
     function changeUrl() {
       window.location.href = "{{ route('register') }}";
     }
   </script>
+
+
+<script>
+    $(document).ready(function () {
+
+    $(".submit_plan").click(function (e) {
+        e.preventDefault();
+
+        // Get the value of the selected plan
+        var selectedPlan = $('input[name="plan"]:checked').val();
+
+        // Prepare data to send via AJAX
+        var formData = {
+            plan: selectedPlan,
+            _token: '{{ csrf_token() }}' // Add CSRF token for Laravel
+        };
+
+        // Send AJAX request
+        $.ajax({
+            url: "{{ route('store.membership') }}",
+            type: "POST", // Change to POST method
+            data: formData,
+            success: function (response) {
+                // Handle success response
+                console.log(response);
+                // Redirect user to the payment page or do something else with the response
+                window.location.href = response.redirectUrl;
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                alert('Error occurred while processing the request');
+            }
+        });
+    });
+
+});
+
+</script>
+
+<script>
+    $(document).ready(function () {
+    $(".try_bot").click(function (e) {
+        e.preventDefault();
+
+        // Get the value of the selected plan
+        var selectedPlan = $('input[name="plan"]:checked').val();
+
+        // Prepare data to send via AJAX
+        var formData = {
+            plan: selectedPlan,
+            _token: '{{ csrf_token() }}' // Add CSRF token for Laravel
+        };
+
+        // Send AJAX request
+        $.ajax({
+            url: "{{ route('start.trial') }}",
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                // Handle success response
+                console.log(response);
+                // Redirect user to the payment page or do something else with the response
+                window.location.href = response.redirectUrl;
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                alert('Error occurred while processing the request');
+            }
+        });
+    });
+});
+
+
+</script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@
             <li><a class="nav-link scrollto {{ is_active_route('/tools') }}" href="{{ route('tools') }}">Tools</a></li>
             <li><a class="nav-link scrollto {{ is_active_route('/support') }}" href="{{ route('support') }}">Support</a></li>
             <li><a class="nav-link scrollto {{ is_active_route('/contact') }}" href="{{ route('contact') }}">Contact</a></li>
+            <li><a class="nav-link scrollto {{ is_active_route('/faqs') }}" href="{{ route('faqs') }}">Faqs</a></li>
         </ul>
         <div class="nav-right">
             @guest

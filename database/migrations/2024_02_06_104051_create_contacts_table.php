@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject');
             $table->text('message');
+            $table->text('reply')->nullable();
+            $table->boolean('viewed')->default(false);
+            $table->json('attachments')->nullable();
             $table->timestamps();
         });
     }

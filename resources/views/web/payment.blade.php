@@ -145,12 +145,12 @@
 
                             <div class="form-container">
                                 <div class="field-container">
-                                    <label for="name">Name</label>
+                                    <label for="name">First Name</label>
                                     <input id="name" maxlength="20" type="text">
                                 </div>
 
                                 <div class="field-container">
-                                    <label for="name">Name</label>
+                                    <label for="name">Last Name</label>
                                     <input id="name" maxlength="20" type="text">
                                 </div>
 

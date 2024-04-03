@@ -99,11 +99,11 @@
                 <div class="title">Login</div>
 
 
-                <form method="POST" action="{{ route('login') }}">
+                <form  method="POST" action="{{ route('login') }}">
                     @csrf
-                    <div class="input-boxes">
+                    <div class="input-boxes " >
 
-                        <div class="input-box">
+                        <div class="input-box" id="login">
                             <i class="bi bi-envelope-fill"></i>
                             {{-- <x-input-label for="email" :value="__('Email')" /> --}}
                             <x-text-input id="email" placeholder="Enter your email" class="block mt-1 w-full" type="email" name="email"
@@ -122,7 +122,7 @@
                         <div class="text"><a href="{{ route('password.request') }}">Forgot password?</a></div>
 
                         <div class="button input-box">
-                            <input type="submit" value="Submit" />
+                            <input type="submit" value="Submit"  class="submit-btn-register"/>
                         </div>
                         <div class="text sign-up-text">
                             Don't have an account? <a href="{{ route('register') }}">Signup</a>

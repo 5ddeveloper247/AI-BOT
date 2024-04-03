@@ -20,9 +20,16 @@
                         your team's full potential for success.
                     </h2>
 
-                    <button class="btn try-bot">
+                    {{-- <button class="btn try-bot">
                         <p class="mb-0 text-white">Try Bot</p>
-                    </button>
+                    </button> --}}
+                    <div class="parent">
+                        <a href="{{ auth()->check() ? route('chat_dashboard') : route('login') }}">
+                            <button class="btn try-bot" id="tryBotButton">
+                                <p class="mb-0 text-white">Try Bot</p>
+                            </button>
+                        </a>
+                    </div>
 
                 </div>
             </div>

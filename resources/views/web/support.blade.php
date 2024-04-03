@@ -19,9 +19,16 @@
                         effectively.
                     </h2>
 
-                    <button class="btn try-bot">
+                    {{-- <button class="btn try-bot">
                         <p class="mb-0 text-white">Try Bot</p>
-                    </button>
+                    </button> --}}
+                    <div class="parent">
+                        <a href="{{ auth()->check() ? route('chat_dashboard') : route('login') }}">
+                            <button class="btn try-bot" id="tryBotButton">
+                                <p class="mb-0 text-white">Try Bot</p>
+                            </button>
+                        </a>
+                    </div>
 
                 </div>
             </div>
@@ -69,7 +76,7 @@
                     <h1 class="text-center mb-3 mb-md-5">About Support</h1>
                 </div>
             </div>
-            
+
             <div class="row my-10">
                 <div class="col-12 col-sm-12 col-md-12 col-xl-12">
                     <div class="card" style="border-radius: 20px;">
@@ -95,7 +102,7 @@
                                             <i class="bi bi-arrow-right-circle-fill"></i>
                                         </span>
                                         <span class="contact"> Chat With Us</span>
-        
+
                                     </button>
                             </div>
                         </div>
