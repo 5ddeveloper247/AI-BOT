@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Repositories\ContactRepositoryInterface;
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\Plan;
 use App\Models\FAQ;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -65,7 +66,11 @@ class AdminController extends Controller
 
     public function pricing()
     {
-        return view('admin.pages.pricing');
+        // Assuming you have a Plan model and you retrieve plans from the database
+        $plans = Plan::all(); // Fetch plans from the database, adjust this according to your schema
+
+        // Pass the plans data to the view
+        return view('admin.pages.pricing', ['plans' => $plans]);
     }
 
     public function tools()

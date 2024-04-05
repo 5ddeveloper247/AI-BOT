@@ -11,8 +11,6 @@ use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\PlanController;
 
 
-
-
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyMail;
 use App\Mail\ReplyMail;
@@ -32,11 +30,11 @@ use App\Mail\ReplyMail;
 
 
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
-
+// Route::get('/', [PlanController::class, 'showPlanDetails']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -56,9 +54,16 @@ Route::get('/', function () {
 
 
 
+// Route::get('/admin/plans/{id}/edit', [PlanController::class, 'edit'])->name('admin.plans.edit');
 
+Route::put('/admin/plans/{id}', [PlanController::class, 'updatePlanFromAdmin']);
+Route::delete('/admin/plans/{id}', [PlanController::class, 'deleteplanfromadmin']);
+Route::post('/admin/plans',  [PlanController::class, 'createplanfromadmin']);
 
-
+Route::delete('/plans/{plan}/features', [PlanController::class, 'deleteFeatures']);
+Route::post('/plans/{plan}/features', [PlanController::class, 'storeFeatures']);
+Route::get('/plans/{plan}/features', [PlanController::class, 'getPlanFeatures']);
+Route::get('/plans/{plan}', [PlanController::class, 'showPlanDetails']);
 
 
 
@@ -85,17 +90,17 @@ Route::middleware('auth')->group(function () {
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
-// Route::post('/update-user', [AdminController::class, 'updateUser'])->name('update.user');
-// Route::delete('/admin/contact/{id}', [AdminController::class, 'destroycontact'])->name('admin.contact.delete');
-// Route::post('/admin/contact/{id}/markAsViewed', [AdminController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
-// Route::post('/admin/faqs/{id}/toggle-preminum', [AdminController::class, 'togglePreminum'])->name('admin.faqs.toggle-preminum');
-// Route::post('/admin/faqs/{id}/toggle-VisitorActive', [AdminController::class, 'toggleVisitorActive'])->name('admin.faqs.toggle-VisitorActive');
-// Route::post('/admin/faqs/{id}/toggle', [AdminController::class, 'toggleFAQ'])->name('admin.faqs.toggle');
-// Route::delete('/admin/faqs/{id}', [AdminController::class, 'deleteFAQ'])->name('admin.faqs.delete');
-// // Route::put('/admin/faqs/{id}', [AdminController::class, 'updateFAQ']);
-// Route::post('/admin/faqs/create', [AdminController::class, 'storeFAQ'])->name('faqs.store');
-// Route::post('/admin/faqs/update/{id}', [AdminController::class, 'updateFAQ'])->name('faqs.update');
-// Route::post('/update-faqs-order', [AdminController::class, 'updateFaqsOrder'])->name('update.faqs.order');
+Route::post('/update-user', [AdminController::class, 'updateUser'])->name('update.user');
+Route::delete('/admin/contact/{id}', [AdminController::class, 'destroycontact'])->name('admin.contact.delete');
+Route::post('/admin/contact/{id}/markAsViewed', [AdminController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
+Route::post('/admin/faqs/{id}/toggle-preminum', [AdminController::class, 'togglePreminum'])->name('admin.faqs.toggle-preminum');
+Route::post('/admin/faqs/{id}/toggle-VisitorActive', [AdminController::class, 'toggleVisitorActive'])->name('admin.faqs.toggle-VisitorActive');
+Route::post('/admin/faqs/{id}/toggle', [AdminController::class, 'toggleFAQ'])->name('admin.faqs.toggle');
+Route::delete('/admin/faqs/{id}', [AdminController::class, 'deleteFAQ'])->name('admin.faqs.delete');
+// Route::put('/admin/faqs/{id}', [AdminController::class, 'updateFAQ']);
+Route::post('/admin/faqs/create', [AdminController::class, 'storeFAQ'])->name('faqs.store');
+Route::post('/admin/faqs/update/{id}', [AdminController::class, 'updateFAQ'])->name('faqs.update');
+Route::post('/update-faqs-order', [AdminController::class, 'updateFaqsOrder'])->name('update.faqs.order');
 
 
 
@@ -150,16 +155,6 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/contact/section-4', 'inbox')->name('admin.contact.section.4');
     Route::post('/send-reply', 'sendReply')->name('send.reply');
     Route::get('/admin/faqs', 'faqs')->name('admin.faqs');
-    Route::post('/update-user', 'updateUser')->name('update.user');
-    Route::delete('/admin/contact/{id}',  'destroycontact')->name('admin.contact.delete');
-    Route::post('/admin/contact/{id}/markAsViewed', 'markAsViewed')->name('admin.contact.markAsViewed');
-    Route::post('/admin/faqs/{id}/toggle-preminum', 'togglePreminum')->name('admin.faqs.toggle-preminum');
-    Route::post('/admin/faqs/{id}/toggle-VisitorActive',  'toggleVisitorActive')->name('admin.faqs.toggle-VisitorActive');
-    Route::post('/admin/faqs/{id}/toggle', 'toggleFAQ')->name('admin.faqs.toggle');
-    Route::delete('/admin/faqs/{id}',  'deleteFAQ')->name('admin.faqs.delete');
-    Route::post('/admin/faqs/create',  'storeFAQ')->name('faqs.store');
-    Route::post('/admin/faqs/update/{id}',  'updateFAQ')->name('faqs.update');
-    Route::post('/update-faqs-order', 'updateFaqsOrder')->name('update.faqs.order');
 });
 
 

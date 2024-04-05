@@ -165,6 +165,63 @@
             <h1 class="text-center my-3 my-md-5">Pricing</h1>
             <div role="list" class="price_card">
 
+
+                {{-- @foreach ($plans as $plan)
+                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                    data-aos-duration="2000">
+                    <div style="background:var(--background)" class="pricing_card_wrap">
+                        <div class="price-card">
+                            <div class="price_card_header">
+                                <h4 style="color:var(--primary-color)" class="price_header_h4">{{ $plan->plan_name }}
+                                </h4>
+                                <p>{{ $plan->plan_name_description }}</p>
+                            </div>
+                            <div class="price_card_body">
+                                <div class="price_line">
+                                    <div class="price_card_price">{{ $plan->plan_tittle }}</div>
+                                </div>
+                                <div class="pricing_small_p">{{ $plan->plan_tittle_description }}</div>
+
+                            </div>
+                            <div class="price_card_body">
+                                <div class="feature_main">
+                                    <div class="price_feature">
+                                        <div class="feature_dollar">$</div>
+                                        <div class="feature_amount">{{ $plan->plan_price }}</div>
+                                        <div class="feature_month">/month</div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="price_line">
+                                    <div class="price_card_price">Talk with sales</div>
+                                </div> -->
+                                <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
+
+                            </div>
+
+
+                            <button class="contact_us_2 scrollto" href="#">
+                                <span class="icon-container">
+                                    <i class="bi bi-arrow-right-circle-fill"></i>
+                                </span>
+                                <span class="contact"> Start free 7-day trial</span>
+
+                            </button>
+                            <div class="price_card_features">
+                                <h6 class="price_card_feature_heading">Features:</h6>
+                                <div class="feature_list">
+                                    @foreach ($plan->features as $feature)
+                                        <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                            class="feature_list_icon">
+                                        <p class="price_card_feature">{{ $feature->name }}</p>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+            @endforeach --}}
+
                 <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
                     data-aos-duration="2000">
                     <div style="background:var(--background)" class="pricing_card_wrap">

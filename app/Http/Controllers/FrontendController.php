@@ -6,22 +6,40 @@ use Illuminate\Http\Request;
 use App\Models\FAQ;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Plan;
+use App\Models\Feature;
+
 
 
 
 class FrontendController extends Controller
 {
+    // public function index()
+    // {
+    //     return view('home');
+    // }
+
     public function index()
-    {
-        return view('home');
-    }
+{
+    // Retrieve all plans
+    $plans = Plan::with('features')->get();
+    // dd(  $plans);
+
+    // Pass the plans data to the view
+    return view('home', compact('plans'));
+}
+
+
     public function product()
     {
-        return view('web.product');
+        $plans = Plan::with('features')->get();
+        return view('web.product', compact('plans'));
     }
     public function pricing()
     {
-        return view('web.pricing');
+    $plans = Plan::with('features')->get();
+    // dd(  $plans);
+    return view('web.pricing', compact('plans'));
+
     }
     public function tools()
     {
