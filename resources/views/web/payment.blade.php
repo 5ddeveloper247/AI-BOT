@@ -200,7 +200,7 @@
                 toastr.success('Thanks For your purchase!', '', { timeOut: 3000 })
 
                 setTimeout(() => {
-                    window.location.href = '{{ route("chat_dashboard") }}';
+                    window.location.href = '{{ url("/chat_dashboard") }}';
 
                 }, 3000);
             });

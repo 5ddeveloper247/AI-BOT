@@ -397,7 +397,7 @@
          }
          // toggleActive
          function toggleActive(faqId) {
-             fetch(`/admin/faqs/${faqId}/toggle`, {
+             fetch(`/admin/faqs/toggle/${faqId}`, {
                      method: 'POST',
                      headers: {
                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -425,7 +425,7 @@
          }
          // PreminumActive
          function togglePreminum(id) {
-             axios.post(`/admin/faqs/${id}/toggle-preminum`)
+             axios.post(`/admin/faqs/toggle-preminum/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');
@@ -441,7 +441,7 @@
 
          // VisitorActive
          function VisitorActive(id) {
-             axios.post(`/admin/faqs/${id}/toggle-VisitorActive`)
+             axios.post(`/admin/faqs/toggle-VisitorActive/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');

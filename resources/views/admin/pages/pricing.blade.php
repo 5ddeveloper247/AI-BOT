@@ -8,7 +8,7 @@
 
 @section('content')
 
-    @if (Route::current()->getName() == 'admin.pricing.section.1')
+    @if (url::current()->getName() == '/admin/pricing/section-1')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -78,7 +78,7 @@
 
 
 
-    @if (Route::current()->getName() == 'admin.pricing.section.2')
+    @if (url::current()->getName() == '/admin/pricing/section-2')
 
 
         <div class="page-wrapper">
@@ -238,7 +238,7 @@
                 $('#showDetailsModal').modal('show');
 
                 $.ajax({
-                    url: `/plans/${planId}`, // Replace with your route to fetch plan details
+                    url: `admin/plans/${planId}`, // Replace with your route to fetch plan details
                     method: 'GET',
                     success: function(response) {
                         console.log(response);
@@ -322,7 +322,7 @@
 
                 // Fetch features for the selected plan via AJAX
                 $.ajax({
-                    url: `/plans/${planId}/features`,
+                    url: `admin/plans/features/${planId}`,
                     method: 'GET',
                     success: function(response) {
                         let featuresHtml = '';
@@ -374,7 +374,7 @@
                 let token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
-                    url: `/plans/${planId}/features`,
+                    url: `admin/plans/features/${planId}`,
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': token
@@ -393,7 +393,7 @@
                 let token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
-                    url: `/plans/${planId}/features`,
+                    url: `admin/plans/features/${planId}`,
                     method: 'POST',
                     data: {
                         _token: token, // Include the CSRF token in the request data
@@ -711,7 +711,7 @@
 
 
 
-    @if (Route::current()->getName() == 'admin.pricing.section.3')
+    @if (Route::current()->getName() == '/admin/pricing/section-3')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -779,7 +779,7 @@
     @endif
 
 
-    @if (Route::current()->getName() == 'admin.pricing.section.4')
+    @if (url::current()->getName() == '/admin/pricing/section-4')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

@@ -60,19 +60,19 @@ Route::put('/admin/plans/{id}', [PlanController::class, 'updatePlanFromAdmin']);
 Route::delete('/admin/plans/{id}', [PlanController::class, 'deleteplanfromadmin']);
 Route::post('/admin/plans',  [PlanController::class, 'createplanfromadmin']);
 
-Route::delete('/plans/{plan}/features', [PlanController::class, 'deleteFeatures']);
-Route::post('/plans/{plan}/features', [PlanController::class, 'storeFeatures']);
-Route::get('/plans/{plan}/features', [PlanController::class, 'getPlanFeatures']);
-Route::get('/plans/{plan}', [PlanController::class, 'showPlanDetails']);
+Route::delete('/admin/plans/features/{plan}', [PlanController::class, 'deleteFeatures']);
+Route::post('/admin/plans/features/{plan}', [PlanController::class, 'storeFeatures']);
+Route::get('/admin/plans/features/{plan}', [PlanController::class, 'getPlanFeatures']);
+Route::get('/admin/plans/{plan}', [PlanController::class, 'showPlanDetails']);
 
 
 
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/user/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/user/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/user/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/upload-profile-image', [ProfileController::class, 'uploadProfileImage'])->name('profile.upload');
     Route::get('/chat_dashboard', [ProfileController::class, 'showProfile'])->name('chat_dashboard');
 
@@ -87,15 +87,15 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/user/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
-Route::post('/update-user', [AdminController::class, 'updateUser'])->name('update.user');
+Route::post('/admin/update-user', [AdminController::class, 'updateUser'])->name('update.user');
 Route::delete('/admin/contact/{id}', [AdminController::class, 'destroycontact'])->name('admin.contact.delete');
-Route::post('/admin/contact/{id}/markAsViewed', [AdminController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
-Route::post('/admin/faqs/{id}/toggle-preminum', [AdminController::class, 'togglePreminum'])->name('admin.faqs.toggle-preminum');
-Route::post('/admin/faqs/{id}/toggle-VisitorActive', [AdminController::class, 'toggleVisitorActive'])->name('admin.faqs.toggle-VisitorActive');
-Route::post('/admin/faqs/{id}/toggle', [AdminController::class, 'toggleFAQ'])->name('admin.faqs.toggle');
+Route::post('/admin/contact/markAsViewed/{id}', [AdminController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
+Route::post('/admin/faqs/toggle-preminum/{id}', [AdminController::class, 'togglePreminum'])->name('admin.faqs.toggle-preminum');
+Route::post('/admin/faqs/toggle-VisitorActive/{id}', [AdminController::class, 'toggleVisitorActive'])->name('admin.faqs.toggle-VisitorActive');
+Route::post('/admin/faqs/toggle/{id}', [AdminController::class, 'toggleFAQ'])->name('admin.faqs.toggle');
 Route::delete('/admin/faqs/{id}', [AdminController::class, 'deleteFAQ'])->name('admin.faqs.delete');
 // Route::put('/admin/faqs/{id}', [AdminController::class, 'updateFAQ']);
 Route::post('/admin/faqs/create', [AdminController::class, 'storeFAQ'])->name('faqs.store');
@@ -123,9 +123,9 @@ Route::post('/upload/image', [TicketController::class, 'uploadChatImageUser']);
 
 
 Route::controller(AdminController::class)->group(function () {
-    Route::get('/admin', 'index')->name('admin.dashboard');
-    Route::get('/admin/users', 'users')->name('admin.user.lisitng');
-    Route::post('/admin/users/{userId}/toggle-active', 'toggleActive')->name('admin.users.toggle-active');
+    Route::get('/admin/dashboard', 'index')->name('admin.dashboard');
+    Route::get('/admin/users/listing', 'users')->name('admin.user.lisitng');
+    Route::post('/admin/users/toggle-active/{userId}', 'toggleActive')->name('admin.users.toggle-active');
     Route::delete('/users/{userId}', 'destroy')->name('users.destroy');
     Route::get('/admin/home/logo', 'home')->name('admin.header');
     Route::get('/admin/home/section-1', 'home')->name('admin.home.Section.2');

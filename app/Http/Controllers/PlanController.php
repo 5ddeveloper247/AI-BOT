@@ -108,7 +108,7 @@ class PlanController extends Controller
         // Return a response
         return response()->json([
             'message' => 'Membership stored successfully',
-            'redirectUrl' => route('chat_dashboard') // Assuming there's a route named 'chat_dashboard'
+            'redirectUrl' => url('/chat_dashboard') // Assuming there's a route named 'chat_dashboard'
         ]);
     }
 

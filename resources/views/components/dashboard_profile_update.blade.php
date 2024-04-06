@@ -65,7 +65,7 @@
 
             <div class="col-md-12">
                 <!-- Your existing HTML form structure -->
-                <form method="post" action="{{ route('profile.update') }}">
+                <form method="post" action="{{ url('/user/profile/update') }}">
                     @csrf
                     @method('patch')
 
@@ -221,7 +221,7 @@
     function loadProfileEdit() {
         // Perform an AJAX request using jQuery and Laravel named route
         $.ajax({
-            url: '{{ route('profile.edit') }}',
+            url: `/user/profile`,
             type: 'GET',
             success: function(response) {
                 // Access the entire response object

@@ -279,7 +279,7 @@
         });
 
         function toggleActive(userId) {
-            fetch(`/admin/users/${userId}/toggle-active`, {
+            fetch(`/admin/users/toggle-active/${userId}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',
@@ -295,7 +295,7 @@
                 })
                 .then(data => {
                     console.log(data.message);
-                    window.location.href = '{{ route('admin.user.lisitng') }}';
+                    window.location.href = '{{ url('/admin/users/listing') }}';
 
 
                 })
@@ -332,7 +332,7 @@
                             document.getElementById(`userRow_${userId}`).remove();
                             // Update the table with the remaining users
                             updateTable(data.users);
-                            window.location.href = '{{ route('admin.user.lisitng') }}';
+                            window.location.href = '{{ url('/admin/users/listing') }}';
                         } else {
                             console.error('Failed to delete user.');
                         }
@@ -424,7 +424,7 @@
 
             // Make an AJAX request to update the user details
             $.ajax({
-                url: '{{ route('update.user') }}', // Use named route
+                url: '{{ url('/admin/update-user') }}', // Use named route
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}', // Include CSRF token

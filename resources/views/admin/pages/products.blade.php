@@ -8,7 +8,7 @@
 
 @section('content')
 
-    @if (Route::current()->getName() == 'admin.products.Section.1')
+    @if (url::current()->getName() == '/admin/products/section-1')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -76,7 +76,7 @@
     @endif
 
 
-    @if (Route::current()->getName() == 'admin.products.Section.2')
+    @if (url::current()->getName() == '/admin/products/section-2')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

@@ -9,7 +9,7 @@
 @section('content')
 
 
-    @if (Route::current()->getName() == 'admin.support.section.1')
+    @if (url::current()->getName() == 'admin/support/section-1')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

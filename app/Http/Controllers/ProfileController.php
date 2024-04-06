@@ -83,7 +83,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('chat_dashboard')->with('status', 'profile-updated');
+        return Redirect::url('/chat_dashboard')->with('status', 'profile-updated');
     }
 
     /**

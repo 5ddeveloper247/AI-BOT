@@ -22,7 +22,7 @@
                     <p class="mb-0 text-white">Try Bot</p>
                 </button> --}}
                 <div class="parent">
-                    <a href="{{ auth()->check() ? route('chat_dashboard') : route('login') }}">
+                    <a href="{{ auth()->check() ? url('/chat_dashboard') : route('login') }}">
                         <button class="btn try-bot" id="tryBotButton">
                             <p class="mb-0 text-white">Try Bot</p>
                         </button>

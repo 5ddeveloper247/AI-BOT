@@ -26,7 +26,7 @@
 
 @section('content')
 
-    @if (Route::current()->getName() == 'admin.contact.section.1')
+    @if (url::current()->getName() == '/admin/contact/section-1')
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -94,7 +94,7 @@
         </div>
     @endif
 
-    @if (Route::current()->getName() == 'admin.contact.section.3')
+    @if (url::current()->getName() == '/admin/contact/section-2')
 
         <!--start page wrapper -->
         <div class="page-wrapper">
@@ -277,7 +277,7 @@
 
     @endif
 
-    @if (Route::current()->getName() == 'admin.contact.section.4')
+    @if (url::current()->getName() == '/admin/contact/section-3')
 
         <!--start page wrapper -->
         <div class="page-wrapper">
@@ -522,7 +522,7 @@
 
 
         function markAsViewed(contactId) {
-            fetch(`/admin/contact/${contactId}/markAsViewed`, {
+            fetch(`/admin/contact/markAsViewed/${contactId}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
         <div>
-            <a href="{{ route('admin.dashboard') }}">
+            <a href="{{ url('/admin/dashboard') }}">
                 <img src="{{ asset('assets/images/logo.jpeg') }}" class="logo-icon" alt="logo icon">
             </a>
 
