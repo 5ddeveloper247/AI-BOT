@@ -9,7 +9,7 @@
 @section('content')
 
 
-    @if (url::current()->getName() == 'admin/support/section-1')
+@if (url()->current() == url('admin/support/section-1'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -77,7 +77,7 @@
         </div>
     @endif
 
-    @if (Route::current()->getName() == 'admin.support.section.2')
+    @if (url()->current() == url('admin/support/section-2'))
         <div class="page-wrapper">
             <div class="page-content">
 
@@ -154,7 +154,7 @@
     @endif
 
 
-    @if (Route::current()->getName() == 'admin.support.section.3')
+    @if (url()->current() == url('admin/support/section-3'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

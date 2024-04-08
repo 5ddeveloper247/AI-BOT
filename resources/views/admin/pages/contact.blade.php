@@ -26,7 +26,7 @@
 
 @section('content')
 
-    @if (url::current()->getName() == '/admin/contact/section-1')
+@if (url()->current() == url('/admin/contact/section-1'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -94,7 +94,7 @@
         </div>
     @endif
 
-    @if (url::current()->getName() == '/admin/contact/section-2')
+     @if (url()->current() == url('/admin/contact/section-3'))
 
         <!--start page wrapper -->
         <div class="page-wrapper">
@@ -277,7 +277,7 @@
 
     @endif
 
-    @if (url::current()->getName() == '/admin/contact/section-3')
+    @if (url()->current() == url('/admin/contact/section-4'))
 
         <!--start page wrapper -->
         <div class="page-wrapper">
@@ -450,7 +450,9 @@
             var contactId = $(this).data('contact-id');
 
             // Perform the deletion using AJAX
-            fetch(`/admin/contact/${contactId}`, {
+            fetch("{{ url('/admin/contact/${contactId}') }}",
+
+            {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -522,7 +524,7 @@
 
 
         function markAsViewed(contactId) {
-            fetch(`/admin/contact/markAsViewed/${contactId}`, {
+            fetch(`{{url('/admin/contact/${contactId}/markAsViewed')}} `, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -570,7 +572,7 @@
         });
 
         function sendReply(email, subject, reply) {
-            fetch('/send-reply', {
+            fetch("{{ url('/send-reply') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

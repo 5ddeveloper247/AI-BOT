@@ -115,7 +115,7 @@
         const helpDeskButton = document.getElementById('helpDeskButton');
         if (helpDeskButton) {
             helpDeskButton.addEventListener('click', function() {
-                window.location.href = '/helpdesk';
+                window.location.href = "{{ url('/helpdesk') }}";
             });
         }
     });

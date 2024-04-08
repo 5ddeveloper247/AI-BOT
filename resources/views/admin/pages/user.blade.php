@@ -279,7 +279,7 @@
         });
 
         function toggleActive(userId) {
-            fetch(`/admin/users/toggle-active/${userId}`, {
+          fetch(`/admin/users/${userId}/toggle-active`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',
@@ -424,7 +424,7 @@
 
             // Make an AJAX request to update the user details
             $.ajax({
-                url: '{{ url('/admin/update-user') }}', // Use named route
+                url: '{{ url('/admin/update/user') }}', // Use named route
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}', // Include CSRF token

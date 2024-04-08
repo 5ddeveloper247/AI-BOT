@@ -198,7 +198,7 @@
         document.getElementById('submitButton').addEventListener('click', function() {
             var formData = new FormData(document.getElementById('contactForm'));
 
-            fetch('{{ url('/user/contact') }}', {
+            fetch('{{ url('/contact/store') }}', {
                     method: 'POST',
                     body: formData
                 })

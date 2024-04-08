@@ -216,7 +216,7 @@
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgb(10, 66, 116)">
-                <form id="ticketForm" action="{{ url('/save-ticket/user') }}" method="POST">
+                <form id="ticketForm" action="{{ url('/save/ticket/user') }}" method="POST">
                     @csrf <!-- CSRF token -->
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="addModalLabel">Create New Ticket</h5>
@@ -333,7 +333,7 @@
 
 
             function fetchChatMessages(uuid) {
-                fetch(`/chat/${uuid}`)
+                fetch("{{ url('/chat') }}/${uuid}")
                     .then(response => response.json())
                     .then(data => displayChatMessages(data))
                     .catch(error => console.error('Error fetching chat messages:', error));
@@ -456,7 +456,7 @@
             });
 
             function sendMessage(uuid, message) {
-                axios.post('/send-message/user', {
+                axios.post("{{ url('/send-message/user') }}", {
                         uuid: uuid,
                         message: message
                     })
@@ -581,7 +581,7 @@
                 formData.append('file', file);
                 formData.append('uuid', uuid);
 
-                axios.post('/upload/image', formData, {
+                axios.post("{{ url('/upload/image') }}", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }

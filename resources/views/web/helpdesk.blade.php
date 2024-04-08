@@ -327,7 +327,7 @@
             });
 
             function fetchChatMessages(uuid) {
-                fetch(`/chat/${uuid}`)
+                fetch(`{{ url('/chat/') }}/${uuid}`)
                     .then(response => response.json())
                     .then(data => displayChatMessages(data))
                     .catch(error => console.error('Error fetching chat messages:', error));

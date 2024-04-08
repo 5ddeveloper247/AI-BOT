@@ -65,7 +65,7 @@
 
             <div class="col-md-12">
                 <!-- Your existing HTML form structure -->
-                <form method="post" action="{{ url('/user/profile/update') }}">
+                <form method="post" action="{{ url('/profile/update') }}">
                     @csrf
                     @method('patch')
 
@@ -221,7 +221,7 @@
     function loadProfileEdit() {
         // Perform an AJAX request using jQuery and Laravel named route
         $.ajax({
-            url: `/user/profile`,
+            url: '{{ url('/profile/edit') }}',
             type: 'GET',
             success: function(response) {
                 // Access the entire response object
@@ -289,7 +289,7 @@
         formData.append('profile_image', file);
 
         // Send the image file to the server
-        fetch('/upload-profile-image', {
+        fetch("{{ url('/upload-profile-image') }}", {
             method: 'POST',
             body: formData,
             headers: {

@@ -12,13 +12,11 @@
                     @php
                         $remainingDays = now()->diffInDays($membership->end_trial);
                     @endphp
-                    <h1 class="text-center text-danger fw-bolder"
-                        style="
+                    <h1 class="text-center text-danger fw-bolder" style="
                     font-size: 20px;
                     margin-top: -20px;
                     margin-bottom: -20px;
-                ">
-                        Membership: {{ $remainingDays }} days remaining</h1>
+                ">Membership: {{ $remainingDays }} days remaining</h1>
                 @endif
             </div>
 
@@ -45,24 +43,21 @@
 
                 <div class="col-md-12 d-flex justify-content-center align-items-center">
                     <div class="bg-bot-div rounded-2 p-2">
-                        <button class="btn btn-bot text-light {{ $plan->id == 1 ? 'active' : '' }}" data-bot="bot1"
-                            {{ $plan->id == 1 ? '' : 'disabled' }}>
+                        <button class="btn btn-bot text-light {{ $plan->id == 1 ? 'active' : '' }}" data-bot="bot1" {{ $plan->id == 1 ? '' : 'disabled' }}>
                             <i class="bi bi-robot me-2"></i>
                             Bot 1
                         </button>
-                        <button class="btn btn-bot text-light {{ $plan->id == 2 ? 'active' : '' }}" data-bot="bot2"
-                            {{ $plan->id == 2 ? '' : 'disabled' }}>
+                        <button class="btn btn-bot text-light {{ $plan->id == 2 ? 'active' : '' }}" data-bot="bot2" {{ $plan->id == 2 ? '' : 'disabled' }}>
                             <i class="bi bi-robot me-2"></i>
                             Bot 2
-                            @unless ($plan->id == 2)
-                                <i class="bi bi-lock ms-2"></i>
+                            @unless($plan->id == 2)
+                            <i class="bi bi-lock ms-2"></i>
                             @endunless
                         </button>
-                        <button class="btn btn-bot text-light {{ $plan->id == 3 ? 'active' : '' }}" data-bot="botboth"
-                            {{ $plan->id == 3 ? '' : 'disabled' }}>
+                        <button class="btn btn-bot text-light {{ $plan->id == 3 ? 'active' : '' }}" data-bot="botboth" {{ $plan->id == 3 ? '' : 'disabled' }}>
                             <i class="bi bi-robot me-2"></i>Bot 1 + Bot 2
-                            @unless ($plan->id == 3)
-                                <i class="bi bi-lock ms-2"></i>
+                            @unless($plan->id == 3)
+                            <i class="bi bi-lock ms-2"></i>
                             @endunless
                         </button>
                     </div>
@@ -142,14 +137,11 @@
                                                 <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
                                         </div>
-                                        <div style="
-                                        width: 75rem;
-                                        margin-left: 10px;
-                                    "
+                                        <div
                                             class="text-muted d-flex justify-content-start align-items-center pe-3 bg-search-bar chat_input">
                                             <img class="chat_image mx-2" src="assets/images/user.png" alt="avatar 3">
                                             <input type="text" class="form-control form-control-lg bg-transparent"
-                                                id="messaeg_bar" placeholder="Type message . . . .">
+                                                id="messaeg_bar" placeholder="Type message">
                                             <a class="ms-3 send_chat_btn text-light p-2 rounded-3" href="#!"><i
                                                     class="bi bi-send-fill"></i></a>
                                         </div>
@@ -180,3 +172,5 @@
         </footer>
     </main>
     <!--Main End-->
+
+

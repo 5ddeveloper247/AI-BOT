@@ -8,7 +8,7 @@
 
 @section('content')
 
-    @if (url::current()->getName() == '/admin/tools/section-1')
+@if (url()->current() == url('/admin/tools/section-1'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -77,7 +77,7 @@
     @endif
 
 
-    @if (url::current()->getName() == '/admin/tools/section-2')
+    @if (url()->current() == url('/admin/tools/section-2'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

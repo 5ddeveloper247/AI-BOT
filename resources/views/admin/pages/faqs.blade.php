@@ -312,7 +312,9 @@
              var premiumCheckbox = document.getElementById('editPremiumCheckbox').checked ? 1 : 0;
              var visitorCheckbox = document.getElementById('editVisitorCheckbox').checked ? 1 : 0;
 
-             axios.post('{{ url('/admin/faqs/update') }}/' + id, {
+
+                axios.post(`{{url('/')}}/admin/faqs/update` + id,{
+
                      question: question,
                      answer: answer,
                      premiumUser: premiumCheckbox,
@@ -397,7 +399,7 @@
          }
          // toggleActive
          function toggleActive(faqId) {
-             fetch(`/admin/faqs/toggle/${faqId}`, {
+             fetch(`{{url('/')}}/admin/faqs/toggle/${faqId}`, {
                      method: 'POST',
                      headers: {
                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -425,7 +427,7 @@
          }
          // PreminumActive
          function togglePreminum(id) {
-             axios.post(`/admin/faqs/toggle-preminum/${id}`)
+             axios.post(`{{url('/')}}/admin/faqs/toggle-preminum/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');
@@ -441,7 +443,7 @@
 
          // VisitorActive
          function VisitorActive(id) {
-             axios.post(`/admin/faqs/toggle-VisitorActive/${id}`)
+             axios.post(`{{url('/')}}/admin/faqs/toggle-VisitorActive/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');

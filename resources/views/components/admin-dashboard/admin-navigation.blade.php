@@ -37,7 +37,7 @@
 
             <li>
                 <a href="{{ url('/admin/products/section-1') }}" id="products-link-section-1" ><i class="bx bx-radio-circle"></i>Section 1</a>
-                <a href="{{ url('/admin/products/section-1') }}" id="products-link-section-1" ><i class="bx bx-radio-circle"></i>Section 2</a>
+                <a href="{{ url('/admin/products/section-2') }}" id="products-link-section-1" ><i class="bx bx-radio-circle"></i>Section 2</a>
                 <a href="{{ url('/admin/add/products') }}" id="products-link-section-1" ><i class="bx bx-radio-circle"></i>Add Product</a>
                 <a href="{{ url('/admin/list/products') }}" id="products-link-section-2" ><i class="bx bx-radio-circle"></i>Product Listing</a>
             </li>
@@ -74,8 +74,8 @@
 
             <li>
                 <a href="{{ url('/admin/tools/section-1') }}" id="Tools-link-section-1" ><i class="bx bx-radio-circle"></i>Section-1</a>
-                <a href="{{ url('/admin/tools/section-2') }}" id="Tools-link-section-2" ><i class="bx bx-radio-circle"></i>Section-2</a>
-                <a href="{{ url('/admin/tools/section-3') }}" id="Tools-link-section-3" ><i class="bx bx-radio-circle"></i>Tools</a>
+                <a href="{{ url('/admin/tools/section-1') }}" id="Tools-link-section-2" ><i class="bx bx-radio-circle"></i>Section-2</a>
+                <a href="{{ url('/admin/tools/section-1') }}" id="Tools-link-section-3" ><i class="bx bx-radio-circle"></i>Tools</a>
 
             </li>
 
@@ -90,9 +90,9 @@
         <ul>
 
             <li>
-                <a href="{{ url('admin/support/section-1') }}" id="Support-link-section-1"><i class="bx bx-radio-circle"></i>Section-1</a>
-                <a href="{{ url('admin/support/section-2') }}" id="Support-link-section-2"><i class="bx bx-radio-circle"></i>Section-2</a>
-                <a href="{{ url('admin/support/section-3') }}" id="Support-link-section-3"><i class="bx bx-radio-circle"></i>Section-3</a>
+                <a href="{{ url('/admin/support/section-1') }}" id="Support-link-section-1"><i class="bx bx-radio-circle"></i>Section-1</a>
+                <a href="{{ url('/admin/support/section-2') }}" id="Support-link-section-2"><i class="bx bx-radio-circle"></i>Section-2</a>
+                <a href="{{ url('/admin/support/section-2') }}" id="Support-link-section-3"><i class="bx bx-radio-circle"></i>Section-3</a>
 
             </li>
 

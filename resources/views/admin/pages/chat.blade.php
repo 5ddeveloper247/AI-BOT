@@ -171,7 +171,7 @@
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgb(10, 66, 116)">
-                <form id="ticketForm" action="{{ url('/ticket.save') }}" method="POST">
+                <form id="ticketForm" action="{{ url('/save/ticket') }}" method="POST">
                     @csrf <!-- CSRF token -->
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="addModalLabel">Create New Ticket</h5>
@@ -392,7 +392,8 @@
             });
 
             function sendMessage(uuid, message) {
-                axios.post('/send-message', {
+                    axios.post(`{{url('/')}}/send-message`,{
+
                         uuid: uuid,
                         message: message
                     })

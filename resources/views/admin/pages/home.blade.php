@@ -12,7 +12,7 @@
 @section('content')
 
 
-    @if (url::current()->getName() == '/admin/home/logo')
+    @if (url()->current() == url('/admin/home/logo'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -49,7 +49,7 @@
         </div>
     @endif
 
-    @if (url::current()->getName() == '/admin/home/section-1')
+    @if (url()->current() == url('/admin/home/section-1'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -124,7 +124,8 @@
         </div>
     @endif
 
-    @if (url::current()->getName() == '/admin/home/section-2')
+    @if (url()->current() == url('/admin/home/section-2'))
+
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="row justify-content-center"> <!-- Center the content -->
@@ -172,7 +173,7 @@
         </div>
     @endif
 
-    @if (url::current()->getName() == '/admin/home/section-3')
+    @if (url()->current() == url('/admin/home/section-3'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -255,7 +256,7 @@
     @endif
 
 
-    @if (url::current()->getName() == '/admin/home/section-3/view-features')
+    @if (url()->current() == url('/admin/home/section-3/view-features'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->
@@ -475,7 +476,7 @@
     @endif
 
 
-    @if (url::current()->getName() == '/admin/home/section-4')
+    @if (url()->current() == url('/admin/home/section-5'))
         <div class="page-wrapper">
             <div class="page-content">
                 <!--breadcrumb-->

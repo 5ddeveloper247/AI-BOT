@@ -416,7 +416,7 @@
 
         // Send AJAX request
         $.ajax({
-            url: "{{ url('/save-plan') }}",
+            url: "{{ url('/save/plan') }}",
             type: "POST", // Change to POST method
             data: formData,
             success: function (response) {
@@ -453,7 +453,7 @@
 
         // Send AJAX request
         $.ajax({
-            url: "{{ url('/start-trial') }}",
+            url: "{{ url('/start/trial') }}",
             type: "POST",
             data: formData,
             success: function (response) {
