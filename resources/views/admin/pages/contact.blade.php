@@ -450,9 +450,7 @@
             var contactId = $(this).data('contact-id');
 
             // Perform the deletion using AJAX
-            fetch("{{ url('/admin/contact/${contactId}') }}",
-
-            {
+            fetch("{{ url('/admin/contact') }}/" + contactId, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -524,7 +522,7 @@
 
 
         function markAsViewed(contactId) {
-            fetch(`{{url('/admin/contact/${contactId}/markAsViewed')}} `, {
+            fetch(`{{url('/admin/contact/markAsViewed')}}/${contactId} `, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
