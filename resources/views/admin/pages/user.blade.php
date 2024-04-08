@@ -279,7 +279,7 @@
         });
 
         function toggleActive(userId) {
-          fetch(`/admin/users/${userId}/toggle-active`, {
+          fetch(`/admin/users/toggle-active/${userId}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',

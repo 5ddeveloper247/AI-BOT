@@ -89,7 +89,7 @@ Route::post('/upload/image', [TicketController::class, 'uploadChatImageUser']);
 Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/dashboard', 'index');
     Route::get('/admin/users/listing', 'users');
-    Route::post('/admin/users/{userId}/toggle-active', 'toggleActive');
+    Route::post('/admin/users/toggle-active/{userId}', 'toggleActive');
     Route::delete('/users/{userId}', 'destroy');
     Route::get('/admin/home/logo', 'home')->name('admin.header');
     Route::get('/admin/home/section-1', 'home');

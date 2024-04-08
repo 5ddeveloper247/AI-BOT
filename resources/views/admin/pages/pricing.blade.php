@@ -219,7 +219,7 @@
         $('#showDetailsModal').modal('show');
 
         $.ajax({
-            url: `/plans/${planId}`, // Replace with your route to fetch plan details
+            url: `{{url('/')}}/plans/${planId}`, // Replace with your route to fetch plan details
             method: 'GET',
             success: function(response) {
                 console.log(response);
@@ -280,7 +280,7 @@
 
         // Fetch features for the selected plan via AJAX
         $.ajax({
-            url: `/plans/${planId}/features`,
+            url: `{{url('/')}}/plans/${planId}/features`,
             method: 'GET',
             success: function(response) {
                 let featuresHtml = '';
@@ -332,7 +332,7 @@
         let token = $('meta[name="csrf-token"]').attr('content');
 
         $.ajax({
-            url: `/plans/${planId}/features`,
+            url: `{{url('/')}}/plans/${planId}/features`,
             method: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': token
@@ -351,7 +351,7 @@
         let token = $('meta[name="csrf-token"]').attr('content');
 
         $.ajax({
-            url: `/plans/${planId}/features`,
+            url: `{{url('/')}}/plans/${planId}/features`,
             method: 'POST',
             data: {
                 _token: token, // Include the CSRF token in the request data
@@ -570,7 +570,7 @@
 
         // Send AJAX request
         $.ajax({
-            url: '/admin/plans/' + id,
+            url: ' {{url('/')}}/admin/plans/' + id,
             type: 'PUT',
             data: formData,
             headers: {
@@ -628,7 +628,7 @@
 
         // Perform the deletion using AJAX
         $.ajax({
-            url: '/admin/plans/' + planId,
+            url: '{{url('/')}}/admin/plans/' + planId,
             type: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

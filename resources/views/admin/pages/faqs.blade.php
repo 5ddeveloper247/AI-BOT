@@ -313,24 +313,30 @@
              var visitorCheckbox = document.getElementById('editVisitorCheckbox').checked ? 1 : 0;
 
 
-                axios.post(`{{url('/')}}/admin/faqs/update` + id,{
-
-                     question: question,
-                     answer: answer,
-                     premiumUser: premiumCheckbox,
-                     visitor: visitorCheckbox
-                 }, {
+             fetch("{{ url('/admin/faqs/update') }}/"+id, {
+                     method: 'POST',
                      headers: {
+                         'Content-Type': 'application/json',
                          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                     }
+                     },
+                     body: JSON.stringify({
+                         question: question,
+                         answer: answer,
+                         premiumUser: premiumCheckbox,
+                         visitor: visitorCheckbox
+                     })
                  })
-                 .then(function(response) {
+                 .then(response => {
+                     if (!response.ok) {
+                         throw new Error('Network response was not ok');
+                     }
                      console.log('FAQ updated successfully');
                      window.location.reload();
                  })
-                 .catch(function(error) {
+                 .catch(error => {
                      console.error('Error updating FAQ:', error);
                  });
+
          }
      </script>
 
@@ -399,7 +405,7 @@
          }
          // toggleActive
          function toggleActive(faqId) {
-             fetch(`{{url('/')}}/admin/faqs/toggle/${faqId}`, {
+             fetch(`{{ url('/') }}/admin/faqs/toggle/${faqId}`, {
                      method: 'POST',
                      headers: {
                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -427,7 +433,7 @@
          }
          // PreminumActive
          function togglePreminum(id) {
-             axios.post(`{{url('/')}}/admin/faqs/toggle-preminum/${id}`)
+             axios.post(`{{ url('/') }}/admin/faqs/toggle-preminum/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');
@@ -443,7 +449,7 @@
 
          // VisitorActive
          function VisitorActive(id) {
-             axios.post(`{{url('/')}}/admin/faqs/toggle-VisitorActive/${id}`)
+             axios.post(`{{ url('/') }}/admin/faqs/toggle-VisitorActive/${id}`)
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');
