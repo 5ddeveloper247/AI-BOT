@@ -374,7 +374,7 @@
             console.log(chatId);
             if (message !== "") {
                 // Make Axios POST request to store the message
-                axios.post(`{{url('/')}}/store-message/user`,{
+                axios.post(baseUrl+"/store-message/user" ,{
 
                         message: message,
                         new_chat: isNewChat,
@@ -405,7 +405,8 @@
         function sendAdminReply(chatId) {
             // Make Axios POST request to send the admin's reply
 
-                axios.post(`{{url('/')}}/send-admin-reply`,{
+            axios.post(baseUrl+"/send-admin-reply",{
+
 
                     bot_reply: "i am your ai boat your reply message here", // Admin's reply message
                     chat_id: chatId, // Pass chatId with the request
@@ -513,7 +514,7 @@
         // Delete the record when confirmed in the modal
         $(".btn-delete").click(function () {
             var chatId = $(this).data("chat-id");
-            axios.delete("{{ url('/delete-chat/${chatId}') }}")
+            axios.delete(baseUrl+"/delete-chat/"+chatId)
                 .then(function (response) {
                     // Remove the chat item from the list
                     $("#chat" + chatId).remove();
@@ -527,7 +528,8 @@
 
         // Function to fetch chat messages for a given chat ID
         function fetchChatMessages(chatId) {
-            axios.get("{{ url('/fetch-chat-messages/${chatId}') }}")
+
+            axios.get(baseUrl+"/fetch-chat-messages/"+chatId)
                 .then(function (response) {
                     // Handle success response
                     chatId = response.data.chat_id;
