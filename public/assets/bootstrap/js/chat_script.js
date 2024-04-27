@@ -229,7 +229,17 @@
     }
     LoadBotsView("bot1");
 
+    $(".search_input_main").on("keyup", function(event) {
+        // Check if the pressed key is Enter (key code 13)
+        if (event.keyCode === 13) {
+            // Trigger the same action as clicking the button
+            $(".start_new_chat").click();
+        }
+    });
+
+
     $(".start_new_chat").on("click", function () {
+
         $(".main_meraki").addClass("d-none");
         $(".chat_meraki").removeClass("d-none");
         $(".start_new_chat").addClass("d-none");
@@ -243,6 +253,13 @@
         $(".start_new_chat").removeClass("d-none");
         $(".close_new_chat").addClass("d-none");
     });
+
+
+
+
+
+
+
 
     function checkScreenSize() {
         var newWindowWidth = $(window).width();

@@ -182,12 +182,34 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select class="form-select" id="category" name="category">
-                                <option selected>Select Category</option>
-                                <option value="1">hamza</option>
-                                <option value="2">zaid</option>
+                                <option value="" selected disabled>Select Category</option>
+                                <option value="1">Hamza</option>
+                                <option value="2">Zaid</option>
                                 <!-- Add your category options here -->
                             </select>
                         </div>
+
+
+
+                        <script>
+                            // Wait for the document to be ready
+                            document.addEventListener("DOMContentLoaded", function() {
+                                // Get the select element
+                                var selectElement = document.getElementById("category");
+
+                                // Attach event listener to select element
+                                selectElement.addEventListener("click", function() {
+                                    // Find the "Select Category" option
+                                    var selectCategoryOption = selectElement.querySelector('option[value=""]');
+
+                                    // Remove the "Select Category" option
+                                    if (selectCategoryOption) {
+                                        selectCategoryOption.remove();
+                                    }
+                                });
+                            });
+                        </script>
+
                         <!-- Name input field -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
@@ -201,7 +223,7 @@
                         <!-- Phone input field -->
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" name="phone">
+                            <input type="number" class="form-control" id="phone" name="phone">
                         </div>
                         <!-- Subject input field -->
                         <div class="mb-3">
@@ -222,6 +244,16 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
 
     {{-- image modal  --}}
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -407,6 +439,7 @@
                     });
             }
 
+
             function displaySentMessage(uuid, message) {
                 // Here, you can append the sent message to the chat interface under the corresponding UUID chat box
                 const chatContent = document.querySelector('.chat-content');
@@ -437,6 +470,8 @@
             }
         });
 
+
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('ticketForm');
             const submitBtn = document.querySelector('#ticketForm button[type="submit"]');
@@ -451,7 +486,7 @@
                     }
                 });
 
-                submitBtn.disabled = hasErrors;
+               // submitBtn.disabled = hasErrors;
             });
 
             form.addEventListener('submit', function(event) {

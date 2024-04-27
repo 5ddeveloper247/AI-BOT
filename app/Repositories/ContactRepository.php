@@ -10,6 +10,7 @@ class ContactRepository implements ContactRepositoryInterface
 {
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -18,12 +19,15 @@ class ContactRepository implements ContactRepositoryInterface
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 422);
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
         try {
             Contact::create($request->all());
-            return response()->json(['message' => 'Message sent successfully']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Message sent successfully'
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error sending message'], 500);
         }

@@ -48,7 +48,7 @@
             </label>
           </div>
 
-          {{-- <form action="#" id="plan_ai">
+        <form action="#" id="plan_ai">
             <div class="grid">
                 <label class="card">
                     <input name="plan" value="1" class="radio" type="radio" checked />
@@ -81,8 +81,8 @@
                     </button>
                 </div>
             </div>
-        </form> --}}
-
+        </form>
+{{--
         <form action="#" id="plan_ai">
             <div class="grid">
                 @foreach($plans as $plan)
@@ -104,7 +104,7 @@
                     </button>
                 </div>
             </div>
-        </form>
+        </form> --}}
 
 
         </div>

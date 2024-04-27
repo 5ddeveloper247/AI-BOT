@@ -16,9 +16,39 @@ use App\Mail\MyMail;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function adminLogin()
+    {
+
+        return view('admin.pages.login');
+    }
+
+    public function logoutadmin(Request $request)
+    {
+        Auth::logout(); // Logout the user
+
+        return redirect('/');
+    }
+
+    public function logiadmin(Request $request)
+    {
+
+        //  dd('i am hamza');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            // Authentication passed...
+            return redirect()->intended('/admin/dashboard');
+        } else {
+            // Authentication failed...
+            return back()->withErrors(['email' => 'Invalid credentials']);
+        }
+    }
+
     public function index()
     {
 
@@ -66,9 +96,9 @@ class AdminController extends Controller
 
     public function pricing()
     {
+        
         // Assuming you have a Plan model and you retrieve plans from the database
         $plans = Plan::all(); // Fetch plans from the database, adjust this according to your schema
-
         // Pass the plans data to the view
         return view('admin.pages.pricing', ['plans' => $plans]);
     }
@@ -139,6 +169,52 @@ class AdminController extends Controller
         return response()->json(['success' => true]);
     }
 
+    // public function sendReply(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'email' => 'required|email',
+    //         'subject' => 'required|string',
+    //         'reply' => 'required|string',
+    //         'attachments.*' => 'nullable|file|max:2048', // Assuming max file size is 2MB
+    //     ]);
+
+    //     $email = $data['email'];
+    //     $subject = $data['subject'];
+    //     $reply = $data['reply'];
+
+    //     try {
+    //         // Save the reply and attachments in the database
+    //         $contact = Contact::where('email', $email)->where('subject', $subject)->first();
+
+    //         if ($contact) {
+    //             $contact->reply = $reply;
+
+    //             // Save attachments' filenames in the database
+    //             $attachments = [];
+    //             if ($request->hasFile('attachments')) {
+    //                 foreach ($request->file('attachments') as $attachment) {
+    //                     $filename = $attachment->store('attachments');
+    //                     $attachments[] = $filename;
+    //                 }
+    //             }
+    //             $contact->attachments = $attachments;
+
+    //             $contact->save();
+    //         } else {
+    //             // Contact not found
+    //             return response()->json(['success' => false, 'message' => 'Contact not found']);
+    //         }
+
+    //         // Send email
+    //         Mail::to($email)->send(new ReplyMail($subject, $reply, $attachments));
+
+    //         return response()->json(['success' => true]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    //     }
+    // }
+
+
     public function sendReply(Request $request)
     {
         $data = $request->validate([
@@ -176,13 +252,14 @@ class AdminController extends Controller
             }
 
             // Send email
-            Mail::to($email)->send(new ReplyMail($subject, $reply, $attachments));
+            // Mail::to($email)->send(new ReplyMail($subject, $reply, $attachments));
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
 
 
     public function faqs()
@@ -193,14 +270,24 @@ class AdminController extends Controller
     }
 
 
+    // public function toggleFAQ($id)
+    // {
+    //     $faq = FAQ::findOrFail($id);
+    //     $faq->active = !$faq->active;
+    //     $faq->save();
+
+    //     return response()->json(['success' => true]);
+    // }
+
     public function toggleFAQ($id)
     {
         $faq = FAQ::findOrFail($id);
         $faq->active = !$faq->active;
         $faq->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'active' => $faq->active]);
     }
+
 
     public function deleteFAQ($id)
     {
@@ -221,14 +308,43 @@ class AdminController extends Controller
     //     return response()->json(['success' => true]);
     // }
 
+    // public function storeFAQ(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validatedData = $request->validate([
+    //         'question' => 'required|string',
+    //         'answer' => 'required|string',
+    //         'premiumUser' => 'nullable|boolean',
+    //         'visitor' => 'nullable|boolean',
+    //     ]);
+
+    //     // Create a new FAQ instance
+    //     $faq = new FAQ();
+    //     $faq->question = $request->question;
+    //     $faq->answer = $request->answer;
+
+    //     // Set Premium User and Visitor values if provided
+    //     $faq->PreminumUser = $request->premiumUser ?? false;
+    //     $faq->visitor = $request->visitor ?? false;
+
+    //     // dd($faq->question  ,    $faq->answer  , $faq->premiumUser ,      $faq->visitor);
+    //     // Save the new FAQ
+    //     $faq->save();
+
+    //     // Optionally, you can return a response indicating success
+    //     return response()->json(['success' => true, 'message' => 'FAQ created successfully']);
+    // }
+
     public function storeFAQ(Request $request)
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'question' => 'required|string',
+            'question' => 'required|string|unique:faqs,question',
             'answer' => 'required|string',
             'premiumUser' => 'nullable|boolean',
             'visitor' => 'nullable|boolean',
+        ], [
+            'question.unique' => 'The FAQ question already exists.'
         ]);
 
         // Create a new FAQ instance
@@ -240,14 +356,12 @@ class AdminController extends Controller
         $faq->PreminumUser = $request->premiumUser ?? false;
         $faq->visitor = $request->visitor ?? false;
 
-        // dd($faq->question  ,    $faq->answer  , $faq->premiumUser ,      $faq->visitor);
         // Save the new FAQ
         $faq->save();
 
         // Optionally, you can return a response indicating success
         return response()->json(['success' => true, 'message' => 'FAQ created successfully']);
     }
-
 
     public function toggleVisitorActive($id)
     {
@@ -285,29 +399,29 @@ class AdminController extends Controller
     }
 
 
-public function updateFAQ(Request $request, $id)
-{
-    // Find the FAQ by its ID
-    $faq = FAQ::findOrFail($id);
+    public function updateFAQ(Request $request, $id)
+    {
+        // Find the FAQ by its ID
+        $faq = FAQ::findOrFail($id);
 
-    // Validate the incoming request data
-    $validatedData = $request->validate([
-        'question' => 'required|string',
-        'answer' => 'required|string',
-        'premiumUser' => 'nullable|boolean',
-        'visitor' => 'nullable|boolean',
-    ]);
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string',
+            'premiumUser' => 'nullable|boolean',
+            'visitor' => 'nullable|boolean',
+        ]);
 
-    $faq->question = $request->question;
-    $faq->answer = $request->answer;
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
 
-    // Set Premium User and Visitor values if provided
-    $faq->PreminumUser = $request->premiumUser ?? false;
-    $faq->visitor = $request->visitor ?? false;
-    // Save the updated FAQ
-    $faq->save();
+        // Set Premium User and Visitor values if provided
+        $faq->PreminumUser = $request->premiumUser ?? false;
+        $faq->visitor = $request->visitor ?? false;
+        // Save the updated FAQ
+        $faq->save();
 
-    // Optionally, you can return a response indicating success
-    return response()->json(['success' => true, 'message' => 'FAQ updated successfully']);
-}
+        // Optionally, you can return a response indicating success
+        return response()->json(['success' => true, 'message' => 'FAQ updated successfully']);
+    }
 }

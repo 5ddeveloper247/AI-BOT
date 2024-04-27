@@ -228,12 +228,31 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select class="form-select" id="category" name="category">
-                                <option selected>Select Category</option>
-                                <option value="1">hamza</option>
-                                <option value="2">zaid</option>
+                                <option value="" selected disabled>Select Category</option>
+                                <option value="1">Hamza</option>
+                                <option value="2">Zaid</option>
                                 <!-- Add your category options here -->
                             </select>
                         </div>
+
+                        <script>
+                            // Wait for the document to be ready
+                            document.addEventListener("DOMContentLoaded", function() {
+                                // Get the select element
+                                var selectElement = document.getElementById("category");
+
+                                // Attach event listener to select element
+                                selectElement.addEventListener("click", function() {
+                                    // Find the "Select Category" option
+                                    var selectCategoryOption = selectElement.querySelector('option[value=""]');
+
+                                    // Remove the "Select Category" option
+                                    if (selectCategoryOption) {
+                                        selectCategoryOption.remove();
+                                    }
+                                });
+                            });
+                        </script>
                         <!-- Name input field -->
 
                         <!-- Subject input field -->

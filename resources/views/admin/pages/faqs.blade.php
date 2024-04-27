@@ -41,6 +41,10 @@
 
      <div class="page-wrapper">
          <div class="page-content">
+
+
+
+             {{--
              <!--breadcrumb-->
              <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                  <div class="breadcrumb-title pe-3">Tables</div>
@@ -53,7 +57,7 @@
                      </nav>
                  </div>
              </div>
-             <!--end breadcrumb-->
+             <!--end breadcrumb--> --}}
 
              <h6 class="mb-0 text-uppercase">Frequently Asked Questions</h6>
              <hr />
@@ -149,7 +153,7 @@
          </div>
      </div>
 
-     <!-- Confirmation Modal -->
+     <!-- Confirmation Delete  Modal -->
      <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
          aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered">
@@ -178,7 +182,14 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                  </div>
                  <div class="modal-body">
-                     <input type="hidden" class="form-control" id="editFaqId">
+
+                     <input type="hidden" id="editFaqId">
+                     <input type="hidden" id="originalQuestion">
+                     <input type="hidden" id="originalAnswer">
+                     <input type="hidden" id="originalPremiumCheckbox">
+                     <input type="hidden" id="originalVisitorCheckbox">
+
+
                      <div class="row mb-3">
                          <div class="col-sm-3">
                              <h6 class="mb-0">Question</h6>
@@ -221,6 +232,25 @@
          </div>
      </div>
 
+     <!-- Confirmation  Edit Modal -->
+     <div class="modal fade" id="confirmationEditModal" tabindex="-1" aria-labelledby="confirmationEditModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered">
+             <div class="modal-content" style="background-color: rgb(9,70,115)">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="confirmationEditModalLabel">Confirm </h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     Are you sure you want to Edit this FAQ?
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                     <button type="button" class="btn btn-success" id="confirmEditButton">save</button>
+                 </div>
+             </div>
+         </div>
+     </div>
 
 
      <!-- Create  Modal -->
@@ -268,7 +298,8 @@
                      </div>
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" onclick="saveNewFAQ()">Save</button>
+                     <button type="button" class="btn btn-primary" id="disable-button"
+                         onclick="saveNewFAQ()">Save</button>
                  </div>
              </div>
          </div>
@@ -285,12 +316,21 @@
 
 
      <script>
+        
          function populateEditModal(question, answer, id, premiumUser, visitor) {
              document.getElementById('editFaqId').value = id;
              document.getElementById('editQuestion').value = question;
              document.getElementById('editAnswer').value = answer;
              document.getElementById('editPremiumCheckbox').checked = premiumUser === '1'; // Note the string comparison
              document.getElementById('editVisitorCheckbox').checked = visitor === '1'; // Note the string comparison
+
+
+             // Assign values to the hidden fields
+             document.getElementById('originalQuestion').value = question;
+             document.getElementById('originalAnswer').value = answer;
+             document.getElementById('originalPremiumCheckbox').value = premiumUser;
+             document.getElementById('originalVisitorCheckbox').value = visitor;
+
          }
 
          // Call populateEditModal function when opening the edit modal
@@ -305,50 +345,206 @@
          });
 
 
+         //  function updateFAQ() {
+         //      // Show the confirmation modal
+         //      $('#confirmationEditModal').modal('show');
+
+         //      // Event handler for confirming FAQ update
+         //      $('#confirmEditButton').click(function() {
+
+         //          // Retrieve input values
+         //          var id = document.getElementById('editFaqId').value;
+         //          var question = document.getElementById('editQuestion').value;
+         //          var answer = document.getElementById('editAnswer').value;
+         //          var premiumCheckbox = document.getElementById('editPremiumCheckbox').checked ? 1 : 0;
+         //          var visitorCheckbox = document.getElementById('editVisitorCheckbox').checked ? 1 : 0;
+
+         //          // Send update request
+         //          fetch("{{ url('/admin/faqs/update') }}/" + id, {
+         //                  method: 'POST',
+         //                  headers: {
+         //                      'Content-Type': 'application/json',
+         //                      'X-CSRF-TOKEN': '{{ csrf_token() }}'
+         //                  },
+         //                  body: JSON.stringify({
+         //                      question: question,
+         //                      answer: answer,
+         //                      premiumUser: premiumCheckbox,
+         //                      visitor: visitorCheckbox
+         //                  })
+         //              })
+         //              .then(response => {
+         //                  if (!response.ok) {
+         //                      throw new Error('Network response was not ok');
+         //                  }
+         //                  // Handle success
+         //                  round_success_noti('FAQ updated successfully.');
+         //                  window.location.reload();
+         //              })
+         //              .catch(error => {
+         //                  console.error('Error updating FAQ:', error);
+         //              });
+
+         //      });
+         //  }
+
+         //  function updateFAQ() {
+         //      // Disable the button
+
+
+         //      // Show the confirmation modal
+         //      $('#confirmationEditModal').modal('show');
+
+         //      // Event handler for confirming FAQ update
+         //      $('#confirmEditButton').click(function() {
+         //          // Retrieve input values
+         //          var id = document.getElementById('editFaqId').value;
+         //          var question = document.getElementById('editQuestion').value;
+         //          var answer = document.getElementById('editAnswer').value;
+         //          var premiumCheckbox = document.getElementById('editPremiumCheckbox').checked ? 1 : 0;
+         //          var visitorCheckbox = document.getElementById('editVisitorCheckbox').checked ? 1 : 0;
+         //          var editButton = document.getElementById('confirmEditButton');
+         //          editButton.disabled = true;
+         //          // Send update request
+         //          fetch("{{ url('/admin/faqs/update') }}/" + id, {
+         //                  method: 'POST',
+         //                  headers: {
+         //                      'Content-Type': 'application/json',
+         //                      'X-CSRF-TOKEN': '{{ csrf_token() }}'
+         //                  },
+         //                  body: JSON.stringify({
+         //                      question: question,
+         //                      answer: answer,
+         //                      premiumUser: premiumCheckbox,
+         //                      visitor: visitorCheckbox
+         //                  })
+         //              })
+         //              .then(response => {
+         //                  if (!response.ok) {
+         //                      throw new Error('Network response was not ok');
+         //                  }
+         //                  // Handle success
+         //                  round_success_noti('FAQ updated successfully.');
+         //                  window.location.reload();
+         //              })
+         //              .catch(error => {
+         //                  console.error('Error updating FAQ:', error);
+         //              })
+         //              .finally(function() {
+         //                  // Re-enable the button after 3 seconds
+         //                  setTimeout(function() {
+         //                      editButton.disabled = false;
+         //                  }, 3000);
+         //              });
+         //      });
+         //  }
+
          function updateFAQ() {
+             // Retrieve input values
              var id = document.getElementById('editFaqId').value;
              var question = document.getElementById('editQuestion').value;
              var answer = document.getElementById('editAnswer').value;
              var premiumCheckbox = document.getElementById('editPremiumCheckbox').checked ? 1 : 0;
              var visitorCheckbox = document.getElementById('editVisitorCheckbox').checked ? 1 : 0;
 
+             // Check if any changes have been made
+             var originalQuestion = document.getElementById('originalQuestion').value;
+             var originalAnswer = document.getElementById('originalAnswer').value;
+             var originalPremiumCheckbox = document.getElementById('originalPremiumCheckbox').value;
+             var originalVisitorCheckbox = document.getElementById('originalVisitorCheckbox').value;
 
-             fetch("{{ url('/admin/faqs/update') }}/"+id, {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                     },
-                     body: JSON.stringify({
-                         question: question,
-                         answer: answer,
-                         premiumUser: premiumCheckbox,
-                         visitor: visitorCheckbox
+             //  console.log('changed ',premiumCheckbox , visitorCheckbox);
+
+             //  console.log('orignal',originalPremiumCheckbox , originalVisitorCheckbox);
+
+             // If no changes have been made, close the modal
+             if (
+                 question === originalQuestion &&
+                 answer === originalAnswer &&
+                 premiumCheckbox == originalPremiumCheckbox &&
+                 visitorCheckbox == originalVisitorCheckbox
+             ) {
+                 $('#editModal').modal('hide'); // Close the modal
+                 round_info_noti('No changes has been made')
+                 return; // Exit the function
+             }
+
+             // Show the confirmation modal
+             $('#confirmationEditModal').modal('show');
+
+             // Event handler for confirming FAQ update
+             $('#confirmEditButton').click(function() {
+                 // Send update request
+                 fetch("{{ url('/admin/faqs/update') }}/" + id, {
+                         method: 'POST',
+                         headers: {
+                             'Content-Type': 'application/json',
+                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                         },
+                         body: JSON.stringify({
+                             question: question,
+                             answer: answer,
+                             premiumUser: premiumCheckbox,
+                             visitor: visitorCheckbox
+                         })
                      })
-                 })
-                 .then(response => {
-                     if (!response.ok) {
-                         throw new Error('Network response was not ok');
-                     }
-                     console.log('FAQ updated successfully');
-                     window.location.reload();
-                 })
-                 .catch(error => {
-                     console.error('Error updating FAQ:', error);
-                 });
-
+                     .then(response => {
+                         if (!response.ok) {
+                             throw new Error('Network response was not ok');
+                         }
+                         // Handle success
+                         round_success_noti('FAQ updated successfully.');
+                         window.location.reload();
+                     })
+                     .catch(error => {
+                         console.error('Error updating FAQ:', error);
+                     });
+             });
          }
      </script>
 
      <script>
+         //  function saveNewFAQ() {
+         //      var question = document.getElementById('addQuestion').value;
+         //      var answer = document.getElementById('addAnswer').value;
+         //      var premiumCheckbox = document.getElementById('premiumCheckbox').checked ? 1 :
+         //          0; // Check if premiumCheckbox is checked
+         //      var visitorCheckbox = document.getElementById('visitorCheckbox').checked ? 1 :
+         //          0; // Check if visitorCheckbox is checked
+
+         //      axios.post('{{ url('/admin/faqs/create') }}', {
+         //              question: question,
+         //              answer: answer,
+         //              premiumUser: premiumCheckbox,
+         //              visitor: visitorCheckbox
+         //          }, {
+         //              headers: {
+         //                  'X-CSRF-TOKEN': '{{ csrf_token() }}'
+         //              }
+         //          })
+         //          .then(function(response) {
+         //              console.log('FAQ added successfully'. response);
+         //              round_success_noti('FAQ added successfully');
+         //              window.location.reload();
+         //          })
+         //          .catch(function(error) {
+         //             round_error_noti('Error adding FAQ:', error);
+         //              console.error('Error adding FAQ:', error);
+         //          });
+         //  }
+
+
+
          function saveNewFAQ() {
+
+             var disableButton = document.getElementById('disable-button');
              var question = document.getElementById('addQuestion').value;
              var answer = document.getElementById('addAnswer').value;
              var premiumCheckbox = document.getElementById('premiumCheckbox').checked ? 1 :
                  0; // Check if premiumCheckbox is checked
              var visitorCheckbox = document.getElementById('visitorCheckbox').checked ? 1 :
                  0; // Check if visitorCheckbox is checked
-
+             disableButton.disabled = true;
              axios.post('{{ url('/admin/faqs/create') }}', {
                      question: question,
                      answer: answer,
@@ -360,16 +556,23 @@
                      }
                  })
                  .then(function(response) {
-                     console.log('FAQ added successfully');
+                     console.log('FAQ added successfully', response);
+                     round_success_noti('FAQ added successfully');
                      window.location.reload();
                  })
                  .catch(function(error) {
+                     // Display error message in error_noti
+                     round_error_noti(error.response.data.message);
                      console.error('Error adding FAQ:', error);
+
+                 })
+                 .finally(function() {
+                     // Re-enable the button after 3 seconds
+                     setTimeout(function() {
+                         disableButton.disabled = false;
+                     }, 2000);
                  });
          }
-
-
-
 
 
          //  function populateModal(question, answer, id) {
@@ -388,7 +591,7 @@
              // Perform AJAX request to update the FAQ details
              $.ajax({
                  url: '/admin/faqs/' + id,
-                 type: 'PUT', // You may need to change this to 'POST' depending on your backend setup
+                 type: 'PUT',
                  data: {
                      _token: '{{ csrf_token() }}',
                      question: question,
@@ -421,8 +624,16 @@
                  })
                  .then(data => {
                      if (data.success) {
+                         if (data.active) {
+                             round_success_noti('FAQ is now visible');
+                         } else {
+                             round_success_noti('FAQ is now hidden');
+                         }
+
                          // Optionally, update UI or display a success message
                          console.log('FAQ status toggled successfully.');
+
+                         //  round_success_noti('FAQ status toggled successfully..');
                      } else {
                          console.error('Failed to toggle FAQ status.');
                      }
@@ -437,6 +648,7 @@
                  .then(response => {
                      if (response.data.success) {
                          console.log('PreminumUser status toggled successfully.');
+                         round_success_noti('PreminumUser status toggled successfully..');
                      } else {
                          console.error('Failed to toggle PreminumUser status.');
                      }
@@ -452,7 +664,8 @@
              axios.post(`{{ url('/') }}/admin/faqs/toggle-VisitorActive/${id}`)
                  .then(response => {
                      if (response.data.success) {
-                         console.log('PreminumUser status toggled successfully.');
+                         console.log('VisitorUser status toggled successfully.');
+                         round_success_noti('VisitorUser status toggled successfully..');
                      } else {
                          console.error('Failed to toggle PreminumUser status.');
                      }
@@ -477,7 +690,7 @@
              var faqId = $(this).data('faq-id');
 
              // Perform the deletion using AJAX
-             fetch(`/admin/faqs/${faqId}`, {
+             fetch("{{ url('/admin/faqs/') }}/" + faqId, {
                      method: 'DELETE',
                      headers: {
                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -496,7 +709,8 @@
                          // Remove the FAQ row from the table
                          $('#faqRow_' + faqId).remove();
                          // Optionally, you can update the UI to reflect the changes
-                         console.log('FAQ deleted successfully.');
+                         //  console.log('FAQ deleted successfully.');
+                         round_success_noti('FAQ deleted successfully.');
                      } else {
                          console.error('Failed to delete FAQ.');
                      }
@@ -521,11 +735,12 @@
                          return item.split('=')[1]; // Extract only the IDs
                      });
                      // Send AJAX request to update order in the backend using Axios
-                     axios.post('/update-faqs-order', {
+                     axios.post('{{ url('/update-faqs-order') }}', {
                              order: dataArray // Pass the serialized data as a single array
                          })
                          .then(function(response) {
                              console.log('Order updated successfully.');
+                             round_success_noti('Order updated successfully.');
                          })
                          .catch(function(error) {
                              console.error('Error updating order:', error);

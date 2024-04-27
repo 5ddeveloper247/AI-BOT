@@ -8,6 +8,7 @@ use App\Models\Membership;
 use Carbon\Carbon;
 use App\Models\Plan;
 use App\Models\Feature;
+use Illuminate\Validation\ValidationException;
 
 
 
@@ -160,34 +161,82 @@ class PlanController extends Controller
     }
 
 
+    // public function createplanfromadmin(Request $request)
+    // {
+    //     // Validate the request data
+    //     $validatedData = $request->validate([
+    //         'plan_name' => 'required|max:255',
+    //         'plan_price' => 'required|numeric',
+    //         'plan_name_description' => 'nullable|max:500',
+    //         'plan_tittle' => 'required|max:255',
+    //         'plan_tittle_description' => 'nullable|max:500',
+    //         'input_word_limit' => 'nullable|numeric',
+    //         'output_word_limit' => 'nullable|numeric',
+    //     ]);
+
+    //     // Create a new plan instance
+    //     $plan = new Plan;
+    //     $plan->plan_name = $request->plan_name;
+    //     $plan->plan_name_description = $request->plan_name_description;
+    //     $plan->plan_tittle = $request->plan_tittle;
+    //     $plan->plan_tittle_description = $request->plan_tittle_description;
+    //     $plan->plan_price = $request->plan_price;
+    //     $plan->input_word_limit = $request->input_word_limit;
+    //     $plan->output_word_limit = $request->output_word_limit;
+    //     $plan->save();
+
+    //     // Optionally, you can return a response indicating success
+    //     return response()->json(['success' => true, 'message' => 'Plan created successfully'], 201);
+    // }
+
+
+
+
+
     public function createplanfromadmin(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'plan_name' => 'required|max:255',
-            'plan_price' => 'required|numeric',
-            'plan_name_description' => 'nullable|max:500',
-            'plan_tittle' => 'required|max:255',
-            'plan_tittle_description' => 'nullable|max:500',
-            'input_word_limit' => 'nullable|numeric',
-            'output_word_limit' => 'nullable|numeric',
-        ]);
+        // return json_encode($request->all());
+        try {
+            // Validate the request data
+            $validatedData = $request->validate([
+                'plan_name' => 'required|max:255|unique:plans',
+                'plan_price' => 'required|numeric',
+                'plan_name_description' => 'nullable|max:500',
+                'plan_tittle' => 'required|max:255',
+                'plan_tittle_description' => 'nullable|max:500',
+                'input_word_limit' => 'nullable|numeric',
+                'output_word_limit' => 'nullable|numeric',
+            ]);
 
-        // Create a new plan instance
-        $plan = new Plan;
-        $plan->plan_name = $request->plan_name;
-        $plan->plan_name_description = $request->plan_name_description;
-        $plan->plan_tittle = $request->plan_tittle;
-        $plan->plan_tittle_description = $request->plan_tittle_description;
-        $plan->plan_price = $request->plan_price;
-        $plan->input_word_limit = $request->input_word_limit;
-        $plan->output_word_limit = $request->output_word_limit;
+            //Create a new plan instance
+            $plan = new Plan;
+            $plan->plan_name = $request->plan_name;
+            $plan->plan_name_description = $request->plan_name_description;
+            $plan->plan_tittle = $request->plan_tittle;
+            $plan->plan_tittle_description = $request->plan_tittle_description;
+            $plan->plan_price = $request->plan_price;
+            $plan->input_word_limit = $request->input_word_limit;
+            $plan->output_word_limit = $request->output_word_limit;
+            $plan->save();
 
-        $plan->save();
-
-        // Optionally, you can return a response indicating success
-        return response()->json(['success' => true, 'message' => 'Plan created successfully'], 201);
+            // Return success response
+            return response()->json(['success' => true, 'message' => 'Plan created successfully'], 201);
+        } catch (ValidationException $e) {
+            // Return validation failure response
+            return response()->json(['success' => false, 'errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            // Return other error response
+            return response()->json(['success' => false, 'message' => 'Failed to create plan'], 500);
+        }
     }
+
+
+
+
+
+
+
+
 
 
 

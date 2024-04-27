@@ -7,7 +7,8 @@ use App\Models\FAQ;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Plan;
 use App\Models\Feature;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cookie;
 
 
 
@@ -19,14 +20,14 @@ class FrontendController extends Controller
     // }
 
     public function index()
-{
-    // Retrieve all plans
-    $plans = Plan::with('features')->get();
-    // dd(  $plans);
+    {
+        // Retrieve all plans
+        $plans = Plan::with('features')->get();
+        // dd(  $plans);
 
-    // Pass the plans data to the view
-    return view('home', compact('plans'));
-}
+        // Pass the plans data to the view
+        return view('home', compact('plans'));
+    }
 
 
     public function product()
@@ -36,10 +37,9 @@ class FrontendController extends Controller
     }
     public function pricing()
     {
-    $plans = Plan::with('features')->get();
-    // dd(  $plans);
-    return view('web.pricing', compact('plans'));
-
+        $plans = Plan::with('features')->get();
+        // dd(  $plans);
+        return view('web.pricing', compact('plans'));
     }
     public function tools()
     {
@@ -51,12 +51,16 @@ class FrontendController extends Controller
     }
     public function contact()
     {
+
+
         return view('web.contact');
     }
     public function privacy()
     {
         return view('web.privacy');
     }
+
+    //C:\Users\Lenovo\Documents\GitHub\new\vendor\laravel\framework\src\Illuminate\Foundation\resources
     public function termCondition()
     {
         return view('web.term_condition');
@@ -98,4 +102,50 @@ class FrontendController extends Controller
         // Pass the fetched FAQs to the view
         return view('web.faqs', compact('faqs'));
     }
+
+
+
+    public function CTdashboard(Request $request)
+{
+    // Retrieve the search value from the request
+    $searchValue = $request->input('search');
+    // Check if the cookies already exist with the specified values
+    // Check if the cookies exist with the specified keys
+    if (!$request->hasCookie('searchValue') || !$request->hasCookie('searchResult')) {
+
+        // here the request will be made to bot endpoint to get the search result
+        $searchResult = "Hello from new chat";
+        // Set the cookies only if they don't exist
+        Cookie::queue('searchValue', $searchValue);
+        Cookie::queue('searchResult', $searchResult);
+         // Return JSON response with the search result
+         return response()->json(['searchResult' => $searchResult, 'message'=>'new']);
+    }
+
+    else{
+    $searchResult = "Hello from previous chat";
+    $searchValue = $request->cookie('searchValue');
+    $searchResult = $request->cookie('searchResult');
+     // Return JSON response with the existed  search result
+    return response()->json(['searchResult' => $searchResult,'message'=>'old']);
+    }
+}
+
+
+
+   public function USchatDashboard(Request $request)
+{
+    if ($request->hasCookie('searchValue') || $request->hasCookie('searchResult')) {
+        // Retrieve the search value from the cookies
+        $searchValue = $request->cookie('searchValue');
+        $searchResult = $request->cookie('searchResult');
+
+        // Return the view with the search value
+        return view('web.chat_dashboard_new_user', [
+            'previousSearchValue' => $searchValue,
+            'previousSearchResult' => $searchResult
+        ]);
+
+    }
+}
 }

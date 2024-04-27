@@ -5,13 +5,7 @@
 
     <!-- Sidebar -->
     <x-chat_dashboard_sidebar :chats="$chats"></x-chat_dashboard_sidebar>
-
     <!-- Sidebar End -->
-
-    {{--
-    <!--Main start-->
-    <x-chat_dashboard_main :plan="$plan"></x-chat_dashboard_main>
-    <!--Main End--> --}}
 
 
     <!--Main start-->

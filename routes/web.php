@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TicketController;
@@ -39,7 +40,18 @@ Route::get('/plans/{plan}/features', [PlanController::class, 'getPlanFeatures'])
 Route::get('/plans/{plan}', [PlanController::class, 'showPlanDetails']);
 
 
+
+Route::get('/admin/dashboard', [AdminController::class, 'index']);
+// ->middleware('auth.admin');
+Route::get('admin/login', [AdminController::class, 'adminLogin']);
+Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']);
+Route::post('/admin/logout', [AdminController::class, 'logoutadmin'])->name('logout');
+
+
+
+
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile/edit', [ProfileController::class, 'edit']);
     Route::patch('/profile/update', [ProfileController::class, 'update']);
     Route::delete('/profile/destory', [ProfileController::class, 'destroy']);
@@ -86,8 +98,10 @@ Route::post('/upload/image', [TicketController::class, 'uploadChatImageUser']);
 
 
 
+
+
 Route::controller(AdminController::class)->group(function () {
-    Route::get('/admin/dashboard', 'index');
+    // Route::get('/admin/dashboard', 'index');
     Route::get('/admin/users/listing', 'users');
     Route::post('/admin/users/toggle-active/{userId}', 'toggleActive');
     Route::delete('/users/{userId}', 'destroy');
@@ -144,5 +158,18 @@ Route::controller(FrontendController::class)->group(function () {
 });
 
 
+// Route for handling AJAX request to send input value
+Route::post('/user/dashboard', [FrontendController::class, 'CTdashboard'])->name('user.dashboard');
 
+// Route for rendering the dashboard page
+Route::get('/user/chat/dashboard', [FrontendController::class, 'USchatDashboard'])->name('chat.dashboard');
+
+
+// google social authentication links
+// Route::middleware('auth',function(){
+    Route::get('/user/oauth/google', [RegisteredUserController::class,'redirectToGoogle'])->name('user.oauth.google');
+    Route::get('/user/oauth/google/callback', [RegisteredUserController::class,'handleGoogleCallback'])->name('aibot.user.oauth.google.callback');
+
+
+// });
 require __DIR__ . '/auth.php';

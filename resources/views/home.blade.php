@@ -19,17 +19,30 @@
                         personalized study plans, practice quizzes, and real-time feedback, ensuring you're fully
                         equipped for success.
                     </h2>
-                    <div class="parent">
+                    {{-- <div class="parent">
                         <input class="input-search" type="type" placeholder="Search..." />
 
                         <button class="btn btn-search">
                             <p class="mb-0 text-white">Start Chat</p>
                         </button>
+                    </div> --}}
+
+                    <div class="parent">
+                        <input id="input-search" class="input-search" type="text" placeholder="Search..." />
+                        <button id="btn-search" class="btn btn-search">
+                            <p class="mb-0 text-white">Start Chat</p>
+                        </button>
                     </div>
+
+
+
                     <div class="no-credit ">No credit card required.</div>
                 </div>
             </div>
         </div>
+
+
+
     </section>
     <!-- Hero Section End -->
 
@@ -40,8 +53,8 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" data-aos="fade-up"
                     data-aos-delay="200">
                     <h1 class="text-center my-3 my-md-5">Chat Dashboard</h1>
-                    <img class="chat_dashboard_image" width="100%" src="{{ asset('assets/images/chat_image.jpg') }}" alt=""
-                        srcset="">
+                    <img class="chat_dashboard_image" width="100%" src="{{ asset('assets/images/chat_image.jpg') }}"
+                        alt="" srcset="">
                 </div>
             </div>
         </div>
@@ -61,7 +74,8 @@
                     <div class="card features-card-item">
                         <div class="card-body features-card-body d-flex flex-column">
                             <div>
-                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt="" class="features-image">
+                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt=""
+                                    class="features-image">
                                 <h3 class="tools-title">Interactive Learning</h3>
                                 <p class="features-para">Boredom? Not here! Engage in interactive learning sessions with
                                     the AI bot, making studying not just effective but fun too! Our bot uses quizzes,
@@ -83,7 +97,8 @@
                     <div class="card features-card-item">
                         <div class="card-body features-card-body d-flex flex-column">
                             <div>
-                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt="" class="features-image">
+                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt=""
+                                    class="features-image">
                                 <h3 class="tools-title">In-Depth Explanations</h3>
                                 <p class="features-para">Stuck on a complex topic? Our AI bot provides
                                     in-depth explanations to clear your doubts. It breaks down challenging concepts into
@@ -105,7 +120,8 @@
                     <div class="card features-card-item ">
                         <div class="card-body features-card-body d-flex flex-column">
                             <div>
-                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt="" class="features-image">
+                                <img src="{{ asset('assets/images/logo.jpeg') }}" loading="lazy" alt=""
+                                    class="features-image">
                                 <h3 class="tools-title">Simulated Practice Exams</h3>
                                 <p class="features-para">Practice makes perfect, right? Prepare yourself with confidence
                                     using our simulated practice exams. The AI bot simulates real NCLEX exam scenarios,
@@ -132,7 +148,8 @@
         <div class="container my-5">
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
-                    <img class="w-100" src="{{ asset('assets/images/Robotics-AI.png') }}" style="border-radius: 10px" alt="">
+                    <img class="w-100" src="{{ asset('assets/images/Robotics-AI.png') }}" style="border-radius: 10px"
+                        alt="">
                 </div>
                 <div class="general-section col-md-6 d-flex justify-content-center flex-column" data-aos="fade-right">
                     <h3 class="h3">Write Factual Trending Content</h3>
@@ -248,27 +265,33 @@
                             <div class="price_card_features">
                                 <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <div class="price_card_feature">Team onboarding & ongoing tech support</div>
                                 </div>
                             </div>
@@ -295,8 +318,8 @@
                                 </div>
 
                                 <!-- <div class="price_line">
-                                    <div class="price_card_price">Talk with sales</div>
-                                </div> -->
+                                                <div class="price_card_price">Talk with sales</div>
+                                            </div> -->
                                 <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
 
                             </div>
@@ -313,27 +336,33 @@
                             <div class="price_card_features">
                                 <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <div class="price_card_feature">Team onboarding & ongoing tech support</div>
                                 </div>
                             </div>
@@ -360,8 +389,8 @@
                                 </div>
 
                                 <!-- <div class="price_line">
-                                    <div class="price_card_price">Talk with sales</div>
-                                </div> -->
+                                                <div class="price_card_price">Talk with sales</div>
+                                            </div> -->
                                 <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
 
                             </div>
@@ -378,27 +407,33 @@
                             <div class="price_card_features">
                                 <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <p class="price_card_feature">No limits on all features</p>
                                 </div>
                                 <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}" class="feature_list_icon">
+                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
+                                        class="feature_list_icon">
                                     <div class="price_card_feature">Team onboarding & ongoing tech support</div>
                                 </div>
                             </div>
@@ -415,4 +450,51 @@
 @endsection
 
 @push('script')
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get reference to the input field and the button
+            var inputField = document.getElementById('input-search');
+            var startChatBtn = document.getElementById('btn-search');
+
+            // Add click event listener to the button
+            startChatBtn.addEventListener('click', function() {
+                // Get the value from the input field
+
+                var inputValue = inputField.value.trim();
+
+                // Check if input field is not blank
+                if (inputValue) {
+
+                    // Make an AJAX request using Axios
+                    axios.post('/user/dashboard', {
+                            search: inputValue
+                        })
+                        .then(function(response) {
+                            // Handle success, if needed
+
+                            window.location.href ="/user/chat/dashboard";
+                        })
+                        .catch(function(error) {
+                            // Handle error, if needed
+                            console.error('Request failed');
+                            console.log(error);
+                        });
+
+                    // Empty the input field
+                    inputField.value = '';
+                }
+                //
+                else{
+
+                   console.log(inputValue);
+                }
+            });
+        });
+    </script>
 @endpush
