@@ -424,4 +424,13 @@ class AdminController extends Controller
         // Optionally, you can return a response indicating success
         return response()->json(['success' => true, 'message' => 'FAQ updated successfully']);
     }
+
+
+ 
+
+
+
+
+
+
 }

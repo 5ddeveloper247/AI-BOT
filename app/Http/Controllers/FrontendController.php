@@ -147,5 +147,19 @@ class FrontendController extends Controller
         ]);
 
     }
+    
+    else{
+        
+        $searchValue = $request->cookie('searchValue');
+        $searchResult = $request->cookie('searchResult');
+    
+        // Return the view with the search value
+        return view('web.chat_dashboard_new_user', [
+            'previousSearchValue' => $searchValue,
+            'previousSearchResult' => $searchResult
+        ]);
+    }
+
+      // Retrieve the search value from the cookies
 }
 }

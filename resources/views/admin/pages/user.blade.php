@@ -1,154 +1,272 @@
 @extends('admin.layouts.admin-master')
 @section('title', 'Users')
 @push('css')
-    <style>
-        .order-actions button {
-            font-size: 18px;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgb(255 255 255 / 15%);
-            border: 1px solid rgb(255 255 255 / 15%);
-            text-align: center;
-            border-radius: 20%;
-            color: #ffffff;
-        }
-    </style>
+<style>
+    .order-actions button {
+        font-size: 18px;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgb(255 255 255 / 15%);
+        border: 1px solid rgb(255 255 255 / 15%);
+        text-align: center;
+        border-radius: 20%;
+        color: #ffffff;
+    }
+</style>
 @endpush
 
 @section('content')
 
 
+{{-- csrf token --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!--start page wrapper -->
-    <div class="page-wrapper">
-        <div class="page-content">
-            <!--breadcrumb-->
-            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">Tables</div>
-                <div class="ps-3">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Users Table</li>
-                        </ol>
-                    </nav>
-                </div>
-
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Tables</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Users Table</li>
+                    </ol>
+                </nav>
             </div>
-            <!--end breadcrumb-->
-
-
-            <hr />
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example2" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Sr</th>
-
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Package</th>
-                                    <th>Status </th>
-                                    <th>View Details</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr id="userRow_{{ $user->id }}">
-                                        <td>{{ $loop->index + 1 }}</td>
-
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->current_package }}</td>
-                                        <td>
-
-
-                                            <div
-                                                class="  order-actions form-check form-switch d-flex justify-content-center align-items-center ">
-                                                <input style="font-size: 20px;" type="checkbox"
-                                                    {{ $user->active ? 'checked' : '' }} class="form-check-input"
-                                                    onchange="toggleActive({{ $user->id }})">
-
-                                            </div>
-
-                                        </td>
-                                        <td>
-
-                                            <button class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal"
-                                                data-bs-target="#showModal" type="button" id="openModalButton"
-                                                onclick="populateModal2('{{ $user->name }}', '{{ $user->email }}', '{{ $user->phone }}', '{{ $user->active }}')">
-                                                Details
-                                            </button>
-
-
-                                        </td>
-                                        <td>
-                                            <div class="d-flex order-actions" style="justify-content: space-around;">
-                                                <button class="btn btn-danger mx-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal"
-                                                    onclick="populateModal('{{ $user->name }}', '{{ $user->email }}', '{{ $user->phone }}',  '{{ $user->active }}')">
-                                                    <i class="bx bxs-edit"></i>
-                                                </button>
-
-                                                <button onclick="deleteUser({{ $user->id }})" class="btn btn-danger">
-                                                    <i class="bx bxs-trash"></i>
-                                                </button>
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
 
         </div>
-    </div>
+
+        <!--end breadcrumb-->
+
+        {{-- create admins btn --}}
+
+        <div class="createBtn">
+            <button class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#showCreateModal"
+                type="button" id="openCreateModalButton">
+                Create Admin</button>
+        </div>
+
+        <hr />
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Sr</th>
+
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Package</th>
+                                <th>Status </th>
+                                <th>View Details</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                            <tr id="userRow_{{ $user->id }}">
+                                <td>{{ $loop->index + 1 }}</td>
+
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>{{ $user->current_package }}</td>
+                                <td>
 
 
-    <!-- edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content" style="background-color: rgb(9,70,115)">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit User Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div
+                                        class="  order-actions form-check form-switch d-flex justify-content-center align-items-center ">
+                                        <input style="font-size: 20px;" type="checkbox" {{ $user->active ? 'checked' :
+                                        '' }} class="form-check-input"
+                                        onchange="toggleActive({{ $user->id }})">
+
+                                    </div>
+
+                                </td>
+                                <td>
+
+                                    <button class="btn btn-light btn-sm radius-30 px-4" data-bs-toggle="modal"
+                                        data-bs-target="#showModal" type="button" id="openModalButton"
+                                        onclick="populateModal2('{{ $user->name }}', '{{ $user->email }}', '{{ $user->phone }}', '{{ $user->active }}')">
+                                        Details
+                                    </button>
+
+
+                                </td>
+                                <td>
+                                    <div class="d-flex order-actions" style="justify-content: space-around;">
+                                        <button class="btn btn-danger mx-2" data-bs-toggle="modal"
+                                            data-bs-target="#editModal"
+                                            onclick="populateModal('{{ $user->name }}', '{{ $user->email }}', '{{ $user->phone }}',  '{{ $user->active }}')">
+                                            <i class="bx bxs-edit"></i>
+                                        </button>
+
+                                        <button onclick="deleteUser({{ $user->id }})" class="btn btn-danger">
+                                            <i class="bx bxs-trash"></i>
+                                        </button>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
+            </div>
+        </div>
 
-                        {{-- <div class="text-center mb-3">
-                            <!-- Image placeholder -->
-                            @if ($user->picture)
+
+
+    </div>
+</div>
+
+
+<!-- edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content" style="background-color: rgb(9,70,115)">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+
+                    {{-- <div class="text-center mb-3">
+                        <!-- Image placeholder -->
+                        @if ($user->picture)
+                        <img src="{{ asset($user->picture) }}" alt="Profile Picture" style="border-radius: 50%;"
+                            width="100" height="100">
+                        @else
+                        <img src="{{ asset('assets/images/defalutuser.PNG') }}" alt="Default Profile Picture"
+                            style="border-radius: 50%; margin-right:-40px;" width="100" height="100">
+                        @endif
+                    </div> --}}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9">
+                        <input id="fullNameInput" type="text" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9">
+                        <input id="emailInput" type="text" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9">
+                        <input id="phoneInput" type="text" class="form-control"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Status</h6>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="ms-3 form-check form-switch">
+                            <input id="statusInput" style="font-size: 20px;" type="checkbox" class="form-check-input" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- details modeal --}}
+<div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: rgb(9,70,115)">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <tr>
+
+                        <td></td>
+                        <td>
+                            <div class="text-center mb-3">
+                                <!-- Image placeholder -->
+                                @if ($user->picture)
                                 <img src="{{ asset($user->picture) }}" alt="Profile Picture" style="border-radius: 50%;"
                                     width="100" height="100">
-                            @else
+                                @else
                                 <img src="{{ asset('assets/images/defalutuser.PNG') }}" alt="Default Profile Picture"
-                                    style="border-radius: 50%; margin-right:-40px;" width="100" height="100">
-                            @endif
-                        </div> --}}
-                    </div>
+                                    style="border-radius: 50%; margin-right:100px;" width="100" height="100">
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td id="NameInput2"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td id="emailInput2"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td id="phoneInput2"></td>
+                    </tr>
 
+                    <tr>
+                        <td>Status:</td>
+                        <td id="statusInput2"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{-- admins create Modal --}}
+
+<div class="modal fade" id="showCreateModal" tabindex="-1" aria-labelledby="showCreateModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: rgb(9,70,115)">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">Create Admin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="createAdminForm">
                     <div class="row mb-3">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Full Name</h6>
                         </div>
                         <div class="col-sm-9">
-                            <input id="fullNameInput" type="text" class="form-control" value="" />
+                            <input name="createFullNameInput" id="createFullNameInput" type="text" class="form-control"
+                                value="" />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -156,7 +274,8 @@
                             <h6 class="mb-0">Email</h6>
                         </div>
                         <div class="col-sm-9">
-                            <input id="emailInput" type="text" class="form-control" value="" />
+                            <input name="createEmailInput" id="createEmailInput" type="text" class="form-control"
+                                value="" />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -164,8 +283,17 @@
                             <h6 class="mb-0">Phone</h6>
                         </div>
                         <div class="col-sm-9">
-                            <input id="phoneInput" type="text" class="form-control"
+                            <input name="createPhoneInput" id="createPhoneInput" type="text" class="form-control"
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Password</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            <input name="createPasswordInput" id="createPasswordInput" type="text" class="form-control"
+                                required />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -174,96 +302,58 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="ms-3 form-check form-switch">
-                                <input id="statusInput" style="font-size: 20px;" type="checkbox" class="form-check-input" />
+                                <input name="createStatusInput" id="createStatusInput" style="font-size: 20px;"
+                                    type="checkbox" class="form-check-input" />
 
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
+                    <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
-                </div>
+                        <button type="button" class="btn btn-primary" onclick="handleCreateAdmin()">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    {{-- details modeal  --}}
-    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: rgb(9,70,115)">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">User Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-hover">
-                        <tr>
 
-                            <td></td>
-                            <td>
-                                <div class="text-center mb-3">
-                                    <!-- Image placeholder -->
-                                    @if ($user->picture)
-                                        <img src="{{ asset($user->picture) }}" alt="Profile Picture"
-                                            style="border-radius: 50%;" width="100" height="100">
-                                    @else
-                                        <img src="{{ asset('assets/images/defalutuser.PNG') }}"
-                                            alt="Default Profile Picture" style="border-radius: 50%; margin-right:100px;"
-                                            width="100" height="100">
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Name:</td>
-                            <td id="NameInput2"></td>
-                        </tr>
-                        <tr>
-                            <td>Email:</td>
-                            <td id="emailInput2"></td>
-                        </tr>
-                        <tr>
-                            <td>Phone:</td>
-                            <td id="phoneInput2"></td>
-                        </tr>
 
-                        <tr>
-                            <td>Status:</td>
-                            <td id="statusInput2"></td>
-                        </tr>
-                    </table>
-                </div>
+
+
+
+
+
+
+
+
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this user?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--end page wrapper -->
+<!--end page wrapper -->
 @endsection
 @push('script')
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             $('#example').DataTable()
         });
 
@@ -451,5 +541,45 @@
                 }
             });
         }
-    </script>
+   // create admin 
+
+   
+
+</script>
+<script>
+    // Define the function
+    function handleCreateAdmin() {
+        var formData = $('#createAdminForm').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('admin.store.admin') }}", // Add quotes around the URL
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // Handle success response
+                console.log('Form submitted successfully!');
+                console.log(response);
+                // Close the modal if needed
+                $('#showCreateModal').modal('hide');
+                round_success_noti('Created successfully!.');
+            },
+            error: function(xhr, status, error) {
+                var errorMessages = "";
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    var errors = xhr.responseJSON.errors;
+                    for (var key in errors) {
+                        
+                        round_error_noti(errors[key][0]);
+                    }
+                } else {             
+                    round_error_noti("An error occurred!");
+                }
+                $('#showCreateModal').modal('show');
+                console.error('Error submitting form:', error);
+}
+        });
+    }
+</script>
 @endpush
