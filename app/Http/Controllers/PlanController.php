@@ -203,6 +203,7 @@ class PlanController extends Controller
                 'plan_price' => 'required|numeric',
                 'plan_name_description' => 'nullable|max:500',
                 'plan_tittle' => 'required|max:255',
+                'plan_type'=>'required',
                 'plan_tittle_description' => 'nullable|max:500',
                 'input_word_limit' => 'nullable|numeric',
                 'output_word_limit' => 'nullable|numeric',
@@ -213,6 +214,7 @@ class PlanController extends Controller
             $plan->plan_name = $request->plan_name;
             $plan->plan_name_description = $request->plan_name_description;
             $plan->plan_tittle = $request->plan_tittle;
+            $plan->plan_type=$request->plan_type;
             $plan->plan_tittle_description = $request->plan_tittle_description;
             $plan->plan_price = $request->plan_price;
             $plan->input_word_limit = $request->input_word_limit;

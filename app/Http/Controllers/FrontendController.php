@@ -21,12 +21,13 @@ class FrontendController extends Controller
 
     public function index()
     {
-        // Retrieve all plans
-        $plans = Plan::with('features')->get();
-        // dd(  $plans);
-
-        // Pass the plans data to the view
-        return view('home', compact('plans'));
+        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
+  //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
+       
+        
+        return view('home',['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
     }
 
 
@@ -35,12 +36,20 @@ class FrontendController extends Controller
         $plans = Plan::with('features')->get();
         return view('web.product', compact('plans'));
     }
+
     public function pricing()
     {
-        $plans = Plan::with('features')->get();
-        // dd(  $plans);
-        return view('web.pricing', compact('plans'));
+        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
+  //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
+       
+        //dd($plans);
+        return view('web.pricing', ['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
     }
+
+
+
     public function tools()
     {
         return view('web.tools');
@@ -67,10 +76,11 @@ class FrontendController extends Controller
     }
     public function plans()
     {
-        $plans = Plan::all();
-
+        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
         // Pass the plans to the view
-        return view('web.plans', compact('plans'));
+        return view('web.plans', ['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
     }
     public function payment()
     {

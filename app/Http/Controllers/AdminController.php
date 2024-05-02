@@ -100,6 +100,7 @@ class AdminController extends Controller
         // Assuming you have a Plan model and you retrieve plans from the database
         $plans = Plan::all(); // Fetch plans from the database, adjust this according to your schema
         // Pass the plans data to the view
+
         return view('admin.pages.pricing', ['plans' => $plans]);
     }
 

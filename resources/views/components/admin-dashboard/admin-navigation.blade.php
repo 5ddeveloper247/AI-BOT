@@ -2,7 +2,7 @@
 
     <li>
         <a href="{{ route('admin.dashboard') }}">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bxs-dashboard'></i>
             </div>
             <div class="menu-title">Dashboard</div>
         </a>
@@ -13,6 +13,7 @@
 
 
 
+    {{-- Home --}}
 
     <li>
         <a href="javascript:;" class="has-arrow">
@@ -23,12 +24,31 @@
         <ul>
             <li>
                 <a href="{{ url('/admin/home/logo') }}"><i class="bx bx-radio-circle"></i>Logo</a>
-                <a href="{{ url('/admin/home/section-1') }}"><i class="bx bx-radio-circle"></i>Section-1</a>
+                {{-- <a href="{{ url('/admin/home/section-1') }}"><i class="bx bx-radio-circle"></i>Section-1</a>
                 <a href="{{ url('/admin/home/section-2') }}"><i class="bx bx-radio-circle"></i>Section-2</a>
                 <a href="{{ url('/admin/home/section-3') }}"><i class="bx bx-radio-circle"></i>Section-3</a>
                 <a href="{{ url('/admin/home/section-4') }}"><i class="bx bx-radio-circle"></i>Section-4</a>
                 <a href="{{ url('/admin/home/section-5') }}"><i class="bx bx-radio-circle"></i>Section-5</a>
-                <a href="{{ url('/admin/home/section-6') }}"><i class="bx bx-radio-circle"></i>Footer</a>
+                <a href="{{ url('/admin/home/section-6') }}"><i class="bx bx-radio-circle"></i>Footer</a> --}}
+            </li>
+        </ul>
+    </li>
+
+
+
+
+
+    {{-- Admin users --}}
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bxs-user'></i>
+            </div>
+            <div class="menu-title">Admin Users</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class="bx bx-radio-circle"></i>Users</a>
+
             </li>
         </ul>
     </li>
@@ -38,9 +58,29 @@
 
 
 
+    {{-- Site Users --}}
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-user-circle'></i>
+            </div>
+            <div class="menu-title">Site Users</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class="bx bx-radio-circle"></i>Users</a>
+
+            </li>
+        </ul>
+    </li>
+
+
+
+
+    {{-- Users --}}
     <li>
         <a href="{{ url('/admin/users/listing') }} " id="users-link">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bx-user'></i>
             </div>
             <div class="menu-title">Users</div>
         </a>
@@ -48,23 +88,26 @@
 
 
 
+
+    {{-- Pricing --}}
     <li>
         <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bx-purchase-tag-alt'></i>
             </div>
             <div class="menu-title">Pricing</div>
         </a>
+
         <ul>
 
             <li>
-                <a href="{{ url('/admin/pricing/section-1') }}" id="Pricing-link-section-1" href="#"><i
-                        class="bx bx-radio-circle"></i>Section-1</a>
                 <a href="{{ url('/admin/pricing/section-2') }}" id="Pricing-link-section-2" href="#"><i
-                        class="bx bx-radio-circle"></i>Plans</a>
+                        class='bx bx-purchase-tag-alt'></i>Plans</a>
+                {{-- <a href="{{ url('/admin/pricing/section-1') }}" id="Pricing-link-section-1" href="#"><i
+                        class="bx bx-radio-circle"></i>Section-1</a>
                 <a href="{{ url('/admin/pricing/section-3') }}" id="Pricing-link-section-3" href="#"><i
                         class="bx bx-radio-circle"></i>Section-3</a>
                 <a href="{{ url('/admin/pricing/section-4') }}" id="Pricing-link-section-4" href="#"><i
-                        class="bx bx-radio-circle"></i>Section-4</a>
+                        class="bx bx-radio-circle"></i>Section-4</a> --}}
 
             </li>
 
@@ -73,17 +116,74 @@
 
 
 
+
+
+    {{-- Bot Prices --}}
+
     <li>
         <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bx-bot'></i>
+            </div>
+            <div class="menu-title">Bot Prices</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bx-bot'></i>Bot Prices</a>
+
+            </li>
+        </ul>
+    </li>
+
+    {{-- MemberShips --}}
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-ghost'></i>
+            </div>
+            <div class="menu-title">Memberships</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bx-ghost'></i>Memberships</a>
+
+            </li>
+        </ul>
+    </li>
+
+
+
+    {{-- Payment and Invoices--}}
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-wallet-alt'></i>
+            </div>
+            <div class="menu-title">Payment and Invoices</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bx-wallet-alt'></i>Payment and Invoices</a>
+
+            </li>
+        </ul>
+    </li>
+
+
+
+
+
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bxs-contact'></i>
             </div>
             <div class="menu-title">Contact</div>
         </a>
         <ul>
 
             <li>
-                <a href="{{ url('/admin/contact/section-1') }}" id="Contact-link-section-1"><i
-                        class="bx bx-radio-circle"></i>Section-1</a>
+                {{-- <a href="{{ url('/admin/contact/section-1') }}" id="Contact-link-section-1"><i
+                        class="bx bx-radio-circle"></i>Section-1</a> --}}
                 <a href="{{ url('/admin/contact/section-2') }}" id="Contact-link-section-2"><i
                         class="bx bx-radio-circle"></i>Gusets User</a>
                 <a href="{{ url('/admin/contact/section-3') }}" id="Contact-link-section-3"><i
@@ -105,29 +205,75 @@
 
     <li>
         <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bx-chat'></i>
             </div>
             <div class="menu-title">Chat</div>
         </a>
         <ul>
 
-            <li>
+            {{-- <li>
                 <a href="{{ url('/admin/chat/section-1') }}" id="Chat-link"><i
                         class="bx bx-radio-circle"></i>Section-1</a>
+            </li> --}}
+        </ul>
+    </li>
+
+    {{-- Payment Api Settings --}}
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-cog'></i>
+            </div>
+            <div class="menu-title">Payment Api Settings</div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bx-cog'></i>Payment Api Settings</a>
+
+            </li>
+        </ul>
+    </li>
+
+
+    {{-- Bot Api Settings --}}
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bxs-cog'></i>
+            </div>
+            <div class="menu-title">Bot Api Settings </div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bxs-cog'></i>Bot Api Settings </a>
+
             </li>
         </ul>
     </li>
 
 
 
+    {{-- Site Configurations --}}
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-sitemap'></i>
+            </div>
+            <div class="menu-title">Site Configurations </div>
+        </a>
+        <ul>
+            <li>
+                <a href="#"><i class='bx bx-sitemap'></i>Site Configurations </a>
+
+            </li>
+        </ul>
+    </li>
+
     <li>
         <a href="{{ url('/admin/faqs') }} ">
-            <div class="parent-icon"><i class='bx bx-home-alt'></i>
+            <div class="parent-icon"><i class='bx bx-info-circle'></i>
             </div>
             <div class="menu-title">FAQS</div>
         </a>
     </li>
-</ul> 
+</ul>
 
 
 

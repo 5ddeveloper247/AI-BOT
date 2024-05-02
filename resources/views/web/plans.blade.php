@@ -48,66 +48,78 @@
             </label>
           </div>
 
-        <form action="#" id="plan_ai">
+          <form action="#" id="plan_ai">
             <div class="grid">
-                <label class="card">
-                    <input name="plan" value="1" class="radio" type="radio" checked />
-                    <span class="plan-details">
-                        <span class="plan-type">Bot 1</span>
-                        <span class="plan-cost">$20<span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
-                    </span>
-                </label>
-                <label class="card">
-                    <input name="plan" value="2" class="radio" type="radio" />
-                    <span class="plan-details" aria-hidden="true">
-                        <span class="plan-type">Bot 2</span>
-                        <span class="plan-cost">$50<span class="slash">/</span><span class="plan-cycle">mo</span></span>
-                    </span>
-                </label>
-                <label class="card">
-                    <input name="plan" value="3" class="radio" type="radio" />
-                    <span class="plan-details" aria-hidden="true">
-                        <span class="plan-type">Bot 1 + Bot 2</span>
-                        <span class="plan-cost">$200<span class="slash">/</span><span class="plan-cycle">mo</span></span>
-                    </span>
-                </label>
-                <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
-                    <button class="btn btn-success submit_plan">
-                        <i class="bi bi-check2-circle"></i> Select Plan
-                    </button>
-                    <button class="btn text-light try_bot" style="background: var(--color-green)">
-                        <i class="bi bi-symmetry-horizontal"></i> Try Bot
-                        <strong>(7 Day Trial)</strong>
-                    </button>
-                </div>
+              <label class="card">
+                <input name="plan" value="{{ $plans_Bot1->id }}" class="radio" type="radio" checked />
+                <span class="plan-details">
+                  <span class="plan-type">Bot 1</span>
+                  <span class="plan-cost">{{ $plans_Bot1->plan_price }}<span class="slash">/</span><abbr
+                      class="plan-cycle">mo</abbr></span>
+                </span>
+              </label>
+              <label class="card">
+                <input name="plan" value="{{ $plans_Bot2->id  }}" class="radio" type="radio" />
+                <span class="plan-details" aria-hidden="true">
+                  <span class="plan-type">Bot 2</span>
+                  <span class="plan-cost">{{ $plans_Bot2->plan_price }}<span class="slash">/</span><span
+                      class="plan-cycle">mo</span></span>
+                </span>
+              </label>
+              <label class="card">
+                <input name="plan" value="{{ $plans_Bot1_Plus_Bot2 }}" class="radio" type="radio" />
+                <span class="plan-details" aria-hidden="true">
+                  <span class="plan-type">Bot 1 + Bot 2</span>
+                  <span class="plan-cost">{{ $plans_Bot1_Plus_Bot2->plan_price }}<span class="slash">/</span><span
+                      class="plan-cycle">mo</span></span>
+                </span>
+              </label>
+              <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
+                <button class="btn btn-success submit_plan">
+                  <i class="bi bi-check2-circle"></i> Select Plan
+                </button>
+                <button class="btn text-light try_bot" style="background: var(--color-green)">
+                  <i class="bi bi-symmetry-horizontal"></i> Try Bot
+                  <strong>(7 Day Trial)</strong>
+                </button>
+              </div>
             </div>
-        </form>
-{{--
-        <form action="#" id="plan_ai">
+          </form>
+
+
+
+
+          {{--
+          <form action="#" id="plan_ai">
             <div class="grid">
-                @foreach($plans as $plan)
-                <label class="card">
-                    <input name="plan" value="{{ $plan->id }}" class="radio" type="radio" {{ $loop->first ? 'checked' : '' }} />
-                    <span class="plan-details">
-                        <span class="plan-type">{{ $plan->plan_name }}</span>
-                        <span class="plan-cost">${{ $plan->plan_price }}<span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
-                    </span>
-                </label>
-                @endforeach
-                <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
-                    <button class="btn btn-success submit_plan">
-                        <i class="bi bi-check2-circle"></i> Select Plan
-                    </button>
-                    <button class="btn text-light try_bot" style="background: var(--color-green)">
-                        <i class="bi bi-symmetry-horizontal"></i> Try Bot
-                        <strong>(7 Day Trial)</strong>
-                    </button>
-                </div>
+              @foreach($plans as $plan)
+              <label class="card">
+                <input name="plan" value="{{ $plan->id }}" class="radio" type="radio" {{ $loop->first ? 'checked' : ''
+                }} />
+                <span class="plan-details">
+                  <span class="plan-type">{{ $plan->plan_name }}</span>
+                  <span class="plan-cost">${{ $plan->plan_price }}<span class="slash">/</span><abbr
+                      class="plan-cycle">mo</abbr></span>
+                </span>
+              </label>
+              @endforeach
+              <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
+                <button class="btn btn-success submit_plan">
+                  <i class="bi bi-check2-circle"></i> Select Plan
+                </button>
+                <button class="btn text-light try_bot" style="background: var(--color-green)">
+                  <i class="bi bi-symmetry-horizontal"></i> Try Bot
+                  <strong>(7 Day Trial)</strong>
+                </button>
+              </div>
             </div>
-        </form> --}}
+          </form> --}}
 
 
         </div>
+
+
+
         <div class="plan_list d-none d-md-block">
           <label onclick="changeDirection()" for="flip" href="#" class=""
             style="position: absolute; top: 5px; right: 12px">
@@ -313,6 +325,7 @@
           </section>
           <!--Pricing Plan End-->
         </div>
+
       </div>
     </div>
   </div>
@@ -399,7 +412,7 @@
   </script>
 
 
-<script>
+  <script>
     $(document).ready(function () {
 
     $(".submit_plan").click(function (e) {
@@ -435,9 +448,9 @@
 
 });
 
-</script>
+  </script>
 
-<script>
+  <script>
     $(document).ready(function () {
     $(".try_bot").click(function (e) {
         e.preventDefault();
@@ -472,7 +485,7 @@
 });
 
 
-</script>
+  </script>
 </body>
 
 </html>

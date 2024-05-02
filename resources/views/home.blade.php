@@ -239,208 +239,220 @@
                     </div>
             @endforeach --}}
 
-                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
-                    data-aos-duration="2000">
-                    <div style="background:var(--background)" class="pricing_card_wrap">
-                        <div class="price-card">
-                            <div class="price_card_header">
-                                <h4 style="color:var(--primary-color)" class="price_header_h4">Bot 1</h4>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod eaque sunt porro.</p>
-                            </div>
-                            <div class="price_card_body">
-                                <div class="price_line">
-                                    <div class="price_card_price">Talk with sales</div>
-                                </div>
-                                <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
 
-                            </div>
-                            <button class="contact_us_2 scrollto" href="#">
-                                <span class="icon-container">
-                                    <i class="bi bi-arrow-right-circle-fill"></i>
-                                </span>
-                                <span class="contact"> Contact Sales</span>
 
-                            </button>
 
-                            <div class="price_card_features">
-                                <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <div class="price_card_feature">Team onboarding & ongoing tech support</div>
-                                </div>
+
+                  <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
+                <div style="background:var(--background)" class="pricing_card_wrap">
+                    <div class="price-card">
+                        <div class="price_card_header">
+                            <h4 style="color:var(--primary-color)" class="price_header_h4">{{$plans_Bot1->plan_tittle }}
+                            </h4>
+                            <p>{{ $plans_Bot1->plan_tittle_description }}</p>
+                        </div>
+                        <div class="price_card_body">
+                            <div class="price_line">
+                                <div class="price_card_price">Talk with sales</div>
                             </div>
+                            <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
+
+                        </div>
+                        <button class="contact_us scrollto d-block" href="#">
+                            <span class="icon-container">
+                                <i class="bi bi-arrow-right-circle-fill"></i>
+                            </span>
+                            <span class="contact"> Contact Sales</span>
+
+                        </button>
+
+                        <div class="price_card_features">
+                            <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
+
+                            @foreach($plans_Bot1->features as $feature )
+
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">{{ $feature->name }}</p>
+                            </div>
+
+                            @endforeach
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div> --}}
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div> --}}
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div> --}}
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <div class="price_card_feature">Team onboarding & ongoing tech support</div>
+                            </div> --}}
                         </div>
                     </div>
-
                 </div>
 
-                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
-                    data-aos-duration="2000">
-                    <div style="background:var(--background)" class="pricing_card_wrap">
-                        <div class="price-card">
-                            <div class="price_card_header">
-                                <h4 style="color:var(--primary-color)" class="price_header_h4">Bot 2</h4>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod eaque sunt porro.</p>
-                            </div>
-                            <div class="price_card_body">
-                                <div class="feature_main">
-                                    <div class="price_feature">
-                                        <div class="feature_dollar">$</div>
-                                        <div class="feature_amount">99</div>
-                                        <div class="feature_month">/month</div>
-                                    </div>
-                                </div>
-
-                                <!-- <div class="price_line">
-                                                <div class="price_card_price">Talk with sales</div>
-                                            </div> -->
-                                <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
-
-                            </div>
+            </div>
 
 
-                            <button class="contact_us_2 scrollto" href="#">
-                                <span class="icon-container">
-                                    <i class="bi bi-arrow-right-circle-fill"></i>
-                                </span>
-                                <span class="contact"> Start free 7-day trial</span>
 
-                            </button>
 
-                            <div class="price_card_features">
-                                <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <div class="price_card_feature">Team onboarding & ongoing tech support</div>
+
+            <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
+                <div style="background:var(--background)" class="pricing_card_wrap">
+                    <div class="price-card">
+                        <div class="price_card_header">
+                            <h4 style="color:var(--primary-color)" class="price_header_h4">{{$plans_Bot2->plan_tittle }}
+                            </h4>
+                            <p>{{$plans_Bot2->plan_tittle_description }}</p>
+                        </div>
+                        <div class="price_card_body">
+                            <div class="feature_main">
+                                <div class="price_feature">
+                                    <div class="feature_dollar">$</div>
+                                    <div class="feature_amount">{{$plans_Bot2->plan_price }}</div>
+                                    <div class="feature_month">/month</div>
                                 </div>
                             </div>
+
+                            <!-- <div class="price_line">
+                                <div class="price_card_price">Talk with sales</div>
+                            </div> -->
+                            <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
+
+                        </div>
+
+
+                        <button class="contact_us scrollto d-block" href="#">
+                            <span class="icon-container">
+                                <i class="bi bi-arrow-right-circle-fill"></i>
+                            </span>
+                            <span class="contact"> Start free 7-day trial</span>
+
+                        </button>
+
+                        <div class="price_card_features">
+                            <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
+                            @foreach($plans_Bot2->features as $feature )
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">{{ $feature->name }}</p>
+                            </div>
+                            @endforeach
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <div class="price_card_feature">Team onboarding & ongoing tech support</div>
+                            </div> --}}
                         </div>
                     </div>
-
                 </div>
 
-                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
-                    data-aos-duration="2000">
-                    <div style="background:var(--background)" class="pricing_card_wrap">
-                        <div class="price-card">
-                            <div class="price_card_header">
-                                <h4 style="color:var(--primary-color)" class="price_header_h4">Bot 1 + Bot 2</h4>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod eaque sunt porro.</p>
-                            </div>
-                            <div class="price_card_body">
-                                <div class="feature_main">
-                                    <div class="price_feature">
-                                        <div class="feature_dollar">$</div>
-                                        <div class="feature_amount">99</div>
-                                        <div class="feature_month">/month</div>
-                                    </div>
-                                </div>
-
-                                <!-- <div class="price_line">
-                                                <div class="price_card_price">Talk with sales</div>
-                                            </div> -->
-                                <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
-
-                            </div>
+            </div>
 
 
-                            <button class="contact_us_2 scrollto" href="#">
-                                <span class="icon-container">
-                                    <i class="bi bi-arrow-right-circle-fill"></i>
-                                </span>
-                                <span class="contact"> Start free 7-day trial</span>
 
-                            </button>
 
-                            <div class="price_card_features">
-                                <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <p class="price_card_feature">No limits on all features</p>
-                                </div>
-                                <div class="feature_list">
-                                    <img alt="Check" src="{{ asset('assets/images/tick_Check.svg') }}"
-                                        class="feature_list_icon">
-                                    <div class="price_card_feature">Team onboarding & ongoing tech support</div>
+
+
+            <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
+                <div style="background:var(--background)" class="pricing_card_wrap">
+                    <div class="price-card">
+                        <div class="price_card_header">
+                            <h4 style="color:var(--primary-color)" class="price_header_h4">
+                                {{$plans_Bot1_Plus_Bot2->plan_tittle }}</h4>
+                            <p>{{$plans_Bot1_Plus_Bot2->plan_tittle_description}}</p>
+                        </div>
+                        <div class="price_card_body">
+                            <div class="feature_main">
+                                <div class="price_feature">
+                                    <div class="feature_dollar">$</div>
+                                    <div class="feature_amount">{{$plans_Bot1_Plus_Bot2->plan_price }}</div>
+                                    <div class="feature_month">/month</div>
                                 </div>
                             </div>
+
+                            <!-- <div class="price_line">
+                                <div class="price_card_price">Talk with sales</div>
+                            </div> -->
+                            <div class="pricing_small_p">Get MediNurseAI tailored for your company.</div>
+
+                        </div>
+
+
+                        <button class="contact_us scrollto d-block" href="#">
+                            <span class="icon-container">
+                                <i class="bi bi-arrow-right-circle-fill"></i>
+                            </span>
+                            <span class="contact"> Start free 7-day trial</span>
+
+                        </button>
+
+                        <div class="price_card_features">
+                            <h6 class="price_card_feature_heading">Everything in Teams, plus:</h6>
+
+                            @foreach($plans_Bot1_Plus_Bot2->features as $feature )
+
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                 <p class="price_card_feature">{{ $feature->name }}</p>
+                            </div>
+
+                            @endforeach
+                            {{-- <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <p class="price_card_feature">No limits on all features</p>
+                            </div>
+                            <div class="feature_list">
+                                <img alt="Check" src="assets/images/tick_Check.svg" class="feature_list_icon">
+                                <div class="price_card_feature">Team onboarding & ongoing tech support</div>
+                            </div> --}}
                         </div>
                     </div>
-
                 </div>
+
+            </div>
+
+
 
             </div>
         </div>

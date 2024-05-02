@@ -13,6 +13,7 @@ class Plan extends Model
         'plan_name',
         'plan_price',
         'plan_description',
+        'plan_type',
     ];
 
     // Define the one-to-many relationship with Feature model
