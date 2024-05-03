@@ -51,7 +51,8 @@
           <form action="#" id="plan_ai">
             <div class="grid">
               <label class="card">
-                <input name="plan" value="{{ $plans_Bot1->id }}" class="radio" type="radio" checked />
+                <input name="{{  $plans_Bot1->plan_tittle }}" value="{{ $plans_Bot1->id }}" class="radio" type="radio"
+                  checked />
                 <span class="plan-details">
                   <span class="plan-type">Bot 1</span>
                   <span class="plan-cost">{{ $plans_Bot1->plan_price }}<span class="slash">/</span><abbr
@@ -59,7 +60,7 @@
                 </span>
               </label>
               <label class="card">
-                <input name="plan" value="{{ $plans_Bot2->id  }}" class="radio" type="radio" />
+                <input name="{{$plans_Bot2->plan_tittle }}" value="{{ $plans_Bot2->id  }}" class="radio" type="radio" />
                 <span class="plan-details" aria-hidden="true">
                   <span class="plan-type">Bot 2</span>
                   <span class="plan-cost">{{ $plans_Bot2->plan_price }}<span class="slash">/</span><span
@@ -67,7 +68,8 @@
                 </span>
               </label>
               <label class="card">
-                <input name="plan" value="{{ $plans_Bot1_Plus_Bot2 }}" class="radio" type="radio" />
+                <input name="{{ $plans_Bot1_Plus_Bot2->plan_title }}" value="{{ $plans_Bot1_Plus_Bot2->id }}"
+                  class="radio" type="radio" />
                 <span class="plan-details" aria-hidden="true">
                   <span class="plan-type">Bot 1 + Bot 2</span>
                   <span class="plan-cost">{{ $plans_Bot1_Plus_Bot2->plan_price }}<span class="slash">/</span><span
@@ -383,28 +385,33 @@
       $(".plan_list").toggleClass("d-none");
     }
 
-    $(".submit_plan").click(function (e) {
-      e.preventDefault();
-      var datastring = $("#plan_ai").serialize();
 
-      console.log(datastring);
-      return false;
-      // $.ajax({
-      //     type: "POST",
-      //     url: "your url.php",
-      //     data: datastring,
-      //     success: function(data) {
-      //           alert('Data send');
-      //     }
-      // });
+
+
+
+
+
+
+  $(".submit_plan").click(function (e) {
+  e.preventDefault();
+  var datastring = $("#plan_ai").serialize();
+ 
+  var planSubmitUri = "{{ route('register.submit.plans') }}?data=" + encodeURIComponent(datastring);
+  console.log(planSubmitUri );
+  // Redirect to the generated URL
+  window.location.href = planSubmitUri;
+});
+ 
+
+
+
+    $(document).ready(function () {
+      $(".try_bot").click(function (e) {
+        e.preventDefault();
+
+        window.location.href = "{{ route('payment') }}";
+      });
     });
-    // $(document).ready(function () {
-    //   $(".try_bot").click(function (e) {
-    //     e.preventDefault();
-
-    //     window.location.href = "{{ route('payment') }}";
-    //   });
-    // });
 
     function changeUrl() {
       window.location.href = "{{ route('register') }}";
@@ -412,7 +419,7 @@
   </script>
 
 
-  <script>
+  {{-- <script>
     $(document).ready(function () {
 
     $(".submit_plan").click(function (e) {
@@ -448,7 +455,7 @@
 
 });
 
-  </script>
+  </script> --}}
 
   <script>
     $(document).ready(function () {

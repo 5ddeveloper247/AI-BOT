@@ -9,6 +9,7 @@ use App\Models\Plan;
 use App\Models\Feature;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Crypt;
 
 
 
@@ -21,13 +22,13 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
-        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
-        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
-  //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
-       
-        
-        return view('home',['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
+        $plans_Bot1 = Plan::with('features')->where('plan_type', 'Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type', 'Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type', 'Bot 1 + Bot 2')->latest()->first();
+        //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
+
+
+        return view('home', ['plans_Bot1' => $plans_Bot1, 'plans_Bot2' => $plans_Bot2, 'plans_Bot1_Plus_Bot2' => $plans_Bot1_Plus_Bot2]);
     }
 
 
@@ -39,13 +40,13 @@ class FrontendController extends Controller
 
     public function pricing()
     {
-        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
-        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
-        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
-  //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
-       
+        $plans_Bot1 = Plan::with('features')->where('plan_type', 'Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type', 'Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type', 'Bot 1 + Bot 2')->latest()->first();
+        //  dd($plans_Bot1, $plans_Bot2,$plans_Bot1_Plus_Bot2 );
+
         //dd($plans);
-        return view('web.pricing', ['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
+        return view('web.pricing', ['plans_Bot1' => $plans_Bot1, 'plans_Bot2' => $plans_Bot2, 'plans_Bot1_Plus_Bot2' => $plans_Bot1_Plus_Bot2]);
     }
 
 
@@ -76,12 +77,44 @@ class FrontendController extends Controller
     }
     public function plans()
     {
-        $plans_Bot1 = Plan::with('features')->where('plan_type','Bot 1')->latest()->first();
-        $plans_Bot2 = Plan::with('features')->where('plan_type','Bot 2')->latest()->first();
-        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type','Bot 1 + Bot 2')->latest()->first();
+        $plans_Bot1 = Plan::with('features')->where('plan_type', 'Bot 1')->latest()->first();
+        $plans_Bot2 = Plan::with('features')->where('plan_type', 'Bot 2')->latest()->first();
+        $plans_Bot1_Plus_Bot2 = Plan::with('features')->where('plan_type', 'Bot 1 + Bot 2')->latest()->first();
         // Pass the plans to the view
-        return view('web.plans', ['plans_Bot1'=>$plans_Bot1,'plans_Bot2'=>$plans_Bot2,'plans_Bot1_Plus_Bot2'=>$plans_Bot1_Plus_Bot2]);
+        return view('web.plans', ['plans_Bot1' => $plans_Bot1, 'plans_Bot2' => $plans_Bot2, 'plans_Bot1_Plus_Bot2' => $plans_Bot1_Plus_Bot2]);
     }
+
+
+
+
+
+
+
+
+
+    public function registerSubmitPlans(Request $request)
+    {
+        // Extract data from the request
+        $plansStr = $request->data;
+        $planId = explode('=', $plansStr)[1];
+
+        // Find the plan
+        $plan = Plan::find($planId);
+        // Extract relevant data from the plan
+        $id = (string)$plan->id; // Convert to string for concatenation
+        $planName = (string)$plan->plan_name; // Convert to string for concatenation
+        $planCreatedAt = (string)$plan->created_at; // Convert to string for concatenation
+
+        // Concatenate data for encryption
+        $encryptionData = $id . $planName . $planCreatedAt;
+        // Encrypt the data
+        $encryptedId = Crypt::encryptString($encryptionData);
+
+        return view('web.payment', ['id' => $encryptedId, 'plan' => $plan]);
+    }
+
+
+
     public function payment()
     {
         return view('web.payment');
@@ -116,60 +149,55 @@ class FrontendController extends Controller
 
 
     public function CTdashboard(Request $request)
-{
-    // Retrieve the search value from the request
-    $searchValue = $request->input('search');
-    // Check if the cookies already exist with the specified values
-    // Check if the cookies exist with the specified keys
-    if (!$request->hasCookie('searchValue') || !$request->hasCookie('searchResult')) {
+    {
+        // Retrieve the search value from the request
+        $searchValue = $request->input('search');
+        // Check if the cookies already exist with the specified values
+        // Check if the cookies exist with the specified keys
+        if (!$request->hasCookie('searchValue') || !$request->hasCookie('searchResult')) {
 
-        // here the request will be made to bot endpoint to get the search result
-        $searchResult = "Hello from new chat";
-        // Set the cookies only if they don't exist
-        Cookie::queue('searchValue', $searchValue);
-        Cookie::queue('searchResult', $searchResult);
-         // Return JSON response with the search result
-         return response()->json(['searchResult' => $searchResult, 'message'=>'new']);
+            // here the request will be made to bot endpoint to get the search result
+            $searchResult = "Hello from new chat";
+            // Set the cookies only if they don't exist
+            Cookie::queue('searchValue', $searchValue);
+            Cookie::queue('searchResult', $searchResult);
+            // Return JSON response with the search result
+            return response()->json(['searchResult' => $searchResult, 'message' => 'new']);
+        } else {
+            $searchResult = "Hello from previous chat";
+            $searchValue = $request->cookie('searchValue');
+            $searchResult = $request->cookie('searchResult');
+            // Return JSON response with the existed  search result
+            return response()->json(['searchResult' => $searchResult, 'message' => 'old']);
+        }
     }
 
-    else{
-    $searchResult = "Hello from previous chat";
-    $searchValue = $request->cookie('searchValue');
-    $searchResult = $request->cookie('searchResult');
-     // Return JSON response with the existed  search result
-    return response()->json(['searchResult' => $searchResult,'message'=>'old']);
-    }
-}
 
 
+    public function USchatDashboard(Request $request)
+    {
+        if ($request->hasCookie('searchValue') || $request->hasCookie('searchResult')) {
+            // Retrieve the search value from the cookies
+            $searchValue = $request->cookie('searchValue');
+            $searchResult = $request->cookie('searchResult');
 
-   public function USchatDashboard(Request $request)
-{
-    if ($request->hasCookie('searchValue') || $request->hasCookie('searchResult')) {
+            // Return the view with the search value
+            return view('web.chat_dashboard_new_user', [
+                'previousSearchValue' => $searchValue,
+                'previousSearchResult' => $searchResult
+            ]);
+        } else {
+
+            $searchValue = $request->cookie('searchValue');
+            $searchResult = $request->cookie('searchResult');
+
+            // Return the view with the search value
+            return view('web.chat_dashboard_new_user', [
+                'previousSearchValue' => $searchValue,
+                'previousSearchResult' => $searchResult
+            ]);
+        }
+
         // Retrieve the search value from the cookies
-        $searchValue = $request->cookie('searchValue');
-        $searchResult = $request->cookie('searchResult');
-
-        // Return the view with the search value
-        return view('web.chat_dashboard_new_user', [
-            'previousSearchValue' => $searchValue,
-            'previousSearchResult' => $searchResult
-        ]);
-
     }
-    
-    else{
-        
-        $searchValue = $request->cookie('searchValue');
-        $searchResult = $request->cookie('searchResult');
-    
-        // Return the view with the search value
-        return view('web.chat_dashboard_new_user', [
-            'previousSearchValue' => $searchValue,
-            'previousSearchResult' => $searchResult
-        ]);
-    }
-
-      // Retrieve the search value from the cookies
-}
 }

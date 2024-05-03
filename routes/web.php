@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminController2;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyMail;
 use App\Mail\ReplyMail;
+use App\Http\Controllers\Payment\doPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -184,10 +185,14 @@ Route::group(['controller' => FrontendController::class], function () {
     Route::get('/privacy', 'privacy')->name('privacy');
     Route::get('/term-condition', 'termCondition')->name('term-condition');
     Route::get('/plans', 'plans')->name('plans');
+    Route::get('/register/submit/plans', 'registerSubmitPlans')->name('register.submit.plans');
     Route::get('/payment', 'payment')->name('payment');
     Route::get('/chat', 'chat')->name('chat');
     Route::get('/faqs', 'faqs')->name('faqs');
 });
+
+
+Route::get('doPayment',[doPaymentController::class,'doPayment']);
 
 
 // });
