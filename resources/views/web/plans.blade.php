@@ -48,7 +48,8 @@
             </label>
           </div>
 
-          <form action="#" id="plan_ai">
+          <form action="{{ route('register.submit.plans') }}" method="POST" id="plan_ai">
+            @csrf
             <div class="grid">
               <label class="card">
                 <input name="{{  $plans_Bot1->plan_tittle }}" value="{{ $plans_Bot1->id }}" class="radio" type="radio"
@@ -77,7 +78,7 @@
                 </span>
               </label>
               <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
-                <button class="btn btn-success submit_plan">
+                <button class="btn btn-success submit_plan" type="submit">
                   <i class="bi bi-check2-circle"></i> Select Plan
                 </button>
                 <button class="btn text-light try_bot" style="background: var(--color-green)">
@@ -392,15 +393,16 @@
 
 
 
-  $(".submit_plan").click(function (e) {
-  e.preventDefault();
-  var datastring = $("#plan_ai").serialize();
- 
-  var planSubmitUri = "{{ route('register.submit.plans') }}?data=" + encodeURIComponent(datastring);
-  console.log(planSubmitUri );
-  // Redirect to the generated URL
-  window.location.href = planSubmitUri;
-});
+//   $(".submit_plan").click(function (e) {
+//   e.preventDefault();
+//   var datastring = $("#plan_ai").serialize();
+//  console.log(datastring);
+//  var planSubmitUri = `{{ route('register.submit.plans') }}/${datastring}`;
+// console.log(planSubmitUri);
+//   console.log(planSubmitUri );
+//   // Redirect to the generated URL
+//   window.location.href = planSubmitUri;
+// });
  
 
 

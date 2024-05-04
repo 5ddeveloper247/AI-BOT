@@ -1,8 +1,85 @@
 @include('layouts.web.chat_dashboard_header')
+<style>
+    /* HTML: <div class="loader"></div> */
+    /* HTML: <div class="loader"></div> */
+    .loader {
+        --s: 25px;
+        --g: 5px;
 
+        width: calc(2*(1.353*var(--s) + var(--g)));
+        aspect-ratio: 1;
+        background:
+            linear-gradient(#ff0303 0 0) left/50% 100% no-repeat,
+            conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+                #fff 135deg, #666 0 270deg, #aaa 0);
+        background-blend-mode: multiply;
+        --_m:
+            linear-gradient(to bottom right,
+                #0000 calc(0.25*var(--s)), #000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)), #0000 0),
+            conic-gradient(from -90deg at right var(--g) bottom var(--g), #000 90deg, #0000 0);
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        background-size: 50% 50%;
+        -webkit-mask-size: 50% 50%;
+        mask-size: 50% 50%;
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+        animation: l9 1.5s infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
 
-<div class="wrapper">
+        transform: translate(-50%, -50%);
+    }
+
+    @keyframes l9 {
+
+        0%,
+        12.5% {
+            background-position: 0% 0%, 0 0
+        }
+
+        12.6%,
+        37.5% {
+            background-position: 100% 0%, 0 0
+        }
+
+        37.6%,
+        62.5% {
+            background-position: 100% 100%, 0 0
+        }
+
+        62.6%,
+        87.5% {
+            background-position: 0% 100%, 0 0
+        }
+
+        87.6%,
+        100% {
+            background-position: 0% 0%, 0 0
+        }
+    }
+</style>
+
+<div class="loader" id="loader">
+
+</div>
+
+<div class="wrapper " id="wrapper">
     <!-- Sidebar -->
+
+    <script>
+        const wrapperEl = document.getElementById('wrapper');
+           wrapperEl.classList.add('d-none');
+
+          setTimeout(() => {
+            wrapperEl.classList.remove('d-none');
+            const loaderEl = document.getElementById('loader');
+            loaderEl.classList.add('d-none');
+          }, 10000);
+  
+    </script>
+
     <aside id="sidebar" class="position-fixed">
         <div class="vh-100 overflow-auto scroll-bar-left-side">
             <div class="sidebar-logo">
@@ -1038,6 +1115,9 @@
 
 
 
+
+
+
                 <div class="col-md-12 ">
                     <div class="search_chat_main my-1 w-50 mx-auto">
                         <div class="form-group has-search">
@@ -1090,7 +1170,8 @@
                                             style="position: relative; height: 73vh">
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
-                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}" alt="avatar 1">
+                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}"
+                                                    alt="avatar 1">
                                                 <input class="form-check-input select_for_bookmark ms-1"
                                                     style="display:none" type="checkbox">
 
@@ -1123,7 +1204,8 @@
                                                 <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
                                             <div class="d-flex flex-row justify-content-start gap-2">
-                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}" alt="avatar 1">
+                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}"
+                                                    alt="avatar 1">
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
 
@@ -1157,7 +1239,8 @@
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
-                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}" alt="avatar 1">
+                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}"
+                                                    alt="avatar 1">
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
 
@@ -1191,7 +1274,8 @@
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
-                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}" alt="avatar 1">
+                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}"
+                                                    alt="avatar 1">
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
 
@@ -1225,7 +1309,8 @@
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
-                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}" alt="avatar 1">
+                                                <img class="chat_image" src="{{ asset('assets/images/user.png') }}"
+                                                    alt="avatar 1">
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
 
@@ -1257,8 +1342,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1295,8 +1379,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1333,8 +1416,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1371,8 +1453,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1409,8 +1490,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1447,8 +1527,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1485,8 +1564,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
                                             <div class="d-flex flex-row justify-content-start gap-2">
@@ -1523,8 +1601,7 @@
                                                 </div>
                                                 <input class="form-check-input select_for_bookmark ms-1 "
                                                     style="display:none" type="checkbox">
-                                                <img class="chat_image" src="assets/images/logo.jpeg"
-                                                    alt="avatar 1">
+                                                <img class="chat_image" src="assets/images/logo.jpeg" alt="avatar 1">
                                             </div>
 
 
@@ -1534,9 +1611,8 @@
                                             class="text-muted d-flex justify-content-start align-items-center pe-3 bg-search-bar chat_input">
                                             <img class="chat_image mx-2" src="{{ asset('assets/images/user.png') }}"
                                                 alt="avatar 3">
-                                            <input type="text"
-                                                class="form-control form-control-lg bg-transparent" id="search_bar"
-                                                placeholder="Type message">
+                                            <input type="text" class="form-control form-control-lg bg-transparent"
+                                                id="search_bar" placeholder="Type message">
 
                                             <a class="ms-3 send_chat_btn text-light p-2 rounded-3" href="#!"><i
                                                     class="bi bi-send-fill"></i></a>
@@ -1544,9 +1620,8 @@
                                         <div
                                             class="text-muted d-flex justify-content-start align-items-center pe-3 bg-search-bar bookmark_input d-none">
 
-                                            <input type="text"
-                                                class="form-control form-control-lg bg-transparent" id="search_bar"
-                                                placeholder="Add To Bookmark" disabled>
+                                            <input type="text" class="form-control form-control-lg bg-transparent"
+                                                id="search_bar" placeholder="Add To Bookmark" disabled>
 
                                             <a class="ms-3 send_chat_btn text-light p-2 rounded-3"
                                                 data-bs-toggle="modal" href="#addToBookmark"><i
@@ -1573,8 +1648,8 @@
     <!--Main End-->
 
     <!-- profile side modal -->
-    <div class="offcanvas offcanvas-start custom-offcanvas" data-bs-backdrop="false" tabindex="-1"
-        id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start custom-offcanvas" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Profile</h5>
             <button type="button" class="btn-close bg-body btn-close p-1 me-1" data-bs-dismiss="offcanvas"
@@ -1585,10 +1660,10 @@
                 <div class="col-md-12">
                     <div class="text-center position-relative">
 
-                        <img class="rounded-circle profile_image " width="100" height="100"
-                            id="profile_image" src="assets/images/logo.jpeg" alt="" />
-                        <input class="d-none" onchange="loadFile(event)" accept="image/*" type="file"
-                            name="" id="hung22">
+                        <img class="rounded-circle profile_image " width="100" height="100" id="profile_image"
+                            src="assets/images/logo.jpeg" alt="" />
+                        <input class="d-none" onchange="loadFile(event)" accept="image/*" type="file" name=""
+                            id="hung22">
                         <span class="profile_icon"><i class="bi bi-pencil"></i></span>
                     </div>
                 </div>
@@ -1664,8 +1739,8 @@
 
                             <div role="list" class="price_card">
 
-                                <div role="listitem" class="" data-aos="flip-left"
-                                    data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+                                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                                    data-aos-duration="2000">
                                     <div style="background:var(--background)" class="pricing_card_wrap">
                                         <div class="price-card">
                                             <div class="price_card_header">
@@ -1742,8 +1817,8 @@
 
                                 </div>
 
-                                <div role="listitem" class="" data-aos="flip-left"
-                                    data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+                                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                                    data-aos-duration="2000">
                                     <div style="background:var(--background)" class="pricing_card_wrap">
                                         <div class="price-card">
                                             <div class="price_card_header">
@@ -1823,8 +1898,8 @@
 
                                 </div>
 
-                                <div role="listitem" class="" data-aos="flip-left"
-                                    data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+                                <div role="listitem" class="" data-aos="flip-left" data-aos-easing="ease-out-cubic"
+                                    data-aos-duration="2000">
                                     <div style="background:var(--background)" class="pricing_card_wrap">
                                         <div class="price-card">
                                             <div class="price_card_header">
@@ -1915,8 +1990,8 @@
     <!-- price modal end-->
 
     <!-- Delete modal -->
-    <div class="modal fade" id="delete_modal_toggle" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal fade" id="delete_modal_toggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header ">
@@ -1960,8 +2035,8 @@
                     </div>
                 </div>
                 <div class="modal-footer p-2">
-                    <button type="button" class="btn btn-sm text-light"
-                        style="background-color: var(--primary-color);" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm text-light" style="background-color: var(--primary-color);"
+                        data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-sm text-light save_bookmark"
                         style="background-color: var(--btn-background-color);">Save</button>
                 </div>
@@ -1970,6 +2045,7 @@
     </div>
     <!--Add Bookmark End-->
 </div>
+
 
 
 @include('layouts.web.chat_dashboard_footer');

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/bootstrap/css/payment.css">
 </head>
 
+
+
 <body>
     <div class="container ">
         <div class="card">
@@ -18,7 +20,7 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="container preload">
-                            <div class="creditcard" >
+                            <div class="creditcard">
                                 <div class="front">
                                     <div id="ccsingle"></div>
                                     <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg"
@@ -141,9 +143,18 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <form>
-
+                        <form method="post" action="{{ route('register.plans.checkout.submit') }}">
+                            @csrf
                             <div class="form-container">
+                                {{-- setting the plan id as hidden --}}
+                                <div class="field-container">
+                                    <input id="planId" name="planId" type="hidden" value="{{ $encryptedId }}">
+                                </div>
+                                <div class="field-container">
+                                    <input id="pId" name="pId" type="hidden" value="{{ $plan->id }}">
+                                </div>
+
+
                                 <div class="field-container">
                                     <label for="name">First Name</label>
                                     <input id="name" maxlength="20" type="text">
@@ -194,17 +205,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#card-form__button').click(function (e) {
+        //     $('#card-form__button').click(function (e) {
 
-                e.preventDefault();
-                toastr.success('Thanks For your purchase!', '', { timeOut: 3000 })
+        //         e.preventDefault();
+        //         toastr.success('Thanks For your purchase!', '', { timeOut: 3000 })
 
-                setTimeout(() => {
-                    window.location.href = '{{ url("/chat_dashboard") }}';
+        //         setTimeout(() => {
+        //             window.location.href = '{{ url("/chat_dashboard") }}';
 
-                }, 3000);
-            });
-        });
+        //         }, 3000);
+        //     });
+        // });
         window.onload = function () {
 
             const name = document.getElementById("name");

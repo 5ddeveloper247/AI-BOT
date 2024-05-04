@@ -40,13 +40,13 @@ Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']);
 
 
 
-Route::middleware('auth.admin')->group(function(){ 
+Route::middleware('auth.admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/admin/logout', [AdminController::class, 'logoutadmin'])->name('logout');
     Route::put('/admin/plans/{id}', [PlanController::class, 'updatePlanFromAdmin']);
     Route::delete('/admin/plans/{id}', [PlanController::class, 'deleteplanfromadmin']);
     Route::post('/admin/plans',  [PlanController::class, 'createplanfromadmin']);
-    
+
     Route::delete('/plans/{plan}/features', [PlanController::class, 'deleteFeatures']);
     Route::post('/plans/{plan}/features', [PlanController::class, 'storeFeatures']);
     Route::get('/plans/{plan}/features', [PlanController::class, 'getPlanFeatures']);
@@ -127,11 +127,11 @@ Route::middleware('auth.admin')->group(function () {
 // -admin routes ends
 
 
-      //opened user routes
-     // google social authentication links
-    // Route::middleware('auth',function(){
-    Route::get('/user/oauth/google', [RegisteredUserController::class,'redirectToGoogle'])->name('user.oauth.google');
-    Route::get('/user/oauth/google/callback', [RegisteredUserController::class,'handleGoogleCallback'])->name('aibot.user.oauth.google.callback');
+//opened user routes
+// google social authentication links
+// Route::middleware('auth',function(){
+Route::get('/user/oauth/google', [RegisteredUserController::class, 'redirectToGoogle'])->name('user.oauth.google');
+Route::get('/user/oauth/google/callback', [RegisteredUserController::class, 'handleGoogleCallback'])->name('aibot.user.oauth.google.callback');
 
 
 
@@ -166,7 +166,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/helpdesk', [TicketController::class, 'helpDeskUserSide'])->middleware(['auth', 'verified']);
     Route::post('/upload', [TicketController::class, 'uploadChatImage'])->name('upload.image');
     Route::post('/upload/image', [TicketController::class, 'uploadChatImageUser']);
-
 });
 
 
@@ -185,14 +184,15 @@ Route::group(['controller' => FrontendController::class], function () {
     Route::get('/privacy', 'privacy')->name('privacy');
     Route::get('/term-condition', 'termCondition')->name('term-condition');
     Route::get('/plans', 'plans')->name('plans');
-    Route::get('/register/submit/plans', 'registerSubmitPlans')->name('register.submit.plans');
+    Route::post('/register/submit/plans', 'registerSubmitPlans')->name('register.submit.plans');
+    Route::post('/register/plans/checkout/submit', 'registerPlansCheckoutSubmit')->name('register.plans.checkout.submit');
     Route::get('/payment', 'payment')->name('payment');
     Route::get('/chat', 'chat')->name('chat');
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
 
-Route::get('doPayment',[doPaymentController::class,'doPayment']);
+Route::get('doPayment', [doPaymentController::class, 'doPayment']);
 
 
 // });

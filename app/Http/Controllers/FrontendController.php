@@ -10,6 +10,15 @@ use App\Models\Feature;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Payment\doPaymentController;
+use App\Models\User;
+use App\Models\Membership;
+use App\Models\Checkout;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -19,6 +28,18 @@ class FrontendController extends Controller
     // {
     //     return view('home');
     // }
+
+    protected $doPaymentController;
+
+    // Injecting DoPaymentController into the constructor
+    public function __construct(DoPaymentController $doPaymentController)
+    {
+        $this->doPaymentController = $doPaymentController;
+    }
+
+
+
+
 
     public function index()
     {
@@ -87,38 +108,6 @@ class FrontendController extends Controller
 
 
 
-
-
-
-
-
-    public function registerSubmitPlans(Request $request)
-    {
-        // Extract data from the request
-        $plansStr = $request->data;
-        $planId = explode('=', $plansStr)[1];
-
-        // Find the plan
-        $plan = Plan::find($planId);
-        // Extract relevant data from the plan
-        $id = (string)$plan->id; // Convert to string for concatenation
-        $planName = (string)$plan->plan_name; // Convert to string for concatenation
-        $planCreatedAt = (string)$plan->created_at; // Convert to string for concatenation
-
-        // Concatenate data for encryption
-        $encryptionData = $id . $planName . $planCreatedAt;
-        // Encrypt the data
-        $encryptedId = Crypt::encryptString($encryptionData);
-
-        return view('web.payment', ['id' => $encryptedId, 'plan' => $plan]);
-    }
-
-
-
-    public function payment()
-    {
-        return view('web.payment');
-    }
     public function chat()
     {
         return view('web.chat_dashboard');
@@ -199,5 +188,144 @@ class FrontendController extends Controller
         }
 
         // Retrieve the search value from the cookies
+    }
+
+
+
+
+
+    // registeration payment plan handling
+    public function registerSubmitPlans(Request $request)
+    {
+        // Extract data from the request
+        $plansData = $request->all();
+        // Assuming 'Central_Brand_Designer' is at index 1
+        $planId = array_values($plansData)[1];
+
+        // Find the plan  
+        $plan = Plan::find($planId);
+        // Extract relevant data from the plan
+        $id = (string)$plan->id; // Convert to string for concatenation
+        $planName = (string)$plan->plan_name; // Convert to string for concatenation
+        $planCreatedAt = (string)$plan->created_at; // Convert to string for concatenation
+
+
+        // Concatenate data for encryption
+        $encryptionData = $id . $planName . $planCreatedAt;
+
+        // Encrypt the data
+        $encryptedId = Crypt::encryptString($encryptionData);
+
+        Session::put(['plan' => $plan, 'encryptedId' => $encryptedId, 'encryptionData' => $encryptionData]);
+
+        return redirect()->route('payment');
+        // return redirect()->to('payment')->with('encryptedId', 'plan');
+
+    }
+
+
+    public function payment(Request $request)
+    {
+        // Retrieve the encrypted data from the session
+        $encryptedId = session('encryptedId');
+        $encryptedData = session('encryptedData');
+        $plan = session('plan');
+        // Decrypt the data if needed
+        // Pass the decrypted data to the view
+        return view('web.payment', ['plan' => $plan, 'encryptedId' => $encryptedId, 'encryptedData' => $encryptedData]);
+    }
+
+
+
+
+
+    public function registerPlansCheckoutSubmit(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $planId = $data['planId'];
+            $pId = $data['pId'];
+            $plan = Plan::find($pId); //finding the plan by plan id 
+            $id = (string)$plan->id; // Convert to string for concatenation
+            $planName = (string)$plan->plan_name; // Convert to string for concatenation
+            $planCreatedAt = (string)$plan->created_at; // Convert to string for concatenation
+            $encryptionData = $id . $planName . $planCreatedAt;
+            $planIdx = $planId;
+            // DeEncrypt the data
+            $decryptedData = Crypt::decryptString($planIdx);
+
+            if ($decryptedData == $encryptionData) {
+                //payment response
+                $response = $this->doPaymentController->doPayment($request);
+                $responseData = $response->getData();
+
+                if ($responseData->status == 'ok') {
+                    // handle payment 
+
+
+                    try {
+
+                        $planRecord = Plan::find($pId);
+                        $userRecord = User::find(auth()->user()->id);
+                        $membershipRecord = Membership::create([
+                            'user_id' => $userRecord->id,
+                            'plan_id' => $planRecord->id,
+                            'payment_status' => true,
+                        ]);
+
+                        $CheckoutRecord = Checkout::create([
+                            'user_id' => $userRecord->id,
+                            'plan_id' => $planRecord->id,
+                            'membership_id' => $membershipRecord->id,
+                            'amount' => $plan->plan_price,
+                            'status' => true,
+                            'payment_gateway' => "AuthorizeNet",
+                            'transaction_id' => $responseData->Transaction_ID,
+                            'auth_code' => $responseData->Auth_Code,
+                            // 'currency'=>""
+
+                        ]);
+
+                        toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
+                        toastr()->addSuccess("Payment Successful!");
+                        return redirect()->to('chat_dashboard');
+                    } catch (\Exception $e) {
+                        //handle payment exception
+
+                        toastr()->addError("Oops! something went wrong");
+                        return redirect()->back();
+                    }
+                } elseif ($responseData->status == 'failed') {
+                    //handle payment failed
+                    toastr()->addError("Oops! payment has failed");
+                    return redirect()->back();
+                } else {
+
+                    //handle payment exception
+                    toastr()->addError("Oops! something went wrong");
+                    return redirect()->back();
+                }
+            } else {
+
+                toastr()
+                    ->closeButton(true)
+                    ->timeOut(10000)
+                    ->addWarning('Critical Warning! security breache occured');
+
+                //store the breached information here 
+
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+
+            // handle the function exception
+
+            toastr()
+                ->closeButton(true)
+                ->timeOut(10000)
+                ->addError('Oops! something went wrong');
+
+            return redirect()->back();
+        }
     }
 }
