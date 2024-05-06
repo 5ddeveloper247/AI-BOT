@@ -26,7 +26,7 @@ class ProfileController extends Controller
     {
         // Get the authenticated user
         $user = Auth::user();
-
+      
         // Fetch the user's membership
         $membership = Membership::where('user_id', $user->id)->first();
 

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('plan_tittle');
             $table->string('plan_tittle_description');
             $table->string('plan_price');
+            $table->string('plan_type');
+            $table->integer('duration')->comment('Duration of the plan in days')->nullable();
             $table->string('input_word_limit');
             $table->string('output_word_limit');
             $table->timestamps();

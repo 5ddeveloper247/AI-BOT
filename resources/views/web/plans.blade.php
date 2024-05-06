@@ -50,16 +50,38 @@
 
           <form action="{{ route('register.submit.plans') }}" method="POST" id="plan_ai">
             @csrf
+
+
+
+            <label class="card d-none">
+              <input name="planTrial" id="planTrial" class="radio" type="radio" />
+              <span class="plan-details">
+                <span class="plan-type">Trial Plan</span>
+                <span class="plan-cost"><span class="slash">/</span><abbr class="plan-cycle">mo</abbr></span>
+              </span>
+            </label>
             <div class="grid">
+
+
+
+              @if (isset($plans_Bot1->id))
+
               <label class="card">
-                <input name="{{  $plans_Bot1->plan_tittle }}" value="{{ $plans_Bot1->id }}" class="radio" type="radio"
-                  checked />
+                <input name="{{  $plans_Bot1->plan_tittle }}" value="{{ $plans_Bot1->id }}" class="radio"
+                  type="radio" />
                 <span class="plan-details">
                   <span class="plan-type">Bot 1</span>
                   <span class="plan-cost">{{ $plans_Bot1->plan_price }}<span class="slash">/</span><abbr
                       class="plan-cycle">mo</abbr></span>
                 </span>
               </label>
+
+              @endif
+
+
+
+              @if(isset($plans_Bot2->id))
+
               <label class="card">
                 <input name="{{$plans_Bot2->plan_tittle }}" value="{{ $plans_Bot2->id  }}" class="radio" type="radio" />
                 <span class="plan-details" aria-hidden="true">
@@ -68,6 +90,14 @@
                       class="plan-cycle">mo</span></span>
                 </span>
               </label>
+              @endif
+
+              {{-- <div>
+                {{ $plans_Bot1_Plus_Bot2->id }}
+              </div> --}}
+
+              
+              @if(isset($plans_Bot1_Plus_Bot2->id))
               <label class="card">
                 <input name="{{ $plans_Bot1_Plus_Bot2->plan_title }}" value="{{ $plans_Bot1_Plus_Bot2->id }}"
                   class="radio" type="radio" />
@@ -77,6 +107,12 @@
                       class="plan-cycle">mo</span></span>
                 </span>
               </label>
+              @endif
+
+
+
+
+
               <div class="d-flex justify-content-center flex-column flex-md-row gap-3 text-center mt-4">
                 <button class="btn btn-success submit_plan" type="submit">
                   <i class="bi bi-check2-circle"></i> Select Plan
@@ -87,7 +123,7 @@
                 </button>
               </div>
             </div>
-          </form>
+          </f orm>
 
 
 
@@ -407,13 +443,13 @@
 
 
 
-    $(document).ready(function () {
-      $(".try_bot").click(function (e) {
-        e.preventDefault();
+    // $(document).ready(function () {
+    //   $(".try_bot").click(function (e) {
+    //     e.preventDefault();
 
-        window.location.href = "{{ route('payment') }}";
-      });
-    });
+    //     window.location.href = "{{ route('payment') }}";
+    //   });
+    // });
 
     function changeUrl() {
       window.location.href = "{{ route('register') }}";
@@ -460,38 +496,66 @@
   </script> --}}
 
   <script>
-    $(document).ready(function () {
     $(".try_bot").click(function (e) {
-        e.preventDefault();
+  e.preventDefault();
 
-        // Get the value of the selected plan
-        var selectedPlan = $('input[name="plan"]:checked').val();
+  // Check the hidden radio button programmatically
+  $('#planTrial').prop('checked', true);
 
-        // Prepare data to send via AJAX
-        var formData = {
-            plan: selectedPlan,
-            _token: '{{ csrf_token() }}' // Add CSRF token for Laravel
-        };
+  // Get the value of the selected plan after checking
+  var selectedPlan = $('input[name="planTrial"]:checked').val();
 
-        // Send AJAX request
-        $.ajax({
-            url: "{{ url('/start/trial') }}",
-            type: "POST",
-            data: formData,
-            success: function (response) {
-                // Handle success response
-                console.log(response);
-                // Redirect user to the payment page or do something else with the response
-                window.location.href = response.redirectUrl;
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
-                alert('Error occurred while processing the request');
-            }
-        });
-    });
-});
+  // Submit the plan_ai form if a plan is selected
+  if (selectedPlan !== "") {
+    $('#plan_ai').submit();
+    
+  } else {
+    // Handle the case where no plan is selected (optional)
+    alert("something went wrong")
+  }
+});  
+
+
+
+//     $(document).ready(function () {
+//     $(".try_bot").click(function (e) {
+//         e.preventDefault();
+//         $('#planTrial').prop('checked', true);
+
+// // Get the value of the selected plan
+// var selectedPlan = $('input[name="planTrial"]:checked').val();
+// console.log(selectedPlan)
+//         // Get the value of the selected plan
+//         alert(selectedPlan)
+
+//         // Prepare data to send via AJAX
+//         var formData = {
+//             plan: selectedPlan,
+//             _token: '{{ csrf_token() }}' // Add CSRF token for Laravel
+//         };
+
+//         // Send AJAX request
+//         $.ajax({
+//             url: "{{ url('/start/trial') }}",
+//             type: "POST",
+//             data: formData,
+//             success: function (response) {
+//                 // Handle success response
+//                 console.log(response);
+//                 // Redirect user to the payment page or do something else with the response
+//                 window.location.href = response.redirectUrl;
+//             },
+//             error: function (xhr, status, error) {
+//                 // Handle error response
+//                 console.error(xhr.responseText);
+//                 alert('Error occurred while processing the request');
+//             }
+//         });
+//     });
+// });
+
+
+
 
 
   </script>

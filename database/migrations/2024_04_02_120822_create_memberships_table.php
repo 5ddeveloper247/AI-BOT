@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membership', function (Blueprint $table) {
+        Schema::create('memberships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('plan_id')->constrained()->onDelete('cascade');
-            $table->string('payment_status');
-            $table->string('trail')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('payment_status')->nullable();
+            $table->unsignedBigInteger('status')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->string('trial')->nullable();
             $table->string('days')->nullable();
             $table->timestamp('start_trial')->nullable();
             $table->timestamp('end_trial')->nullable();
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('membership');
+        Schema::dropIfExists('memberships');
     }
 };

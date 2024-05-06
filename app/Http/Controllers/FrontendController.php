@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Payment\doPaymentController;
 use App\Models\User;
+use App\Models\Payment;
 use App\Models\Membership;
 use App\Models\Checkout;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Date;
+
 
 
 
@@ -197,9 +200,32 @@ class FrontendController extends Controller
     // registeration payment plan handling
     public function registerSubmitPlans(Request $request)
     {
+
+
+
+
+        // Check if the "planTrial" input is selected
+        if ($request->has('planTrial') && $request->input('planTrial') === 'on') {
+            // Run your code here if "planTrial" is selected
+            $trialResponse = $this->handleTrialPlan($request);   //handle the trial registerations by this function
+            if ($trialResponse) {
+
+                toastr()->addSuccess("Welcome on board");
+                return redirect()->to('chat_dashboard');
+            } else {
+
+                toastr()->addError("Oops! something went wrong");
+                return redirect()->back();
+            }
+        }
+
+
+        //handling the plan registeration
+
         // Extract data from the request
         $plansData = $request->all();
         // Assuming 'Central_Brand_Designer' is at index 1
+      
         $planId = array_values($plansData)[1];
 
         // Find the plan  
@@ -224,6 +250,57 @@ class FrontendController extends Controller
     }
 
 
+    public function handleTrialPlan(Request $request)    //this function is responsible for handling the trial registerations
+    {
+        $plan = Plan::find(1);  //finding the default plan 
+        try {
+
+            $planRecord = Plan::find($plan->id);
+            $userRecord = User::find(auth()->user()->id);
+            $membershipStartDate = Date::now();
+            $planDuration = $plan->duration;
+            $membershipEndDate = $membershipStartDate->addDays($planDuration);
+            $membershipRecord = Membership::create([
+                'user_id' => $userRecord->id,
+                'plan_id' => $planRecord->id,
+                'payment_status' => true,
+                'status' => true,
+                'trial' => true,
+                'days' => $plan->duration,
+                // 'start_date' => Date::now(),
+                // 'end_date' => $membershipEndDate,  
+                'start_trial' => Date::now(),
+                'end_trial' => $membershipEndDate,
+            ]);
+
+            $PaymentRecord = Payment::create([
+                'user_id' => $userRecord->id,
+                'plan_id' => $planRecord->id,
+                'membership_id' => $membershipRecord->id,
+                'amount' => $plan->plan_price,
+                'status' => true,
+                'payment_gateway' => "AuthorizeNet",
+                'transaction_id' => "Trial Plan",
+                'auth_code' => "Trial Plan",
+                // 'currency'=>""
+
+            ]);
+
+            //   toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
+            // toastr()->addSuccess("Payment Successful!");
+            // return redirect()->to('chat_dashboard');
+            return true;
+        } catch (\Exception $e) {
+            //handle payment exception
+            return false;
+            // dd($e);
+            // toastr()->addError("Oops! something went wrong");
+            // return redirect()->back();
+        }
+    }
+
+
+
     public function payment(Request $request)
     {
         // Retrieve the encrypted data from the session
@@ -241,8 +318,10 @@ class FrontendController extends Controller
 
     public function registerPlansCheckoutSubmit(Request $request)
     {
+
         try {
             $data = $request->all();
+
             $planId = $data['planId'];
             $pId = $data['pId'];
             $plan = Plan::find($pId); //finding the plan by plan id 
@@ -259,21 +338,45 @@ class FrontendController extends Controller
                 $response = $this->doPaymentController->doPayment($request);
                 $responseData = $response->getData();
 
+
                 if ($responseData->status == 'ok') {
                     // handle payment 
+
+
 
 
                     try {
 
                         $planRecord = Plan::find($pId);
                         $userRecord = User::find(auth()->user()->id);
+                        $planDuration = $plan->duration;
+                        $membershipStartDate = Date::now();
+                        $membershipEndDate = $membershipStartDate->addDays($planDuration);
+
+
+                        // make the any existing membership expire
+                        $existingMembership = Membership::where('user_id', Auth::user()->id)->first();
+                        if ($existingMembership) {
+                            $existingMembership->status = false;
+                            $existingMembership->save();
+                        }
+
                         $membershipRecord = Membership::create([
                             'user_id' => $userRecord->id,
                             'plan_id' => $planRecord->id,
                             'payment_status' => true,
+                            'status' => true,
+                            'trial' => true,
+                            'days' => $plan->duration,
+                            'start_date' => Date::now(),
+                            'end_date' => $membershipEndDate,
+
                         ]);
 
-                        $CheckoutRecord = Checkout::create([
+
+
+
+                        $PaymentRecord = Payment::create([
                             'user_id' => $userRecord->id,
                             'plan_id' => $planRecord->id,
                             'membership_id' => $membershipRecord->id,
@@ -282,11 +385,13 @@ class FrontendController extends Controller
                             'payment_gateway' => "AuthorizeNet",
                             'transaction_id' => $responseData->Transaction_ID,
                             'auth_code' => $responseData->Auth_Code,
+                            'trial' => false,
+                            //'membership_type'=>" "
                             // 'currency'=>""
 
                         ]);
 
-                        toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
+                        //   toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
                         toastr()->addSuccess("Payment Successful!");
                         return redirect()->to('chat_dashboard');
                     } catch (\Exception $e) {

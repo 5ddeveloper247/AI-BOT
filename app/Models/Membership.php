@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Membership extends Model
 {
     use HasFactory;
-    protected $table = 'membership';
+    protected $table = 'memberships';
     protected $fillable = [
         'user_id',
         'plan_id',
         'payment_status',
-        'trail',
+        'trial',
         'days',
+        'start_date',
+        'end_date',
+        'status',
         'start_trial',
         'end_trial',
     ];

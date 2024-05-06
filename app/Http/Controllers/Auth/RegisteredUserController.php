@@ -59,54 +59,60 @@ class RegisteredUserController extends Controller
 
     // }
 
-//
+    //
 
 
 
-public function store(Request $request): RedirectResponse
-{
-    $validatedData = $request->validate([
-        'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'phone' => ['required', 'string', 'regex:/^[0-9]+$/'],
-        'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'],
-    ], [
-        'name.required' => 'The name field is required.',
-        'name.string' => 'The name must be a string.',
-        'name.regex' => 'The name  only contain letters and spaces.',
-        'email.required' => 'The email field is required.',
-        'email.string' => 'The email must be a string.',
-        'email.email' => 'The email must be a valid email address.',
-        'email.max' => 'The email must not be greater than :max characters.',
-        'email.unique' => 'The email has already been taken.',
-        'phone.required' => 'The phone field is required.',
-        'phone.string' => 'The phone must be a string.',
-        'phone.regex' => 'The phone only contain digits.',
-        'password.required' => 'The password field is required.',
-        'password.string' => 'The password must be a string.',
-        'password.min' => 'The password must be at least :min characters.',
-        'password.confirmed' => 'The password confirmation does not match.',
-        'password.regex' => 'The password must contain at least one letter, one number, and one special character.',
-    ]);
+    public function store(Request $request): RedirectResponse
+    {
 
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'password' => Hash::make($request->password),
-    ]);
-
-    event(new Registered($user));
-
-    Auth::login($user);
-
-    // Redirect the user if registration is successful
-    return redirect()->route('plans');
-}
+      
 
 
 
 
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]+$/'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'],
+        ], [
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name must be a string.',
+            'name.regex' => 'The name  only contain letters and spaces.',
+            'email.required' => 'The email field is required.',
+            'email.string' => 'The email must be a string.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.max' => 'The email must not be greater than :max characters.',
+            'email.unique' => 'The email has already been taken.',
+            'phone.required' => 'The phone field is required.',
+            'phone.string' => 'The phone must be a string.',
+            'phone.regex' => 'The phone only contain digits.',
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password must be a string.',
+            'password.min' => 'The password must be at least :min characters.',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'password.regex' => 'The password must contain at least one letter, one number, and one special character.',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
+        
+        
+
+        
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        // Redirect the user if registration is successful
+        return redirect()->route('plans');
+    }
 
 
 
@@ -115,11 +121,15 @@ public function store(Request $request): RedirectResponse
 
 
 
- // google authentication
 
 
 
- public function redirectToGoogle(Request $request)
+
+    // google authentication
+
+
+
+    public function redirectToGoogle(Request $request)
     {
         // $ip = $request->ip();
         // dd($ip);
@@ -157,18 +167,18 @@ public function store(Request $request): RedirectResponse
             $profileData = $profileResponse->json();
 
             // Check if required data is present in the response
-            if(isset($profileData['name'], $profileData['email'], $profileData['id'])){
+            if (isset($profileData['name'], $profileData['email'], $profileData['id'])) {
                 // Check if the user already exists in the database
                 $user = User::where('email', $profileData['email'])->first();
                 if ($user) {
-                   // dd(Hash::check($profileData['id'], $user->password));
+                    // dd(Hash::check($profileData['id'], $user->password));
                     // If the user exists, check if the password matches
                     if (Hash::check($profileData['id'], $user->password)) {
                         // If the password matches, log the user in
                         Auth::login($user);
                     } else {
                         // If the password does not match, return an error message
-                        return redirect()->route('register')->with(['googleSocialAutherror'=>"Invalid credentials"]);
+                        return redirect()->route('register')->with(['googleSocialAutherror' => "Invalid credentials"]);
                     }
                 } else {
                     // If the user does not exist, create a new account
@@ -187,14 +197,11 @@ public function store(Request $request): RedirectResponse
                 return redirect()->route('plans');
             } else {
                 // If required data is not present, redirect to register route with error message
-                return redirect()->route('register')->with(['googleSocialAutherror'=>"Incomplete user data"]);
+                return redirect()->route('register')->with(['googleSocialAutherror' => "Incomplete user data"]);
             }
         } catch (\Exception $e) {
             // Redirect to the register route if an error occurs
-            return redirect()->route('register')->with(['googleSocialAutherror'=>"Something went wrong"]);
+            return redirect()->route('register')->with(['googleSocialAutherror' => "Something went wrong"]);
         }
     }
-
-
-
 }
