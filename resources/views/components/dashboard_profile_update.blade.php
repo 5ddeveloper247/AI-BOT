@@ -12,16 +12,15 @@
 
                     <img class="rounded-circle profile_image " width="100" height="100" id="profile_image"
                         src="assets/images/logo.jpeg" alt="" />
-                    <input class="d-none" onchange="loadFile(event)" accept="image/*" type="file" name=""
-                        id="hung22">
+                    <input class="d-none" onchange="loadFile(event)" accept="image/*" type="file" name="" id="hung22">
                     <span class="profile_icon"><i class="bi bi-pencil"></i></span>
                 </div> --}}
                 <div class="text-center position-relative">
                     <img class="rounded-circle profile_image" width="100" height="100" id="profile_image"
                         src="{{ $user->picture ? asset(Storage::url($user->picture)) : asset('assets/images/logo.jpeg') }}"
                         alt="Profile Image" />
-                    <input class="d-none" onchange="uploadImage(event)" accept="image/*" type="file" name="profile_image"
-                        id="profile_image_input">
+                    <input class="d-none" onchange="uploadImage(event)" accept="image/*" type="file"
+                        name="profile_image" id="profile_image_input">
                     <label for="profile_image_input" class="profile_icon"><i class="bi bi-pencil"></i></label>
                 </div>
 
@@ -29,24 +28,24 @@
             </div>
 
             @if (session('status') === 'profile-updated')
-                <style>
-                    .custom-alert {
-                        position: fixed;
-                        top: 20px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background-color: #d9f8d7;
-                        /* Green color */
-                        color: #1c7222;
-                        padding: 15px 20px;
-                        border-radius: 5px;
-                        border: 1px solid #4ae73c;
-                        /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
-                        z-index: 9999;
-                    }
-                </style>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+            <style>
+                .custom-alert {
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #d9f8d7;
+                    /* Green color */
+                    color: #1c7222;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    border: 1px solid #4ae73c;
+                    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+                    z-index: 9999;
+                }
+            </style>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
                         // Create a custom alert element
                         var profileUpdatedAlert = document.createElement('div');
                         profileUpdatedAlert.className = 'custom-alert success';
@@ -60,12 +59,12 @@
                             profileUpdatedAlert.style.display = 'none';
                         }, 3000);
                     });
-                </script>
+            </script>
             @endif
 
             <div class="col-md-12">
                 <!-- Your existing HTML form structure -->
-                <form method="post" action="{{ url('/profile/update') }}">
+                <form method="post" action="{{ route('user.profile.update') }}">
                     @csrf
                     @method('patch')
 
@@ -78,11 +77,19 @@
                         <input type="email" class="form-control form-control-sm" id="inputEmail" name="email"
                             aria-describedby="emailHelp">
                     </div>
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     {{-- <div class="mb-3">
-                    <label for="inputPassword" class="form-label form_label">Password</label>
-                    <input type="password" class="form-control form-control-sm" id="inputPassword"
-                        name="password">
-                </div> --}}
+                        <label for="inputPassword" class="form-label form_label">Password</label>
+                        <input type="password" class="form-control form-control-sm" id="inputPassword" name="password">
+                    </div> --}}
 
                     <button type="submit" class="btn btn-sm float-end ms-1 text-light"
                         style="background-color: var(--btn-background-color);">Save</button>
@@ -93,7 +100,10 @@
 
             </div>
 
-            <div class="col-md-12 my-3">
+
+
+
+            {{-- <div class="col-md-12 my-3">
                 <h6>Update Payment Card</h6>
 
                 <form>
@@ -118,27 +128,27 @@
                     <button class="btn btn-sm btn-dark float-end" data-bs-dismiss="offcanvas"
                         aria-label="Close">Cancel</button>
                 </form>
-            </div>
+            </div> --}}
 
             @if (session('status') === 'password-updated')
-                <style>
-                    .custom-alert {
-                        position: fixed;
-                        top: 20px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background-color: #d9f8d7;
-                        /* Green color */
-                        color: #1c7222;
-                        padding: 15px 20px;
-                        border-radius: 5px;
-                        border: 1px solid #4ae73c;
-                        /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
-                        z-index: 9999;
-                    }
-                </style>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+            <style>
+                .custom-alert {
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #d9f8d7;
+                    /* Green color */
+                    color: #1c7222;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    border: 1px solid #4ae73c;
+                    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+                    z-index: 9999;
+                }
+            </style>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
                         // Create a custom alert element
                         var profileUpdatedAlert = document.createElement('div');
                         profileUpdatedAlert.className = 'custom-alert success';
@@ -152,11 +162,24 @@
                             profileUpdatedAlert.style.display = 'none';
                         }, 3000);
                     });
-                </script>
+            </script>
             @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="col-md-12 my-3">
                 <h6>Update Password</h6>
-
 
 
                 <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
@@ -169,19 +192,24 @@
                             class="form-control form-control-sm" {{-- class="mt-1 block w-full" --}}
                             autocomplete="current-password" />
 
-                        {{-- <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" /> --}}
-                        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2 alert-error" id="currentPasswordError" />
+                        {{--
+                        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" /> --}}
+                        <x-input-error :messages="$errors->updatePassword->get('current_password')"
+                            class="mt-2 alert-error" id="currentPasswordError" />
 
 
                     </div>
 
                     <div>
                         <x-input-label for="update_password_password" :value="__('New Password')" />
-                        <x-text-input id="update_password_password" name="password" type="password"
-                            {{-- class="mt-1 block w-full"  --}} class="form-control form-control-sm" autocomplete="new-password" />
+                        <x-text-input id="update_password_password" name="password" type="password" {{--
+                            class="mt-1 block w-full" --}} class="form-control form-control-sm"
+                            autocomplete="new-password" />
 
-                        {{-- <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" /> --}}
-                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2 alert-error" id="passwordError" />
+                        {{--
+                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" /> --}}
+                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2 alert-error"
+                            id="passwordError" />
 
                     </div>
 

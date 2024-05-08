@@ -122,6 +122,12 @@
         setFocusAtEnd(chatNameInput);
     });
 
+
+
+
+
+
+
     $(".close_record").on("click", function () {
         const parentDiv = $(this).closest(".sidebar-item").find(".chat_name");
         const chatNameInput = $(this)
@@ -147,6 +153,13 @@
         chatNameInput.addClass("d-none");
         parentDiv.text(currentText);
     });
+
+
+
+
+
+
+
 
     const toggler = document.querySelector(".toggle_btn");
 
@@ -229,7 +242,7 @@
     }
     LoadBotsView("bot1");
 
-    $(".search_input_main").on("keyup", function(event) {
+    $(".search_input_main").on("keyup", function (event) {
         // Check if the pressed key is Enter (key code 13)
         if (event.keyCode === 13) {
             // Trigger the same action as clicking the button
@@ -247,6 +260,7 @@
         scrollToLastChat();
         $(".scrollable-content").empty();
     });
+
     $(".close_new_chat").on("click", function () {
         $(".main_meraki").removeClass("d-none");
         $(".chat_meraki").addClass("d-none");
@@ -374,15 +388,45 @@
 
 
 
+
+
+    ///invoke keyup to send the input 
+
+    $("#messaeg_bar").on("keyup", function (event) {
+        // Check if the pressed key is Enter (key code 13)
+
+        if (event.keyCode === 13) {
+            // Trigger the same action as clicking the button
+            console.log("jkfdsj")
+            $(".send_chat_btn").click();
+
+        }
+    });
+
+
+
+    // isssue with this start_new_chat
+
+
+
+
+
+
+
+
+
+
+
+
     $(document).ready(function () {
         let isNewChat = false; // Initialize isNewChat flag
-        let chatId = null; // Initialize chatId variable
-
         $(".start_new_chat").on("click", function () {
             isNewChat = true; // Set isNewChat to true when starting a new chat
             chatId = null; // Reset chatId when starting a new chat
             console.log(chatId);
         });
+        let chatId = null; // Initialize chatId variable
+
 
         $(".send_chat_btn").on("click", function (e) {
             e.preventDefault();
@@ -391,12 +435,12 @@
             console.log(chatId);
             if (message !== "") {
                 // Make Axios POST request to store the message
-                axios.post(baseUrl+"/store-message/user" ,{
+                axios.post(baseUrl + "/store-message/user", {
 
-                        message: message,
-                        new_chat: isNewChat,
-                        chat_id: chatId, // Pass chatId with the request
-                    })
+                    message: message,
+                    new_chat: isNewChat,
+                    chat_id: chatId, // Pass chatId with the request
+                })
                     .then(function (response) {
                         // Handle success response if needed
                         console.log(response.data);
@@ -422,12 +466,12 @@
         function sendAdminReply(chatId) {
             // Make Axios POST request to send the admin's reply
 
-            axios.post(baseUrl+"/send-admin-reply",{
+            axios.post(baseUrl + "/send-admin-reply", {
 
 
-                    bot_reply: "i am your ai boat your reply message here", // Admin's reply message
-                    chat_id: chatId, // Pass chatId with the request
-                })
+                bot_reply: "i am your ai boat your reply message here", // Admin's reply message
+                chat_id: chatId, // Pass chatId with the request
+            })
                 .then(function (response) {
                     // Handle success response if needed
                     console.log(
@@ -484,6 +528,11 @@
             `);
         }
 
+
+
+
+
+
         // Function to update the chat window with the sent message
         function updateChatWindow(userMessage, botReply) {
             // Append the user's message to the chat window
@@ -531,7 +580,7 @@
         // Delete the record when confirmed in the modal
         $(".btn-delete").click(function () {
             var chatId = $(this).data("chat-id");
-            axios.delete(baseUrl+"/delete-chat/"+chatId)
+            axios.delete(baseUrl + "/delete-chat/" + chatId)
                 .then(function (response) {
                     // Remove the chat item from the list
                     $("#chat" + chatId).remove();
@@ -546,7 +595,7 @@
         // Function to fetch chat messages for a given chat ID
         function fetchChatMessages(chatId) {
 
-            axios.get(baseUrl+"/fetch-chat-messages/"+chatId)
+            axios.get(baseUrl + "/fetch-chat-messages/" + chatId)
                 .then(function (response) {
                     // Handle success response
                     chatId = response.data.chat_id;
@@ -608,6 +657,39 @@
             fetchChatMessages(chatId);
         });
     });
+
+
+
+
+
+
+    // making ajax call to store the input word cound 
+
+    // $(document).ready(function () {
+
+    //     $("#sendButton").on("click", function () {
+    //         // Get the value from the input field
+    //         var inputData = $("#inputField").val();
+
+    //         // Make AJAX call
+    //         $.ajax({
+    //             url: "{{route('savewordcount.user')}}",
+    //             type: "POST", // or "GET" depending on your requirements
+    //             data: {
+    //                 data: inputData // Send the input data as a parameter named "data"
+    //             },
+    //             success: function (response) {
+    //                 // Handle success response
+    //                 console.log("Success:", response);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 // Handle error response
+    //                 console.error("Error:", xhr, status, error);
+    //             }
+    //         });
+    //     });
+    // });
+
 
 
 })();

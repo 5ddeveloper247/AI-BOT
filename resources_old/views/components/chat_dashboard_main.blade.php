@@ -146,7 +146,7 @@
                                                     class="bi bi-send-fill"></i></a>
                                         </div>
                                         <div
-                                            class="text-muted d-flex justify-content-start align-items-center pe-3 bg-search-bar bookmark_input d-none">
+                                            class="text-muted d-flex justify-content-start align-items-center pe-3 bg-search-bar bookmark_input ">
                                             <input type="text" class="form-control form-control-lg bg-transparent"
                                                 id="search_bar" placeholder="Add To Bookmark" disabled>
                                             <a class="ms-3 send_chat_btn text-light p-2 rounded-3"
@@ -164,6 +164,9 @@
         <!--Chat End-->
 
 
+
+
+        
 
         <footer class="footer mt-auto py-1">
             <p class="copyright my-1">

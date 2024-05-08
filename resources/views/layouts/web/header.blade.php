@@ -1,5 +1,5 @@
- <!-- header -->
- <header id="header" class="fixed-top">
+<!-- header -->
+<header id="header" class="fixed-top">
 
     <!-- .navbar -->
     <nav id="navbar" class="navbar nav-tb">
@@ -22,17 +22,21 @@
                 </ul>
             </li>
 
-            <li><a class="nav-link scrollto {{ is_active_route('/pricing') }}" href="{{ route('pricing') }}">Pricing</a></li>
+            <li><a class="nav-link scrollto {{ is_active_route('/pricing') }}" href="{{ route('pricing') }}">Pricing</a>
+            </li>
             <li><a class="nav-link scrollto {{ is_active_route('/tools') }}" href="{{ route('tools') }}">Tools</a></li>
-            <li><a class="nav-link scrollto {{ is_active_route('/support') }}" href="{{ route('support') }}">Support</a></li>
-            <li><a class="nav-link scrollto {{ is_active_route('/contact') }}" href="{{ route('contact') }}">Contact</a></li>
+            <li><a class="nav-link scrollto {{ is_active_route('/support') }}" href="{{ route('support') }}">Support</a>
+            </li>
+            <li><a class="nav-link scrollto {{ is_active_route('/contact') }}" href="{{ route('contact') }}">Contact</a>
+            </li>
             <li><a class="nav-link scrollto {{ is_active_route('/faqs') }}" href="{{ route('faqs') }}">Faqs</a></li>
         </ul>
         <div class="nav-right">
             @guest
-                <a class="login scrollto1 me-2" href="{{ url('/login') }}">Login</a>
+            <a class="login scrollto1 me-2" href="{{ url('/login') }}">Login</a>
             @else
-                <a class="login scrollto1 me-2" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <a class="login scrollto1 me-2" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             @endguest
 
             {{-- <button class="contact_us scrollto" href="#">
@@ -42,12 +46,15 @@
                 <span class="contact"> Start free 7-day trial</span>
 
             </button> --}}
+            @if(App\Helpers\UserHelpers::hasUserMembership() == false)
             <button class="contact_us scrollto d-block" onclick="window.location='{{ route('register') }}'">
                 <span class="icon-container">
                     <i class="bi bi-arrow-right-circle-fill"></i>
                 </span>
-                <span class="contact"> Start free 7-day trial</span>
+                <span class="contact">Start free 7-day trial</span>
             </button>
+            @endif
+
 
         </div>
         <i class="bi mobile-nav-toggle bi-list"></i>

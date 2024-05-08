@@ -24,12 +24,7 @@
         <ul>
             <li>
                 <a href="{{ url('/admin/home/logo') }}"><i class="bx bx-radio-circle"></i>Logo</a>
-                {{-- <a href="{{ url('/admin/home/section-1') }}"><i class="bx bx-radio-circle"></i>Section-1</a>
-                <a href="{{ url('/admin/home/section-2') }}"><i class="bx bx-radio-circle"></i>Section-2</a>
-                <a href="{{ url('/admin/home/section-3') }}"><i class="bx bx-radio-circle"></i>Section-3</a>
-                <a href="{{ url('/admin/home/section-4') }}"><i class="bx bx-radio-circle"></i>Section-4</a>
-                <a href="{{ url('/admin/home/section-5') }}"><i class="bx bx-radio-circle"></i>Section-5</a>
-                <a href="{{ url('/admin/home/section-6') }}"><i class="bx bx-radio-circle"></i>Footer</a> --}}
+
             </li>
         </ul>
     </li>
@@ -47,7 +42,7 @@
         </a>
         <ul>
             <li>
-                <a href="#"><i class="bx bx-radio-circle"></i>Users</a>
+                <a href="{{ route('admin.list.admins.view') }}"><i class="bx bx-radio-circle"></i>Admins</a>
 
             </li>
         </ul>
@@ -102,12 +97,7 @@
             <li>
                 <a href="{{ url('/admin/pricing/section-2') }}" id="Pricing-link-section-2" href="#"><i
                         class='bx bx-purchase-tag-alt'></i>Plans</a>
-                {{-- <a href="{{ url('/admin/pricing/section-1') }}" id="Pricing-link-section-1" href="#"><i
-                        class="bx bx-radio-circle"></i>Section-1</a>
-                <a href="{{ url('/admin/pricing/section-3') }}" id="Pricing-link-section-3" href="#"><i
-                        class="bx bx-radio-circle"></i>Section-3</a>
-                <a href="{{ url('/admin/pricing/section-4') }}" id="Pricing-link-section-4" href="#"><i
-                        class="bx bx-radio-circle"></i>Section-4</a> --}}
+
 
             </li>
 
@@ -218,6 +208,21 @@
         </ul>
     </li>
 
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-chat'></i>
+            </div>
+            <div class="menu-title">Payment History</div>
+        </a>
+        <ul>
+
+            <li>
+                <a href="{{ route('admin.payment.history.view') }}" id="Chat-link"><i
+                        class="bx bx-radio-circle"></i>Payment History</a>
+            </li>
+        </ul>
+    </li>
+
     {{-- Payment Api Settings --}}
     <li>
         <a href="javascript:;" class="has-arrow">
@@ -227,7 +232,7 @@
         </a>
         <ul>
             <li>
-                <a href="#"><i class='bx bx-cog'></i>Payment Api Settings</a>
+                <a href="{{ route('admin.paymentapisettings.view') }}"><i class='bx bx-cog'></i>Payment Api Settings</a>
 
             </li>
         </ul>
@@ -243,8 +248,7 @@
         </a>
         <ul>
             <li>
-                <a href="#"><i class='bx bxs-cog'></i>Bot Api Settings </a>
-
+                <a href="{{ route('admin.botConfiguration.view') }}"><i class='bx bxs-cog'></i>Bot Api Settings </a>
             </li>
         </ul>
     </li>
@@ -256,11 +260,12 @@
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class='bx bx-sitemap'></i>
             </div>
-            <div class="menu-title">Site Configurations </div>
+            <div class="menu-title">Site Configurations</div>
         </a>
         <ul>
             <li>
-                <a href="#"><i class='bx bx-sitemap'></i>Site Configurations </a>
+                <a href="{{ route('admin.siteconfiguration.view') }}"><i class='bx bx-sitemap'></i>Site Configurations
+                </a>
 
             </li>
         </ul>

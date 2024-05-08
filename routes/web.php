@@ -11,6 +11,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\AdminController2;
+use App\Http\Controllers\PaymentApiSettingsController;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyMail;
@@ -79,12 +80,10 @@ Route::controller(AdminController::class)->middleware('auth.admin')->group(funct
     Route::get('/admin/home/section-4', 'home')->name('admin.home.Section.5');
     Route::get('/admin/home/section-5', 'home')->name('admin.home.Section.6');
     Route::get('/admin/home/section-6', 'home')->name('admin.home.Section.7');
-
     Route::get('/admin/products/section-1', 'products')->name('admin.products.Section.1');
     Route::get('/admin/products/section-2', 'products')->name('admin.products.Section.2');
     Route::get('/admin/add/products', 'products')->name('admin.add.products');
     Route::get('/admin/list/products', 'products')->name('admin.products.lisitng');
-
     Route::get('/admin/pricing/section-1', 'pricing')->name('admin.pricing.section.1');
     Route::get('/admin/pricing/section-2', 'pricing')->name('admin.pricing.section.2');
     Route::get('/admin/pricing/section-3', 'pricing')->name('admin.pricing.section.3');
@@ -104,6 +103,13 @@ Route::controller(AdminController::class)->middleware('auth.admin')->group(funct
     Route::get('/admin/contact/section-4', 'inbox')->name('admin.contact.section.4');
     Route::post('/send-reply', 'sendReply')->name('send.reply');
     Route::get('/admin/faqs', 'faqs')->name('admin.faqs');
+    Route::get('/admin/siteconfig/view', 'adminSiteConfiguration')->name('admin.siteconfiguration.view');
+    Route::get('/admin/botapi/settings/view', 'adminBotConfigration')->name('admin.botConfiguration.view');
+    Route::post('/admin/botapi/settings/submit', 'adminBotConfigrationSubmit')->name('admin.botConfiguration.submit');
+    Route::get('/admin/payment/settings/view', 'adminPaymentApiSettings')->name('admin.paymentapisettings.view');
+    Route::get('/admin/payment/history/view', 'adminPaymentHistory')->name('admin.payment.history.view');
+    Route::post('/admin/payment/settings/submit', 'adminPaymentApiSettingsStore')->name('admin.paymentapisettings.submit');
+    Route::get('/admin/list/admins', 'listAdmins')->name('admin.list.admins.view');
 });
 
 
@@ -145,7 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/chat/dashboard', [FrontendController::class, 'USchatDashboard'])->name('chat.dashboard');
 
     Route::get('/profile/edit', [ProfileController::class, 'edit']);
-    Route::patch('/profile/update', [ProfileController::class, 'update']);
+    Route::patch('/user/profile/update', [ProfileController::class, 'update'])->name('user.profile.update');
     Route::delete('/profile/destory', [ProfileController::class, 'destroy']);
     Route::post('/upload-profile-image', [ProfileController::class, 'uploadProfileImage']);
     Route::get('/chat_dashboard', [ProfileController::class, 'showProfile'])->name('chat_dashboard');

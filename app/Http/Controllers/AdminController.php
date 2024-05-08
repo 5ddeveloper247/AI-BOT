@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Validator;
 use App\Repositories\ContactRepositoryInterface;
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\BotApiSettings;
+use App\Models\PaymentApiSettings;
 use App\Models\Plan;
+use App\Models\Payment;
 use App\Models\FAQ;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +20,9 @@ use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Database\QueryException;
 
 class AdminController extends Controller
 {
@@ -63,18 +69,31 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::all();
+        $users = User::where('role', 'user')->get();
         return view('admin.pages.user', compact('users')); // Make sure you have imported the User model
     }
 
+
+
     public function toggleActive(Request $request, $userId)
     {
-        $user = User::findOrFail($userId);
-        $user->active = !$user->active;
-        $user->save();
-
-        return response()->json(['message' => 'User active state toggled successfully']);
+        try {
+            $user = User::findOrFail($userId);
+            $user->active = !$user->active;
+            $user->save();
+            return response()->json(['message' => 'User active state toggled successfully']);
+        } catch (ModelNotFoundException $e) {
+            // User not found
+            return response()->json(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
+        } catch (\Exception $e) {
+            // Other unexpected errors
+            return response()->json(['error' => 'An unexpected error occurred'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
+
+
+
+
 
     public function destroy($userId)
     {
@@ -96,7 +115,7 @@ class AdminController extends Controller
 
     public function pricing()
     {
-        
+
         // Assuming you have a Plan model and you retrieve plans from the database
         $plans = Plan::all(); // Fetch plans from the database, adjust this according to your schema
         // Pass the plans data to the view
@@ -427,11 +446,93 @@ class AdminController extends Controller
     }
 
 
- 
+
+
+
+
+    // site configurations
+
+    public function adminSiteConfiguration(Request $request)
+    {
+
+        return view('admin.pages.siteConfiguration');
+    }
+
+
+    public function adminBotConfigration(Request $request)
+    {
+
+        $record = BotApiSettings::all();
+        return view('admin.pages.botApiSettings', ['data' => $record]);
+    }
+
+    public function adminBotConfigrationSubmit(Request $request)
+    {
+
+        try {
+            $data = $request->all();
+            $record = BotApiSettings::create([
+                'client_id' => $data['cientId'],
+                'client_secret' => $data['clientSecret'], // Corrected field name
+                'type' => $data['type'], // Make sure $data['type'] contains 'live' or 'sandbox'
+                'status' => isset($data['status']) && $data['status'] == 'on' ? 1 : 0, // Check if 'status' is set and 'on'
+            ]);
+            return redirect()->back()->with('success', 'Payment Api Settings Added Successfully');
+        } catch (QueryException $e) {
+            // Log the error
+
+            // Handle the error, e.g., return an error message to the user
+            return redirect()->back()->with('failed', 'Failed to add settings');
+        }
+    }
 
 
 
 
 
+    public function adminPaymentApiSettings(Request $request)
+    {
+        $data = PaymentApiSettings::all();
+        return view('admin.pages.paymentApiSettings', ['data' => $data]);
+    }
 
+
+
+
+    public function adminPaymentHistory(Request $request)
+    {
+        $payments = Payment::with('user', 'plan', 'membership')->get();
+        // dd($payments[0]);
+        $users = User::all();
+        return view('admin.pages.paymentHistory', ['payments' => $payments, 'users' => $users]);
+    }
+
+
+    public function adminPaymentApiSettingsStore(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $record = PaymentApiSettings::create([
+                'name' => $data['addName'],
+                'transaction_key' => $data['addTransactionKey'], // Corrected field name
+                'type' => $data['type'], // Make sure $data['type'] contains 'live' or 'sandbox'
+                'status' => isset($data['status']) && $data['status'] == 'on' ? 1 : 0, // Check if 'status' is set and 'on'
+            ]);
+            return redirect()->back()->with('success', 'Payment Api Settings Added Successfully');
+        } catch (QueryException $e) {
+            // Log the error
+
+            // Handle the error, e.g., return an error message to the user
+            return redirect()->back()->with('failed', 'Failed to add settings');
+        }
+    }
+
+
+
+    public function listAdmins(Request $request)
+    {
+
+        $users = User::where('role', 'admin')->get();
+        return view('admin.pages.listAdmins', compact('users'));
+    }
 }

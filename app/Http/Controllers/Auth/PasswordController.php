@@ -26,4 +26,4 @@ class PasswordController extends Controller
 
         return back()->with('status', 'password-updated');
     }
-}
+} 
