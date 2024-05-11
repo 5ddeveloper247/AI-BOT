@@ -201,10 +201,10 @@
         </a>
         <ul>
 
-            {{-- <li>
+            <li>
                 <a href="{{ url('/admin/chat/section-1') }}" id="Chat-link"><i
-                        class="bx bx-radio-circle"></i>Section-1</a>
-            </li> --}}
+                        class="bx bx-radio-circle"></i>Support</a>
+            </li>
         </ul>
     </li>
 

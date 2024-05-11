@@ -16,7 +16,11 @@ use App\Http\Controllers\PaymentApiSettingsController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyMail;
 use App\Mail\ReplyMail;
+use App\Models\Chat;
 use App\Http\Controllers\Payment\doPaymentController;
+use App\Http\Controllers\SiteConfigurationController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +41,7 @@ use App\Http\Controllers\Payment\doPaymentController;
 //opened admin routes
 
 Route::get('admin/login', [AdminController::class, 'adminLogin']);
-Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']);
+Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']); 
 
 
 
@@ -110,8 +114,12 @@ Route::controller(AdminController::class)->middleware('auth.admin')->group(funct
     Route::get('/admin/payment/history/view', 'adminPaymentHistory')->name('admin.payment.history.view');
     Route::post('/admin/payment/settings/submit', 'adminPaymentApiSettingsStore')->name('admin.paymentapisettings.submit');
     Route::get('/admin/list/admins', 'listAdmins')->name('admin.list.admins.view');
+   
 });
 
+Route::controller(SiteConfigurationController::class)->middleware('auth.admin')->group(function(){
+    Route::post('/admin/site/config/submit','adminSiteConfigSubmit')->name('admin.site.config.submit');
+});
 
 
 
@@ -143,13 +151,11 @@ Route::get('/user/oauth/google/callback', [RegisteredUserController::class, 'han
 
 //user protected routes
 Route::middleware('auth')->group(function () {
-
     // Route for handling AJAX request to send input value
     Route::post('/user/dashboard', [FrontendController::class, 'CTdashboard'])->name('user.dashboard');
 
     // Route for rendering the dashboard page
     Route::get('/user/chat/dashboard', [FrontendController::class, 'USchatDashboard'])->name('chat.dashboard');
-
     Route::get('/profile/edit', [ProfileController::class, 'edit']);
     Route::patch('/user/profile/update', [ProfileController::class, 'update'])->name('user.profile.update');
     Route::delete('/profile/destory', [ProfileController::class, 'destroy']);
@@ -197,6 +203,12 @@ Route::group(['controller' => FrontendController::class], function () {
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
+
+Route::get('user/chat/all', function () {
+    $chats = Chat::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+    return response()->json(['chats' => $chats]);
+})->name('user.chat.all');
 
 Route::get('doPayment', [doPaymentController::class, 'doPayment']);
 

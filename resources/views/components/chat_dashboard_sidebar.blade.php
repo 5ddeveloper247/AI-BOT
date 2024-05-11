@@ -35,7 +35,7 @@
                 <i class="bi bi-plus start_new_chat text-white"></i>
                 <i class="bi bi-box-arrow-left close_new_chat d-none text-white"></i>
                 <i class="bi bi-bookmarks text-white"></i>
-                <i class="bi bi-arrow-repeat text-white"></i>
+                <i class="bi bi-arrow-repeat text-white " id="chatReloadSidebarBtn"></i>
             </div>
         </div>
         <div class="search_chat my-1 mx-2">
@@ -74,34 +74,42 @@
             @endforeach
         </ul>
 
- --}}
- <ul id="chatlist" class="sidebar-nav">
-    @foreach ($chats as $chat)
-    <li class="sidebar-item chat-item" id="chat{{ $chat->id }}" data-chat-id="{{ $chat->id }}">
-        <div class="sidebar-link">
-            <i class="bi bi-chat-left me-2"></i>
-            <label class="chat_name">{{ $chat->user_chat }}</label>
-            <input type="text" class="chat_name_input d-none">
-        </div>
-        <div class="d-flex action_btn d-none">
-            <a type="button" class="edit_field">
-                <i class="bi bi-pencil-square text-white me-1"></i>
-            </a>
-            <a type="button" class="delete_record" data-chat-id="{{ $chat->id }}">
-                <i class="bi bi-trash text-white"></i>
-            </a>
-        </div>
-        <div class="d-flex action_save_btn d-none">
-            <a type="button" class="save_field">
-                <i class="bi bi-check2 text-white me-1"></i>
-            </a>
-            <a type="button" class="close_record">
-                <i class="bi bi-x text-white"></i>
-            </a>
-        </div>
-    </li>
-    @endforeach
-</ul>
+        --}}
+
+
+        <ul id="chatlist" class="sidebar-nav">
+            {{-- @foreach ($chats as $chat)
+            <li class="sidebar-item chat-item" id="chat{{ $chat->id }}" data-chat-id="{{ $chat->id }}">
+                <div class="sidebar-link">
+                    <i class="bi bi-chat-left me-2"></i>
+                    <label class="chat_name">{{ $chat->user_chat }}</label>
+                    <input type="text" class="chat_name_input d-none">
+                </div>
+                <div class="d-flex action_btn d-none">
+                    <a type="button" class="edit_field">
+                        <i class="bi bi-pencil-square text-white me-1"></i>
+                    </a>
+                    <a type="button" class="delete_record" data-chat-id="{{ $chat->id }}">
+                        <i class="bi bi-trash text-white"></i>
+                    </a>
+                </div>
+                <div class="d-flex action_save_btn d-none">
+                    <a type="button" class="save_field">
+                        <i class="bi bi-check2 text-white me-1"></i>
+                    </a>
+                    <a type="button" class="close_record">
+                        <i class="bi bi-x text-white"></i>
+                    </a>
+                </div>
+            </li>
+            @endforeach --}}
+        </ul>
+
+
+
+
+
+
         <div class="fixed-bottom-left">
             <button id="helpDeskButton" class="btn btn-primary">Help Desk</button>
         </div>
@@ -120,10 +128,7 @@
         }
     });
 
-
-
     // ************ search funtin ************
-
 
     document.getElementById('searchInput').addEventListener('keyup', function() {
         const searchTerm = this.value.trim().toLowerCase();
@@ -142,4 +147,66 @@
             }
         });
     });
+</script>
+
+<script>
+    $(document).ready(function() {
+       
+           reloadChatSideBar();
+    });
+
+
+
+    //reload on when reloadsidebard btn clicked
+   $('#chatReloadSidebarBtn').on('click',()=>{
+    reloadChatSideBar();
+   });
+
+    function reloadChatSideBar(){
+    
+        $.ajax({
+            type: "GET",
+            url: "{{ route('user.chat.all') }}",
+            success: function(response) {
+                var chats = response.chats; // Assuming 'chats' is the key containing the array of chats
+
+                // Loop through the chats and append HTML dynamically
+                $('#chatlist').empty();// empty the ul first then append 
+                chats.forEach(function(chat) {
+                    var chatItem = `
+                        <li class="sidebar-item chat-item" id="chat${chat.id}" data-chat-id="${chat.id}">
+                            <div class="sidebar-link">
+                                <i class="bi bi-chat-left me-2"></i>
+                                <label class="chat_name">${chat.user_chat}</label>
+                                <input type="text" class="chat_name_input d-none">
+                            </div>
+                            <div class="d-flex action_btn d-none">
+                                <a type="button" class="edit_field">
+                                    <i class="bi bi-pencil-square text-white me-1"></i>
+                                </a>
+                                <a type="button" class="delete_record" data-chat-id="${chat.id}">
+                                    <i class="bi bi-trash text-white"></i>
+                                </a>
+                            </div>
+                            <div class="d-flex action_save_btn d-none">
+                                <a type="button" class="save_field">
+                                    <i class="bi bi-check2 text-white me-1"></i>
+                                </a>
+                                <a type="button" class="close_record">
+                                    <i class="bi bi-x text-white"></i>
+                                </a>
+                            </div>
+                        </li>
+                    `;
+                    
+                    $('#chatlist').append(chatItem); // Assuming '#chatlist' is the container where you want to append the chat items
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+
 </script>

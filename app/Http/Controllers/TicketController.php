@@ -80,12 +80,13 @@ class TicketController extends Controller
 
 
 
-    public function fetchChatMessages($uuid)
+    public function fetchChatMessages(Request $request, $uuid)
     {
+
         // Assuming you have a Message model and a relationship set up to fetch messages by ticket UUID
         $messages = Ticket::where('uuid', $uuid)->get();
 
-        // dd(  $messages);
+        // dd($messages);
 
         return response()->json($messages);
     }
@@ -128,7 +129,7 @@ class TicketController extends Controller
     //     $userEmail = Auth::user()->email;
 
     //     $tickets = Ticket::select('id', 'uuid', 'msgfrom', 'category', 'name', 'email', 'phone', 'subject', 'description', 'created_at')
-    //         ->whereIn('id', function ($query) {
+    //         ->whereIn('id', function ($query) {    
     //             $query->selectRaw('MAX(id)')
     //                 ->from('tickets')
     //                 ->groupBy('uuid');
@@ -186,6 +187,9 @@ class TicketController extends Controller
         return redirect()->back()->with('success', 'Ticket created successfully.');
     }
 
+
+
+
     public function sendReplyUser(Request $request)
     {
         // Validate incoming request data
@@ -196,7 +200,6 @@ class TicketController extends Controller
 
         // Retrieve previous data based on UUID
         $previousTicket = Ticket::where('uuid', $validatedData['uuid'])->latest()->first();
-
 
         // Create a new row with updated message and created time
         $newTicket = new Ticket();
@@ -279,7 +282,7 @@ class TicketController extends Controller
 
         // Save the image URL in the chat_image column
         $newTicket->chat_image = $imageUrl;
-// dd($imageUrl);
+        // dd($imageUrl);
         // Save the new ticket
         $newTicket->save();
 
@@ -332,7 +335,7 @@ class TicketController extends Controller
 
         // Save the image URL in the chat_image column
         $newTicket->chat_image = $imageUrl;
-// dd($imageUrl);
+        // dd($imageUrl);
         // Save the new ticket
         $newTicket->save();
 
@@ -343,5 +346,4 @@ class TicketController extends Controller
             'image_url' => asset('storage/' . $filePath)
         ]);
     }
-
 }

@@ -535,4 +535,8 @@ class AdminController extends Controller
         $users = User::where('role', 'admin')->get();
         return view('admin.pages.listAdmins', compact('users'));
     }
+
+
+
+   
 }

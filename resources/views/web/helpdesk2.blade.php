@@ -36,8 +36,7 @@
     <!--start page wrapper -->
     <div class="">
         <div class="headline">
-            <h1
-                style="
+            <h1 style="
             text-align: center;
             font-weight: bold;
             font-size: 4rem;
@@ -74,12 +73,12 @@
 
                                     {{-- <div class="dropdown mt-3"> <a href="#"
                                             class="text-uppercase text-secondary dropdown-toggle dropdown-toggle-nocaret"
-                                            data-bs-toggle="dropdown" >Recent Chats <i
+                                            data-bs-toggle="dropdown">Recent Chats <i
                                                 class='bx bxs-chevron-down'></i></a>
                                         <div class="dropdown-menu"> <a class="dropdown-item" href="#">Recent
                                                 Chats</a>
-                                            <div class="dropdown-divider"></div> <a class="dropdown-item"
-                                                href="#">Sort by Time</a>
+                                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="#">Sort
+                                                by Time</a>
                                             <a class="dropdown-item" href="#">Sort by Unread</a>
 
                                         </div>
@@ -87,27 +86,91 @@
                                 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                {{-- chat list side bar start--}}
+
                                 <div class="chat-list">
                                     <div class="list-group list-group-flush" id="ticketList">
                                         @foreach ($tickets as $ticket)
-                                            <a href="javascript:;" class="list-group-item chat-item"
-                                                data-uuid="{{ $ticket->uuid }}">
-                                                <div class="d-flex">
-                                                    <div class="flex-grow-1 ms-2">
-                                                        <h6 class="mb-0 chat-title">{{ $ticket->uuid }}</h6>
-                                                        <!-- Display name -->
-                                                        <p class="mb-0 chat-msg">{{ $ticket->subject }}</p>
-                                                        <!-- Display subject -->
-                                                    </div>
-                                                    <div class="chat-time">
-                                                        {{ $ticket->created_at ? $ticket->created_at->format('h:i A') : '' }}
-                                                    </div>
-                                                    <!-- Display time -->
+                                        <a href="javascript:;" class="list-group-item chat-item border-bottom shadow-lg"
+                                            data-uuid="{{ $ticket->uuid }}">
+                                            <div class="d-flex">
+                                                <div class="flex-grow-1 ms-2">
+                                                    <h6 class="mb-0 chat-title">{{ $ticket->subject }}</h6>
+                                                    <!-- Display name -->
+                                                    {{-- <p class="mb-0 chat-msg">{{ $ticket->subject }}</p> --}}
+                                                    <!-- Display subject -->
                                                 </div>
-                                            </a>
+                                                <div class="chat-time">
+                                                    {{ $ticket->created_at ? $ticket->created_at->format('h:i A') : ''
+                                                    }}
+                                                </div>
+                                                <!-- Display time -->
+                                            </div>
+                                        </a>
+
                                         @endforeach
                                     </div>
                                 </div>
+
+
+                                {{-- chat list side bar end--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                             </div>
@@ -123,7 +186,7 @@
                     </div>
 
                 </div>
-                {{-- chat box area of  --}}
+                {{-- chat box area of --}}
 
 
 
@@ -133,7 +196,8 @@
                         <div class="d-flex">
                             <div class="flex-grow-1 ms-2">
                                 {{-- <p class="mb-0 chat-time">Harvey, 3:33 PM</p>
-                                <p class="chat-left-msg">All the best for your target. thanks for giving your time.</p> --}}
+                                <p class="chat-left-msg">All the best for your target. thanks for giving your time.</p>
+                                --}}
                             </div>
                         </div>
                     </div>
@@ -157,21 +221,17 @@
                     <div class="chat-footer-menu">
                         <button type="submit" style="
                         margin-right: 10px;
-                    "
-                            id="send-message" class="btn btn-primary">Send</button>
+                    " id="send-message" class="btn btn-primary">Send</button>
                     </div>
                     <div class="chat-footer-menu">
                         <!-- Input field to select the image -->
-                        {{-- <input  id="send-attachment" type="file" id="myFile" name="filename"> --}}
+                        {{-- <input id="send-attachment" type="file" id="myFile" name="filename"> --}}
                         <div class="chat-footer-menu">
                             <!-- Input field to select the image -->
-                            <input id="send-attachment" type="file" id="myFile" name="filename"
-                                style="display: none;">
-                            <label for="send-attachment"
-                                style="
+                            <input id="send-attachment" type="file" id="myFile" name="filename" style="display: none;">
+                            <label for="send-attachment" style="
                             width: 50;
-                            height: 40; margin-left: 10;"
-                                class="btn btn-primary">
+                            height: 40; margin-left: 10;" class="btn btn-primary">
                                 <i class="fas fa-paperclip"></i>
                                 <!-- Font Awesome icon for image -->
 
@@ -192,8 +252,7 @@
                 {{-- <div class="chat-footer  align-items-center">
                     <div class="flex-grow-1 pe-2">
                         <div class="input-group">
-                            <input id="message-input" type="text" class="form-control"
-                                placeholder="Type a message">
+                            <input id="message-input" type="text" class="form-control" placeholder="Type a message">
                         </div>
                     </div>
                     <div class="chat-footer-menu">
@@ -212,16 +271,22 @@
     <!--end page wrapper -->
 
 
+
+
+
+
+    {{-- create new chat modal start--}}
+
     <!-- Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgb(10, 66, 116)">
                 <form id="ticketForm" action="{{ url('/save/ticket/user') }}" method="POST">
-                    @csrf <!-- CSRF token -->
+                    @csrf
+                    <!-- CSRF token -->
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="addModalLabel">Create New Ticket</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Category dropdown -->
@@ -276,16 +341,22 @@
     </div>
 
 
-    {{-- image modal  --}}
+
+
+
+    {{-- create new chat modal end --}}
+
+
+    {{-- image modal --}}
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgb(10, 66, 116)">
                 <div id="ticketForm">
-                    @csrf <!-- CSRF token -->
+                    @csrf
+                    <!-- CSRF token -->
 
                     <div class="modal-body">
-                        <img id="previewImage" src="#" alt="Selected Image"
-                            style="width: 100%; display: none;">
+                        <img id="previewImage" src="#" alt="Selected Image" style="width: 100%; display: none;">
                         <!-- Other form fields -->
                     </div>
                     <div class="modal-footer">
@@ -301,6 +372,52 @@
 
     <!--  this reply script  section -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{-- //show chat box to start chat by clicking on chat item --}}
+    {{-- chat side bar item click --}}
 
     <script>
         document.getElementById('searchInput').addEventListener('keyup', function() {
@@ -335,10 +452,14 @@
             chatFooter.style.display = 'none';
 
             chatItems.forEach(item => {
+               
                 item.addEventListener('click', function() {
                     const uuid = item.dataset.uuid;
+                    console.log(item.dataset);
                     currentChatUUID = item.dataset.uuid;
+                   console.log("clicked");
                     fetchChatMessages(uuid);
+                 
 
                     // Show the chat footer when a chat item is clicked
                     chatFooter.style.display = 'flex';
@@ -350,14 +471,22 @@
 
 
 
-
             function fetchChatMessages(uuid) {
-                fetch("{{ url('/chat') }}/${uuid}")
-                    .then(response => response.json())
-                    .then(data => displayChatMessages(data))
-                    .catch(error => console.error('Error fetching chat messages:', error));
+    fetch("{{ url('/chat') }}/" + uuid)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            displayChatMessages(data);
+        })
+        .catch(error => {
+            console.error('Error fetching chat messages:', error);
+        });
+}
 
 
             function displayChatMessages(messages) {
@@ -438,22 +567,22 @@
             }
 
 
-            chatItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const uuid = item.dataset.uuid;
-                    currentChatUUID = item.dataset.uuid;
-                    fetchChatMessages(uuid);
+            // chatItems.forEach(item => {
+            //     item.addEventListener('click', function() {
+            //         const uuid = item.dataset.uuid;
+            //         currentChatUUID = item.dataset.uuid;
+            //         fetchChatMessages(uuid);
 
-                    // Show the chat footer when a chat item is clicked
-                    chatFooter.style.display = 'flex';
+            //         // Show the chat footer when a chat item is clicked
+            //         chatFooter.style.display = 'flex';
 
-                    // Update the content of the <h4> element with the current chat UUID
-                    const chatUUIDElement = document.querySelector('.current-chat-uuid');
-                    if (chatUUIDElement) {
-                        chatUUIDElement.textContent = currentChatUUID;
-                    }
-                });
-            });
+            //         // Update the content of the <h4> element with the current chat UUID
+            //         const chatUUIDElement = document.querySelector('.current-chat-uuid');
+            //         if (chatUUIDElement) {
+            //             chatUUIDElement.textContent = currentChatUUID;
+            //         }
+            //     });
+            // });
 
             function getChatUUID(uuid) {
                 // Implement this function to get the UUID of the current chat box
@@ -461,6 +590,50 @@
                 // For now, returning a placeholder value
                 return currentChatUUID;
             }
+
+            // side  bar chat list  click event end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // send  message click event   sendMessage
+        //binding on key up for Enter key to send message
+
+                document.getElementById('message-input').addEventListener('keyup', function(e) {
+            if (e.code === 'Enter') {
+                const messageInput = document.getElementById('message-input').value.trim();
+                const uuid = currentChatUUID; // Implement this function to get the UUID of the current chat box
+                if (messageInput !== '') {
+                    sendMessage(uuid, messageInput); 
+                    document.getElementById('message-input').value = ''; // Clear the input field after sending the message
+                }
+            }
+        });
+
+
 
             document.getElementById('send-message').addEventListener('click', function() {
                 const messageInput = document.getElementById('message-input').value.trim();
@@ -473,6 +646,8 @@
                         ''; // Clear the input field after sending the message
                 }
             });
+
+
 
             function sendMessage(uuid, message) {
                 axios.post("{{ url('/send-message/user') }}", {
@@ -518,6 +693,29 @@
                 return `${hours}:${minutes}`;
             }
         });
+
+
+      //send messae btn click even end
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+
+
+
+
 
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('ticketForm');

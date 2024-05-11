@@ -20,6 +20,8 @@ class Membership extends Model
         'status',
         'start_trial',
         'end_trial',
+        'chat_input_net_count',
+        'chat_output_net_count',
     ];
 
     public function user()

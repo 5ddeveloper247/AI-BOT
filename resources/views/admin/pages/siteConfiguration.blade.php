@@ -305,6 +305,184 @@
 </div>
 
 
+
+
+{{-- // site configuration --}}
+
+
+<div class="row justify-content-center">
+    <!-- Center the content -->
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-header px-4 py-3 border-bottom text-center">
+                <!-- Center the text -->
+                <h5 class="mb-0">Site Configuration</h5>
+            </div>
+
+
+
+            {{-- Errors handling here --}}
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+
+            {{-- Errors handling here --}}
+
+
+
+            
+            <div class="card-body p-4">
+                <form class="row g-3 needs-validation" action="{{ route('admin.site.config.submit') }}" method="POST"
+                    id="siteConfigForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="configForm" name="type">
+
+                    <div class="col-md-12">
+                        <label for="siteLogo" class="form-label fs-5"> Logo</label>
+                        <!-- Increased label size -->
+                        <input type="file" name="siteLogo" class="form-control" id="siteLogo" />
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <label for="mainTitle" class="form-label fs-5">Copy Right Text</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="mainTitle" name="copyright" placeholder="Text"></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <!-- Center the buttons -->
+                        <div class="d-md-flex d-grid gap-3 justify-content-center">
+                            <button type="submit" class="btn btn-white px-4 siteConfigBtn">Submit</button>
+                            {{-- <button type="reset" class="btn btn-light px-4">Reset</button> --}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+
+
+
+
+            {{-- contact us started --}}
+            <div class="card-header px-4 py-3 border-bottom text-center">
+                <!-- Center the text -->
+                <h5 class="mb-0">Contact Us</h5>
+            </div>
+            <div class="card-body p-4">
+                <form class="row g-3 needs-validation" action="{{ route('admin.site.config.submit') }}" method="POST"
+                    novalidate id="siteConfigContactForm">
+                    @csrf
+                    <input type="hidden" value="contactForm" name="type">
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Address</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="address" name="address" placeholder="Address"
+                            rows="2"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Phone</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" name="phone" id="phone" placeholder="Phone" rows="2"
+                            maxlength="20"></textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5">Email</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" name="email" id="email" placeholder="Email" rows="2"></textarea>
+                    </div>
+
+
+
+                    <div class="col-md-12 text-center">
+                        <!-- Center the buttons -->
+                        <div class="d-md-flex d-grid gap-3 justify-content-center">
+                            <button type="submit" class="btn btn-white px-4" id="siteConfigContactBtn">Submit</button>
+                            {{-- <button type="reset" class="btn btn-light px-4">Reset</button> --}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            {{-- contact links ended --}}
+
+
+
+
+
+
+
+            {{-- social proifles --}}
+
+            <div class="card-header px-4 py-3 border-bottom text-center">
+                <!-- Center the text -->
+                <h5 class="mb-0">Social Profiles</h5>
+            </div>
+
+            <div class="card-body p-4">
+                <form class="row g-3 needs-validation" action="{{ route('admin.site.config.submit') }}" method="POST"
+                    novalidate id="siteConfigSocialForm">
+                    @csrf
+                    <input type="hidden" value="socialForm" name="type">
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Facebook</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="facebook" name="facebook" placeholder="Link"
+                            required></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Linked In</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="mainTitle" name="linkedin" placeholder="Link"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> TwitterX</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="mainTitle" placeholder="Link" name="twitter"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Instagram</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="mainTitle" placeholder="Link" name="instagram"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="mainTitle" class="form-label fs-5"> Youtube</label>
+                        <!-- Increased label size -->
+                        <textarea class="form-control" id="mainTitle" placeholder="Link" name="youtube"></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <!-- Center the buttons -->
+                        <div class="d-md-flex d-grid gap-3 justify-content-center">
+                            <button type="submit" class="btn btn-white px-4" id="siteConfigSocialBtn">Submit</button>
+                            {{-- <button type="reset" class="btn btn-light px-4">Reset</button> --}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {{-- Social ended --}}
+
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -750,4 +928,118 @@
 
         // Your existing JavaScript code for CRUD operations
 </script> --}}
+
+
+
+{{-- here is the ajax calls to handle the site configurations form submission --}}
+{{-- <script>
+    $(document).ready(function() {
+    // Get CSRF token from the meta tag
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    // Set up AJAX headers to include CSRF token
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        }
+    });
+
+    // AJAX for Site Configuration Form
+    $('#siteConfigForm').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting traditionally
+
+        // Retrieve logo file input element
+        const logoFile = $('#logo')[0].files[0]; // Get the first file
+
+        // Retrieve copyright text
+        const copyrightText = $('#mainTitle').val();
+
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append logo file and copyright text to FormData object
+        formData.append('logo', logoFile);
+        formData.append('copyright', copyrightText);
+
+        // Create a plain object to store data
+        const data = {
+            logo: logoFile,
+            copyright: copyrightText
+        };
+
+        // Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('admin.site.config.submit') }}',
+            data: data,
+            contentType: false, // Prevent jQuery from setting contentType
+            processData: false, // Prevent jQuery from processing data
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // Handle success response
+                console.log('Site Configuration Form submitted successfully.');
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error('Error submitting Site Configuration Form:', xhr.responseText);
+            }
+        });
+    });
+
+    // AJAX for Contact Us Form
+    $('#siteConfigContactForm').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting traditionally
+
+        // Serialize form data
+        var formData = $(this).serialize();
+        const formType = "contactForm";
+
+        // Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('admin.site.config.submit') }}',
+            data: { formData: formData, formType: formType },
+            success: function(response) {
+                // Handle success response
+                console.log('Contact Us Form submitted successfully.');
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error('Error submitting Contact Us Form:', xhr.responseText);
+            }
+        });
+    });
+
+    // AJAX for Social Profiles Form
+    $('#siteConfigSocialForm').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting traditionally
+
+        // Serialize form data
+        var formData = $(this).serialize();
+        const formType = "socialForm";
+
+        // Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('admin.site.config.submit') }}',
+            data: { formData: formData, formType: formType },
+            success: function(response) {
+                // Handle success response
+                console.log('Social Profiles Form submitted successfully.');
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error('Error submitting Social Profiles Form:', xhr.responseText);
+            }
+        });
+    });
+});
+
+</script> --}}
+
+
+
+{{-- here is the ajax calls to handle the site configurations form submission --}}
 @endpush

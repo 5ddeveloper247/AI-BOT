@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('days')->nullable();
             $table->timestamp('start_trial')->nullable();
             $table->timestamp('end_trial')->nullable();
+            $table->integer('chat_input_net_count')->default(0);
+            $table->integer('chat_output_net_count')->default(0);
             $table->timestamps();
         });
     }

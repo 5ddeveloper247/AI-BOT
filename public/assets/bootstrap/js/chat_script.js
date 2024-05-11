@@ -94,6 +94,7 @@
         inputElement[0].setSelectionRange(length, length);
     }
 
+
     $(".edit_field").on("click", function () {
         const parentDiv = $(this).closest(".sidebar-item").find(".chat_name");
         const chatNameInput = $(this)
@@ -392,16 +393,16 @@
 
     ///invoke keyup to send the input 
 
-    $("#messaeg_bar").on("keyup", function (event) {
-        // Check if the pressed key is Enter (key code 13)
+    // $("#messaeg_bar").on("keyup", function (event) {
+    //     // Check if the pressed key is Enter (key code 13)
 
-        if (event.keyCode === 13) {
-            // Trigger the same action as clicking the button
-            console.log("jkfdsj")
-            $(".send_chat_btn").click();
+    //     if (event.keyCode === 13) {
+    //         // Trigger the same action as clicking the button
+    //         console.log("jkfdsj")
+    //         $(".send_chat_btn").click();
 
-        }
-    });
+    //     }
+    // });
 
 
 
@@ -419,20 +420,23 @@
 
 
     $(document).ready(function () {
+
         let isNewChat = false; // Initialize isNewChat flag
         $(".start_new_chat").on("click", function () {
             isNewChat = true; // Set isNewChat to true when starting a new chat
             chatId = null; // Reset chatId when starting a new chat
-            console.log(chatId);
+            console.log("resetting the chat", chatId);
+            console.log("is NewChat", isNewChat);
+
         });
+
+
         let chatId = null; // Initialize chatId variable
-
-
         $(".send_chat_btn").on("click", function (e) {
             e.preventDefault();
             var message = $("#messaeg_bar").val().trim();
 
-            console.log(chatId);
+
             if (message !== "") {
                 // Make Axios POST request to store the message
                 axios.post(baseUrl + "/store-message/user", {
@@ -442,19 +446,27 @@
                     chat_id: chatId, // Pass chatId with the request
                 })
                     .then(function (response) {
-                        // Handle success response if needed
                         console.log(response.data);
 
                         chatId = response.data.chat_id;
-                        console.log(chatId);
                         userMessage = response.data.message;
                         botReply = response.data.bot_reply; // Get bot reply from response
                         isNewChat = response.data.isNewChat;
 
                         $("#messaeg_bar").val("");
+                        console.log(isNewChat)
+                        console.log(chatId)
 
-                        sendAdminReply(chatId)
+                        // sendAdminReply(chatId)
                         // prependChatItem(userMessage)
+
+                        if (isNewChat) {
+
+                            prependChatItem(userMessage);
+                            isNewChat = false; // Set isNewChat to false after creating a new chat
+                        }
+                        // Update chat window with user message and bot reply
+                        updateChatWindow(userMessage, botReply);
                     })
                     .catch(function (error) {
                         // Handle error response if needed
@@ -463,40 +475,168 @@
             }
         });
 
-        function sendAdminReply(chatId) {
-            // Make Axios POST request to send the admin's reply
 
-            axios.post(baseUrl + "/send-admin-reply", {
+        $("#messaeg_bar").on("keyup", function (e) {
+            e.preventDefault();
+            if (event.keyCode === 13) {
 
 
-                bot_reply: "i am your ai boat your reply message here", // Admin's reply message
-                chat_id: chatId, // Pass chatId with the request
-            })
-                .then(function (response) {
-                    // Handle success response if needed
-                    console.log(
-                        "Admin reply sent successfully:",
-                        response.data
-                    );
+                var message = $("#messaeg_bar").val().trim();
 
-                    botReply = response.data.boat_reply; // Assign bot reply from the response
 
-                    // Check if the response is true
-                    if (response.data.success) {
-                        // If it's a new chat, prepend the chat item to the list
-                        if (isNewChat) {
-                            prependChatItem(userMessage);
-                            isNewChat = false; // Set isNewChat to false after creating a new chat
-                        }
-                        // Update chat window with user message and bot reply
-                        updateChatWindow(userMessage, botReply);
-                    }
-                })
-                .catch(function (error) {
-                    // Handle error response if needed
-                    console.error("Error sending admin reply:", error);
-                });
-        }
+                if (message !== "") {
+                    // Make Axios POST request to store the message
+                    axios.post(baseUrl + "/store-message/user", {
+
+                        message: message,
+                        new_chat: isNewChat,
+                        chat_id: chatId, // Pass chatId with the request
+                    })
+                        .then(function (response) {
+                            console.log(response.data);
+
+                            chatId = response.data.chat_id;
+                            userMessage = response.data.message;
+                            botReply = response.data.bot_reply; // Get bot reply from response
+                            isNewChat = response.data.isNewChat;
+
+                            $("#messaeg_bar").val("");
+                            console.log(isNewChat)
+                            console.log(chatId)
+
+                            // sendAdminReply(chatId)
+                            // prependChatItem(userMessage)
+
+                            if (isNewChat) {
+
+                                prependChatItem(userMessage);
+                                isNewChat = false; // Set isNewChat to false after creating a new chat
+                            }
+                            // Update chat window with user message and bot reply
+                            updateChatWindow(userMessage, botReply);
+                        })
+                        .catch(function (error) {
+                            // Handle error response if needed
+                            console.error("Error:", error);
+                        });
+                }
+            }
+        });
+
+
+
+
+        // function sendAdminReply(chatId) {
+        //     // Make Axios POST request to send the admin's reply
+
+        //     axios.post(baseUrl + "/send-admin-reply", {
+        //         bot_reply: "i am your ai boat your reply message here", // Admin's reply message
+        //         chat_id: chatId, // Pass chatId with the request
+        //     })
+        //         .then(function (response) {
+        //             // Handle success response if needed
+        //             console.log(
+        //                 "Admin reply sent successfully:",
+        //                 response.data
+        //             );
+
+        //             botReply = response.data.boat_reply; // Assign bot reply from the response
+
+        //             // Check if the response is true
+        //             if (response.data.success) {
+        //                 // If it's a new chat, prepend the chat item to the list
+        //                 alert(isNewChat)
+        //                 if (isNewChat) {
+
+        //                     prependChatItem(userMessage);
+        //                     isNewChat = false; // Set isNewChat to false after creating a new chat
+        //                 }
+        //                 // Update chat window with user message and bot reply
+        //                 updateChatWindow(userMessage, botReply);
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             // Handle error response if needed
+        //             console.error("Error sending admin reply:", error);
+        //         });
+        // }
+
+
+
+
+
+
+
+
+        // $(".send_chat_btn").on("click", function (e) {
+        //     e.preventDefault();
+        //     var message = $("#messaeg_bar").val().trim();
+
+        //     console.log(chatId);
+        //     if (message !== "") {
+        //         // Make Axios POST request to store the message
+        //         axios.post(baseUrl + "/store-message/user", {
+
+        //             message: message,
+        //             new_chat: isNewChat,
+        //             chat_id: chatId, // Pass chatId with the request
+        //         })
+        //             .then(function (response) {
+        //                 // Handle success response if needed
+        //                 console.log(response.data);
+
+        //                 chatId = response.data.chat_id;
+        //                 console.log(chatId);
+        //                 userMessage = response.data.message;
+        //                 botReply = response.data.bot_reply; // Get bot reply from response
+        //                 isNewChat = response.data.isNewChat;
+
+        //                 $("#messaeg_bar").val("");
+
+        //                 sendAdminReply(chatId)
+        //                 // prependChatItem(userMessage)
+        //             })
+        //             .catch(function (error) {
+        //                 // Handle error response if needed
+        //                 console.error("Error:", error);
+        //             });
+        //     }
+        // });
+
+        // function sendAdminReply(chatId) {
+        //     // Make Axios POST request to send the admin's reply
+
+        //     axios.post(baseUrl + "/send-admin-reply", {
+
+
+        //         bot_reply: "i am your ai boat your reply message here", // Admin's reply message
+        //         chat_id: chatId, // Pass chatId with the request
+        //     })
+        //         .then(function (response) {
+        //             // Handle success response if needed
+        //             console.log(
+        //                 "Admin reply sent successfully:",
+        //                 response.data
+        //             );
+
+        //             botReply = response.data.boat_reply; // Assign bot reply from the response
+
+        //             // Check if the response is true
+        //             if (response.data.success) {
+        //                 // If it's a new chat, prepend the chat item to the list
+        //                 if (isNewChat) {
+        //                     prependChatItem(userMessage);
+        //                     isNewChat = false; // Set isNewChat to false after creating a new chat
+        //                 }
+        //                 // Update chat window with user message and bot reply
+        //                 updateChatWindow(userMessage, botReply);
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             // Handle error response if needed
+        //             console.error("Error sending admin reply:", error);
+        //         });
+        // }
 
 
         // Function to prepend chat item to the list
@@ -564,6 +704,9 @@
                 $(".scrollable-content")[0].scrollHeight
             );
         }
+
+
+
 
         // Show the delete modal when the delete button is clicked
         $(".delete_record").on("click", function () {
@@ -693,4 +836,7 @@
 
 
 })();
+
+
+
 

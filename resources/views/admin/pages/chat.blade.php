@@ -4,195 +4,196 @@
 
 @section('title', 'Chat')
 @push('css')
-    <style>
-        .custom-padding {
-            --bs-btn-padding-x: 3.75rem;
-            /* Custom padding */
-        }
-    </style>
+<style>
+    .custom-padding {
+        --bs-btn-padding-x: 3.75rem;
+        /* Custom padding */
+    }
+</style>
 @endpush
 
 @section('content')
 
 
-    <!--start page wrapper -->
-    <div class="page-wrapper">
-        <div class="page-content">
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
 
 
-            <div class="chat-wrapper">
+        <div class="chat-wrapper">
 
-                <div class="chat-sidebar">
+            <div class="chat-sidebar">
 
-                    <div class="chat-sidebar-header">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1 ms-2">
-                                <a href="javascript:;" class="btn btn-light radius-30 mt-2 mt-lg-0  custom-padding"
-                                    data-bs-toggle="modal" data-bs-target="#addModal">
-                                    <i class="bx bxs-plus-square"></i>create new ticket
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="mb-3"></div>
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text"><i class='bx bx-search'></i></span>
-                            <input id="searchInput" type="text" class="form-control"
-                                placeholder="Search by Ticket Id or Subject">
+                <div class="chat-sidebar-header">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 ms-2">
+                            <a href="javascript:;" class="btn btn-light radius-30 mt-2 mt-lg-0  custom-padding"
+                                data-bs-toggle="modal" data-bs-target="#addModal">
+                                <i class="bx bxs-plus-square"></i>create new ticket
+                            </a>
                         </div>
 
                     </div>
-                    <div class="chat-sidebar-content">
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-Chats">
+                    <div class="mb-3"></div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class='bx bx-search'></i></span>
+                        <input id="searchInput" type="text" class="form-control"
+                            placeholder="Search by Ticket Id or Subject">
+                    </div>
+
+                </div>
+                <div class="chat-sidebar-content">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-Chats">
 
 
-                                <div class="chat-list">
-                                    <div class="list-group list-group-flush" id="ticketList">
-                                        @foreach ($tickets as $ticket)
-                                            <a href="javascript:;" class="list-group-item chat-item"
-                                                data-uuid="{{ $ticket->uuid }}">
-                                                <div class="d-flex">
-                                                    <div class="flex-grow-1 ms-2">
-                                                        <h6 class="mb-0 chat-title">{{ $ticket->uuid }}</h6>
-                                                        <!-- Display name -->
-                                                        <p class="mb-0 chat-msg">{{ $ticket->subject }}</p>
-                                                        <!-- Display subject -->
-                                                    </div>
-                                                    <div class="chat-time">
-                                                        {{ $ticket->created_at ? $ticket->created_at->format('h:i A') : '' }}
-                                                    </div>
-                                                    <!-- Display time -->
-                                                </div>
-                                            </a>
-                                        @endforeach
-                                    </div>
+                            <div class="chat-list">
+                                <div class="list-group list-group-flush" id="ticketList">
+                                    @foreach ($tickets as $ticket)
+                                    <a href="javascript:;" class="list-group-item chat-item border-bottom shadow-lg"
+                                        data-uuid="{{ $ticket->uuid }}">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1 ms-2">
+                                                <h6 class="mb-0 chat-title">{{ $ticket->subject }}</h6>
+                                                <!-- Display name -->
+                                                {{-- <p class="mb-0 chat-msg">{{ $ticket->subject }}</p> --}}
+                                                <!-- Display subject -->
+                                            </div>
+                                            <div class="chat-time">
+                                                {{ $ticket->created_at ? $ticket->created_at->format('h:i A') : '' }}
+                                            </div>
+                                            <!-- Display time -->
+                                        </div>
+                                    </a>
+                                    @endforeach
                                 </div>
-
-
                             </div>
+
+
                         </div>
                     </div>
                 </div>
-                <div class="chat-header d-flex align-items-center">
-                    <div class="chat-toggle-btn"><i class='bx bx-menu-alt-left'></i>
-                    </div>
-                    <div>
-                        <h4 class="mb-1 font-weight-bold"></h4>
-                    </div>
-
+            </div>
+            <div class="chat-header d-flex align-items-center">
+                <div class="chat-toggle-btn"><i class='bx bx-menu-alt-left'></i>
                 </div>
-                {{-- chat box area of  --}}
-
-
-
-                <div class="chat-content">
-
-                    <div class="chat-content-leftside">
-                        <div class="d-flex">
-                            <div class="flex-grow-1 ms-2">
-                                <p class="mb-0 chat-time">Harvey, 3:33 PM</p>
-                                <p class="chat-left-msg">All the best for your target. thanks for giving your time.</p>
-                                <img style="width: 200px; height: auto;" src="{{ asset('assets/images/gallery/01.png') }}"
-                                    class="card-img-top img-fluid" alt="...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-content-rightside">
-                        <div class="d-flex">
-                            <div class="flex-grow-1 me-2">
-                                <p class="mb-0 chat-time text-end">you, 3:35 PM</p>
-                                <p class="chat-right-msg">thanks Harvey</p>
-                                <img style="width: 200px; height: auto; margin-left: 704px;" class="card-img-top img-fluid"
-                                    src="{{ asset('assets/images/gallery/01.png') }}" alt="...">
-                            </div>
-
-                        </div>
-                    </div>
-
+                <div>
+                    <h4 class="mb-1 font-weight-bold"></h4>
                 </div>
 
+            </div>
+            {{-- chat box area of --}}
 
-                <div class="chat-footer align-items-center">
-                    <div class="flex-grow-1 pe-2">
-                        <div class="input-group">
-                            <input id="message-input" type="text" class="form-control" placeholder="Type a message">
+
+
+            <div class="chat-content">
+
+                <div class="chat-content-leftside">
+                    <div class="d-flex">
+                        <div class="flex-grow-1 ms-2">
+                            <p class="mb-0 chat-time">Harvey, 3:33 PM</p>
+                            <p class="chat-left-msg">All the best for your target. thanks for giving your time.</p>
+                            <img style="width: 200px; height: auto;" src="{{ asset('assets/images/gallery/01.png') }}"
+                                class="card-img-top img-fluid" alt="...">
                         </div>
                     </div>
-                    <div class="chat-footer-menu">
-                        <button type="submit" id="send-message" class="btn btn-primary">Send</button>
+                </div>
+                <div class="chat-content-rightside">
+                    <div class="d-flex">
+                        <div class="flex-grow-1 me-2">
+                            <p class="mb-0 chat-time text-end">you, 3:35 PM</p>
+                            <p class="chat-right-msg">thanks Harvey</p>
+                            <img style="width: 200px; height: auto; margin-left: 704px;" class="card-img-top img-fluid"
+                                src="{{ asset('assets/images/gallery/01.png') }}" alt="...">
+                        </div>
+
                     </div>
-                    <div class="chat-footer-menu">
-                        <!-- Input field to select the image -->
-                        <input id="send-attachment" type="file" id="myFile" name="filename" style="display: none;">
-                        <label for="send-attachment"
-                            style="
+                </div>
+
+            </div>
+
+
+            <div class="chat-footer align-items-center">
+                <div class="flex-grow-1 pe-2">
+                    <div class="input-group">
+                        <input id="message-input" type="text" class="form-control" placeholder="Type a message">
+                    </div>
+                </div>
+                <div class="chat-footer-menu">
+                    <button type="submit" id="send-message" class="btn btn-primary">Send</button>
+                </div>
+                <div class="chat-footer-menu">
+                    <!-- Input field to select the image -->
+                    <input id="send-attachment" type="file" id="myFile" name="filename" style="display: none;">
+                    <label for="send-attachment" style="
                         width: 50;
                         height: 40; margin-left: 10;" class="btn btn-primary">
-                            <i style="font-size: 16px;margin-top: 4px;" class="fas fa-paperclip"></i>  <!-- Font Awesome icon for image -->
+                        <i style="font-size: 16px;margin-top: 4px;" class="fas fa-paperclip"></i>
+                        <!-- Font Awesome icon for image -->
 
 
-                        </label>
+                    </label>
 
-                        <!-- Hidden file input for attachments -->
-                        <input id="attachment-input" type="file" style="display: none;" accept="image/*, .pdf, .docx">
+                    <!-- Hidden file input for attachments -->
+                    <input id="attachment-input" type="file" style="display: none;" accept="image/*, .pdf, .docx">
+                </div>
+            </div>
+
+
+
+            {{-- <div class="chat-footer  align-items-center">
+                <div class="flex-grow-1 pe-2">
+                    <div class="input-group">
+                        <input id="message-input" type="text" class="form-control" placeholder="Type a message">
                     </div>
                 </div>
+                <div class="chat-footer-menu">
+                    <button type="submit" id="send-message" class="btn btn-primary">Send</button>
 
+                </div>
+                <div class="chat-footer-menu">
+                    <button type="submit" id="send-Attachment" class="btn btn-primary">Attachment</button>
 
+                </div>
 
-                {{-- <div class="chat-footer  align-items-center">
-                    <div class="flex-grow-1 pe-2">
-                        <div class="input-group">
-                            <input id="message-input" type="text" class="form-control" placeholder="Type a message">
-                        </div>
-                    </div>
-                    <div class="chat-footer-menu">
-                        <button type="submit" id="send-message" class="btn btn-primary">Send</button>
+            </div> --}}
 
-                    </div>
-                    <div class="chat-footer-menu">
-                        <button type="submit" id="send-Attachment" class="btn btn-primary">Attachment</button>
-
-                    </div>
-
-                </div> --}}
-
-                <!--start chat overlay-->
-                <div class="overlay chat-toggle-btn-mobile"></div>
-                <!--end chat overlay-->
-            </div>
+            <!--start chat overlay-->
+            <div class="overlay chat-toggle-btn-mobile"></div>
+            <!--end chat overlay-->
         </div>
     </div>
-    <!--end page wrapper -->
+</div>
+<!--end page wrapper -->
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: rgb(10, 66, 116)">
-                <form id="ticketForm" action="{{ url('/save/ticket') }}" method="POST">
-                    @csrf <!-- CSRF token -->
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" id="addModalLabel">Create New Ticket</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: rgb(10, 66, 116)">
+            <form id="ticketForm" action="{{ url('/save/ticket') }}" method="POST">
+                @csrf
+                <!-- CSRF token -->
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="addModalLabel">Create New Ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Category dropdown -->
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="" selected disabled>Select Category</option>
+                            <option value="1">Hamza</option>
+                            <option value="2">Zaid</option>
+                            <!-- Add your category options here -->
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <!-- Category dropdown -->
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" name="category">
-                                <option value="" selected disabled>Select Category</option>
-                                <option value="1">Hamza</option>
-                                <option value="2">Zaid</option>
-                                <!-- Add your category options here -->
-                            </select>
-                        </div>
 
 
 
-                        <script>
-                            // Wait for the document to be ready
+                    <script>
+                        // Wait for the document to be ready
                             document.addEventListener("DOMContentLoaded", function() {
                                 // Get the select element
                                 var selectElement = document.getElementById("category");
@@ -208,42 +209,42 @@
                                     }
                                 });
                             });
-                        </script>
+                    </script>
 
-                        <!-- Name input field -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <!-- Email input field -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email">
-                        </div>
-                        <!-- Phone input field -->
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="number" class="form-control" id="phone" name="phone">
-                        </div>
-                        <!-- Subject input field -->
-                        <div class="mb-3">
-                            <label for="subject" class="form-label">Subject</label>
-                            <input type="text" class="form-control" id="subject" name="subject">
-                        </div>
-                        <!-- Description textarea -->
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
-                        </div>
+                    <!-- Name input field -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <!-- Email input field -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
-                </form>
-            </div>
+                    <!-- Phone input field -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="phone" name="phone">
+                    </div>
+                    <!-- Subject input field -->
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject">
+                    </div>
+                    <!-- Description textarea -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 
 
@@ -255,34 +256,35 @@
 
 
 
-    {{-- image modal  --}}
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: rgb(10, 66, 116)">
-                <div id="ticketForm">
-                    @csrf <!-- CSRF token -->
+{{-- image modal --}}
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: rgb(10, 66, 116)">
+            <div id="ticketForm">
+                @csrf
+                <!-- CSRF token -->
 
-                    <div class="modal-body">
-                        <img id="previewImage" src="#" alt="Selected Image" style="width: 100%; display: none;">
-                        <!-- Other form fields -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" id="send-image" class="btn btn-primary">Send Image</button>
-                    </div>
+                <div class="modal-body">
+                    <img id="previewImage" src="#" alt="Selected Image" style="width: 100%; display: none;">
+                    <!-- Other form fields -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="send-image" class="btn btn-primary">Send Image</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @endsection
 
 @push('script')
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
             const searchTerm = this.value.trim().toLowerCase();
             const ticketList = document.getElementById('ticketList');
             const chatItems = ticketList.querySelectorAll('.chat-item');
@@ -410,6 +412,28 @@
                 // For now, returning a placeholder value
                 return currentChatUUID;
             }
+
+
+
+
+
+
+
+            //binding with enter key to send messaage 
+            
+            document.getElementById('message-input').addEventListener('keyup', function(e) {
+            if (e.code === 'Enter') {
+                const messageInput = document.getElementById('message-input').value.trim();
+                const uuid = currentChatUUID; // Implement this function to get the UUID of the current chat box
+                if (messageInput !== '') {
+                    sendMessage(uuid, messageInput); 
+                    document.getElementById('message-input').value = ''; // Clear the input field after sending the message
+                }
+            }
+        });
+
+
+
 
             document.getElementById('send-message').addEventListener('click', function() {
                 const messageInput = document.getElementById('message-input').value.trim();
@@ -599,5 +623,5 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             return `${hours}:${minutes}`;
         }
-    </script>
+</script>
 @endpush

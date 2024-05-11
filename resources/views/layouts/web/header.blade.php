@@ -8,7 +8,7 @@
         </form>
         <!--image logo -->
         <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('assets/images/logo.jpeg') }}" alt="" class="img-fluid rounded">
+            <img src="{{$SiteConfiguration[9]['tag_value'] }}" alt="" class="img-fluid rounded">
         </a>
 
         <ul>
