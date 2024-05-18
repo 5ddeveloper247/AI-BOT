@@ -57,6 +57,31 @@ class AuthenticatedSessionController extends Controller
                         // Check trial status
                         $currentDate = date('Y-m-d');
                         if (strtotime($membership->end_trial) <= strtotime($currentDate)) {
+                          //sending mail to user trial has expired
+                          try {
+                            $user=Auth::user();
+                            $plan=Plan::find($membership["plan_id"]);
+                            $membershipDetails=$membership;
+                            $userDetails = ['user' => $user]; // Pass user details as an array
+                            $body = view('mail.mail_templates.membership_expired_template', ['userDetails'=>$userDetails,'membershipDetails'=>$membershipDetails,'plan'=>$plan])->render();
+                            $userEmailsSend[] = $user->email;
+                                    // to username, to email, from username, subject, body html 
+                            $response = sendMail($user->name, $userEmailsSend, 'Ai Bot', 'Trial has Expired', $body);
+                
+                            if ($response !== true) {
+                                Log::error('Failed to send registration email', ['response' => $response]);
+                            }
+                        } catch (\Exception $e) {
+                            Log::error('An error occurred while sending the email: ' . $e->getMessage());
+                        }
+
+
+
+
+
+
+
+
                             toastr()->addInfo("Trial has expired");
                             return redirect()->route('plans');
                         } else {

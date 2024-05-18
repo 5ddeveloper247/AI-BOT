@@ -12,14 +12,15 @@ use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\AdminController2;
 use App\Http\Controllers\PaymentApiSettingsController;
-
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyMail;
 use App\Mail\ReplyMail;
 use App\Models\Chat;
+use App\Models\User;
 use App\Http\Controllers\Payment\doPaymentController;
 use App\Http\Controllers\SiteConfigurationController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 
 /*
@@ -41,7 +42,7 @@ use Illuminate\Support\Facades\Auth;
 //opened admin routes
 
 Route::get('admin/login', [AdminController::class, 'adminLogin']);
-Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']); 
+Route::post('/login/submit/admin', [AdminController::class, 'logiadmin']);
 
 
 
@@ -114,11 +115,10 @@ Route::controller(AdminController::class)->middleware('auth.admin')->group(funct
     Route::get('/admin/payment/history/view', 'adminPaymentHistory')->name('admin.payment.history.view');
     Route::post('/admin/payment/settings/submit', 'adminPaymentApiSettingsStore')->name('admin.paymentapisettings.submit');
     Route::get('/admin/list/admins', 'listAdmins')->name('admin.list.admins.view');
-   
 });
 
-Route::controller(SiteConfigurationController::class)->middleware('auth.admin')->group(function(){
-    Route::post('/admin/site/config/submit','adminSiteConfigSubmit')->name('admin.site.config.submit');
+Route::controller(SiteConfigurationController::class)->middleware('auth.admin')->group(function () {
+    Route::post('/admin/site/config/submit', 'adminSiteConfigSubmit')->name('admin.site.config.submit');
 });
 
 
@@ -213,5 +213,17 @@ Route::get('user/chat/all', function () {
 Route::get('doPayment', [doPaymentController::class, 'doPayment']);
 
 
+
+
+Route::get('/mail', function (Request $request) {
+    // resources\views\auth\forgot-password.blade.php
+    $userDetails = User::where('id', '2')->first();
+    $body = view('mail.mail_templates.register_template', $userDetails);
+    $userEmailsSend[] = 'devofd172@gmail.com';
+    // to username, to email, from username, subject, body html
+    $response = sendMail('Test', $userEmailsSend, 'PANCARD', 'Test email', $body);
+    dd($response);
+    echo 'test success';
+});
 // });
 require __DIR__ . '/auth.php';

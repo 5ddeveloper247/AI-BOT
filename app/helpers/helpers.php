@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 if (!function_exists('is_active_route')) {
     function is_active_route($route)
     {
@@ -7,3 +10,8 @@ if (!function_exists('is_active_route')) {
         return $currentURI == $route ? 'active' : '';
     }
 }
+
+
+
+
+

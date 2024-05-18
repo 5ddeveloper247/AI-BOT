@@ -455,9 +455,11 @@
                
                 item.addEventListener('click', function() {
                     const uuid = item.dataset.uuid;
-                    console.log(item.dataset);
+                    localStorage.removeItem('currentChatUUID');
+                    localStorage.setItem('currentChatUUID', uuid);
+                    
                     currentChatUUID = item.dataset.uuid;
-                   console.log("clicked");
+               
                     fetchChatMessages(uuid);
                  
 
@@ -469,9 +471,17 @@
             });
 
 
+            const fetchInterval = setInterval(() => {
+            const storedUUID = localStorage.getItem('currentChatUUID');
+            if (storedUUID) {
+                fetchChatMessages(storedUUID);
+            }
+        }, 5000);
 
 
-            function fetchChatMessages(uuid) {
+
+
+    function fetchChatMessages(uuid) {
     fetch("{{ url('/chat') }}/" + uuid)
         .then(response => {
             if (!response.ok) {
@@ -622,7 +632,7 @@
         // send  message click event   sendMessage
         //binding on key up for Enter key to send message
 
-                document.getElementById('message-input').addEventListener('keyup', function(e) {
+        document.getElementById('message-input').addEventListener('keyup', function(e) {
             if (e.code === 'Enter') {
                 const messageInput = document.getElementById('message-input').value.trim();
                 const uuid = currentChatUUID; // Implement this function to get the UUID of the current chat box
@@ -633,7 +643,7 @@
             }
         });
 
-
+           
 
             document.getElementById('send-message').addEventListener('click', function() {
                 const messageInput = document.getElementById('message-input').value.trim();

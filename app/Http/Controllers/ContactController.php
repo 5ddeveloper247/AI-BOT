@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Mail\ReplyMail;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\ContactRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -22,6 +25,25 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+
+        try {
+
+            $userDetails = $request->all(); // Pass user details as an array
+
+            $user = $userDetails;
+            $body = view('mail.mail_templates.guest_contact_template', ['userDetails' => $userDetails])->render();
+            $userEmailsSend[] = $request->email;
+            // to username, to email, from username, subject, body html 
+            $response = sendMail($request->name, $userEmailsSend, 'Ai Bot', 'Thanks For Contacting us', $body);
+
+            if ($response !== true) {
+                Log::error('Failed to send registration email', ['response' => $response]);
+            }
+        } catch (\Exception $e) {
+            Log::error('An error occurred while sending the email: ' . $e->getMessage());
+        }
+
+
         return $this->contactRepository->store($request);
     }
 

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
@@ -65,12 +66,6 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-
-      
-
-
-
-
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -79,7 +74,7 @@ class RegisteredUserController extends Controller
         ], [
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
-            'name.regex' => 'The name  only contain letters and spaces.',
+            'name.regex' => 'The name may only contain letters and spaces.',
             'email.required' => 'The email field is required.',
             'email.string' => 'The email must be a string.',
             'email.email' => 'The email must be a valid email address.',
@@ -87,7 +82,7 @@ class RegisteredUserController extends Controller
             'email.unique' => 'The email has already been taken.',
             'phone.required' => 'The phone field is required.',
             'phone.string' => 'The phone must be a string.',
-            'phone.regex' => 'The phone only contain digits.',
+            'phone.regex' => 'The phone may only contain digits.',
             'password.required' => 'The password field is required.',
             'password.string' => 'The password must be a string.',
             'password.min' => 'The password must be at least :min characters.',
@@ -101,14 +96,26 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
-        
-        
-
-        
-
         event(new Registered($user));
 
         Auth::login($user);
+
+        try {
+            $userDetails = ['user' => $user]; // Pass user details as an array
+            $body = view('mail.mail_templates.register_template', $userDetails)->render();
+            $userEmailsSend[] = $user->email;
+
+            // to username, to email, from username, subject, body html
+            $response = sendMail($user->name, $userEmailsSend, 'PANCARD', 'Registeration Successful', $body);
+
+            if ($response !== true) {
+                Log::error('Failed to send registration email', ['response' => $response]);
+            }
+        } catch (\Exception $e) {
+            Log::error('An error occurred while sending the email: ' . $e->getMessage());
+        }
+
+      
 
         // Redirect the user if registration is successful
         return redirect()->route('plans');

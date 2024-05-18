@@ -316,6 +316,8 @@
                 item.addEventListener('click', function() {
                     const uuid = item.dataset.uuid;
                     currentChatUUID = item.dataset.uuid;
+                    localStorage.removeItem('currentChatUUID');
+                    localStorage.setItem('currentChatUUID', uuid);
                     fetchChatMessages(uuid);
 
                     // Show the chat footer when a chat item is clicked
@@ -323,18 +325,24 @@
 
                     // alert(currentChatUUID);
                 });
-            });
+            });    
+
+
+            const fetchInterval = setInterval(() => {
+            const storedUUID = localStorage.getItem('currentChatUUID');
+            if (storedUUID) {
+                fetchChatMessages(storedUUID);
+            }
+            }, 5000); 
 
             function fetchChatMessages(uuid) {
                 fetch(`{{url('/')}}/chat/${uuid}`)
                     .then(response => response.json())
                     .then(data => displayChatMessages(data))
                     .catch(error => console.error('Error fetching chat messages:', error));
-            }
+            }  
 
-
-
-            function displayChatMessages(messages) {
+            function displayChatMessages(messages) { 
                 const chatContent = document.querySelector('.chat-content');
                 chatContent.innerHTML = ''; // Clear existing messages
 
@@ -353,11 +361,6 @@
                     chatTime.textContent = message.msgfrom === 'admin' ? 'you, ' + formatTime(message
                         .created_at) : message.name + ', ' + formatTime(message.created_at);
                     chatMsg.textContent = message.description;
-
-
-
-
-
 
                     if (message.msgfrom === 'admin') {
                         chatMsg.classList.add('chat-right-msg');

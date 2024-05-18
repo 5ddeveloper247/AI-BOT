@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use Ramsey\Uuid\Uuid; // Import the Uuid class
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 class TicketController extends Controller
@@ -183,6 +184,25 @@ class TicketController extends Controller
 
         $ticket->save();
 
+        //sending email on ticket creation
+        try {
+
+            $userDetails = $ticket; // Pass user details as an arra
+
+            $user = $userDetails;
+            $body = view('mail.mail_templates.support_ticket_creation_template', ['userDetails' => $userDetails])->render();
+            $userEmailsSend[] = 'devofd172@gmail.com';
+            // $userEmailsSend[] = Auth::user()->email;
+            // to username, to email, from username, subject, body html 
+            $response = sendMail($request->name, $userEmailsSend, 'Ai Bot', 'Ticket Created Successfully', $body);
+
+            if ($response !== true) {
+                Log::error('Failed to send registration email', ['response' => $response]);
+            }
+        } catch (\Exception $e) {
+            Log::error('An error occurred while sending the email: ' . $e->getMessage());
+        }
+
         // Optionally, you can return a response or redirect the user
         return redirect()->back()->with('success', 'Ticket created successfully.');
     }
@@ -192,6 +212,7 @@ class TicketController extends Controller
 
     public function sendReplyUser(Request $request)
     {
+
         // Validate incoming request data
         $validatedData = $request->validate([
             'uuid' => 'required|string',

@@ -19,6 +19,7 @@ use App\Models\Checkout;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Date;
 
 
@@ -202,13 +203,30 @@ class FrontendController extends Controller
     {
 
 
-
-
         // Check if the "planTrial" input is selected
         if ($request->has('planTrial') && $request->input('planTrial') === 'on') {
             // Run your code here if "planTrial" is selected
             $trialResponse = $this->handleTrialPlan($request);   //handle the trial registerations by this function
-            if ($trialResponse) {
+      
+            if ($trialResponse['status']) {
+                // sending mail to inform about memebership
+                try {
+                    $user=User::find($trialResponse["membershipRecord"]["user_id"]);
+                    $plan=Plan::find($trialResponse["membershipRecord"]["plan_id"]);
+                    $membershipDetails=$trialResponse["membershipRecord"];
+                    $userDetails = ['user' => $user]; // Pass user details as an array
+                    $body = view('mail.mail_templates.membership_template', ['userDetails'=>$userDetails,'membershipDetails'=>$membershipDetails,'plan'=>$plan])->render();
+                    $userEmailsSend[] = $user->email;
+                            // to username, to email, from username, subject, body html 
+                    $response = sendMail($user->name, $userEmailsSend, 'PANCARD', 'Membership Activated Successfully', $body);
+        
+                    if ($response !== true) {
+                        Log::error('Failed to send registration email', ['response' => $response]);
+                    }
+                } catch (\Exception $e) {
+                    Log::error('An error occurred while sending the email: ' . $e->getMessage());
+                }
+                // sending mail to inform about memebership
 
                 toastr()->addSuccess("Welcome on board");
                 return redirect()->to('chat_dashboard');
@@ -289,7 +307,8 @@ class FrontendController extends Controller
             //   toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
             // toastr()->addSuccess("Payment Successful!");
             // return redirect()->to('chat_dashboard');
-            return true;
+            $data=['status'=>true,'membershipRecord'=>$membershipRecord];
+            return $data;
         } catch (\Exception $e) {
             //handle payment exception
             return false;
@@ -390,6 +409,27 @@ class FrontendController extends Controller
                             // 'currency'=>""
 
                         ]);
+
+
+
+
+                        try {
+                            $user=User::find($membershipRecord["user_id"]);
+                          
+                            $plan=Plan::find($membershipRecord["plan_id"]);
+                            $membershipDetails=$membershipRecord;
+                            $userDetails = ['user' => $user]; // Pass user details as an array
+                            $body = view('mail.mail_templates.membership_template', ['userDetails'=>$userDetails,'membershipDetails'=>$membershipDetails,'plan'=>$plan])->render();
+                            $userEmailsSend[] = $user->email;
+                                    // to username, to email, from username, subject, body html 
+                            $response = sendMail($user->name, $userEmailsSend, 'PANCARD', 'Membership Activated Successfully', $body);
+                
+                            if ($response !== true) {
+                                Log::error('Failed to send registration email', ['response' => $response]);
+                            }
+                        } catch (\Exception $e) {
+                            Log::error('An error occurred while sending the email: ' . $e->getMessage());
+                        }
 
                         //   toastr()->timeOut(10000)->addInfo("Getting things ready for you....");
                         toastr()->addSuccess("Payment Successful!");
